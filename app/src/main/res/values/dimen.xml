@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ dimen.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <dimen name="logo_size">80dp</dimen>
+    <dimen name="text_size_2nd_row">13sp</dimen>
+    <dimen name="download_view_height">64dp</dimen>
+    <dimen name="download_view_padding">4dp</dimen>
+    <dimen name="download_view_grid_padding">8dp</dimen>
+</resources>

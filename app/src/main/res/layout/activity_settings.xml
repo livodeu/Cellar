@@ -1,0 +1,38 @@
+<!--
+  ~ activity_settings.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    tools:context=".SettingsActivity">
+
+    <FrameLayout
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageButton
+        android:id="@+id/btn_hlp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/action_help"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:backgroundTint="@color/colorSecondarySemiTrans"
+        android:elevation="20dp"
+        android:padding="7dp"
+        app:tint="@color/colorSecondary"
+        android:src="@drawable/ic_baseline_help_outline_24"
+        tools:ignore="RtlSymmetry" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

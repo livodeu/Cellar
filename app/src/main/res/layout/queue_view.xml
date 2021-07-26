@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ queue_view.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:padding="4dp"
+    tools:showIn="@layout/content_queued"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textViewWishTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical|start"
+            android:layout_weight="0.5"
+            android:ellipsize="middle"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            tools:ignore="NestedWeights"
+            tools:text="Awesome video file" />
+
+        <TextView
+            android:id="@+id/textViewWishInfo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom|start"
+            android:layout_weight="0.5"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="@dimen/text_size_2nd_row"
+            tools:ignore="NestedWeights"
+            tools:text="12.12.1234 12:34" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical|end"
+        android:contentDescription="@string/action_delete"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:tooltipText="@string/action_delete"
+        android:visibility="gone"
+        tools:ignore="UnusedAttribute" />
+
+    <ImageButton
+        android:id="@+id/buttonUp"
+        android:layout_width="36dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical|end"
+        android:contentDescription="@string/action_move_up"
+        android:src="@drawable/ic_baseline_arrow_upward_24"
+        android:background="@null"
+        android:tooltipText="@string/action_move_up"
+        tools:ignore="UnusedAttribute" />
+
+</LinearLayout>

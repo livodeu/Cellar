@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ AndroidManifest.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.cellar"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission-sdk-23 android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- https://developer.android.com/training/basics/intents/package-visibility -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <data android:mimeType="*/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND_MULTIPLE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.ACTION_BUG_REPORT" />
+        </intent>
+    </queries>
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:appCategory="productivity"
+        android:defaultToDeviceProtectedStorage="true"
+        android:description="@string/app_desc"
+        android:extractNativeLibs="false"
+        android:fullBackupContent="false"
+        android:hasFragileUserData="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:manageSpaceActivity="net.cellar.ManageSpaceActivity"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:usesNonSdkApi="true"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:replace="android:allowBackup">
+
+        <meta-data
+            android:name="android.webkit.WebView.MetricsOptOut"
+            android:value="true" />
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
+
+        <activity
+            android:name=".UiActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
+            android:launchMode="standard"
+            android:theme="@style/AppTheme.Launcher"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.action.DOCUMENT_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NewDownloadActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:label="@string/label_new_download"
+            android:launchMode="standard"
+            android:parentActivityName=".UiActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateUnchanged" />
+        <activity
+            android:name=".queue.ManageQueueActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:label="@string/action_manage_queue"
+            android:parentActivityName=".UiActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".auth.ManageCredentialsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:label="@string/action_manage_credentials"
+            android:parentActivityName=".UiActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".SettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:exported="true"
+            android:label="@string/action_settings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ManageSpaceActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar.Invisible"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".StoreActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="true"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar.Invisible"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter android:label="@string/action_saveas_text">
+                <action android:name="com.google.android.gms.actions.CREATE_NOTE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="text/*" />
+            </intent-filter>
+            <intent-filter android:label="@string/action_saveas_vcalendar">
+                <action android:name="android.intent.action.INSERT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="content" />
+                <data android:mimeType="vnd.android.cursor.dir/event" />
+            </intent-filter>
+            <intent-filter android:label="@string/action_saveas_vcard">
+                <action android:name="android.intent.action.INSERT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="vnd.android.cursor.dir/contact" />
+            </intent-filter>
+            <intent-filter android:label="@string/action_download_text">
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:mimeType="text/html"
+                    android:scheme="mailto" />
+                <data
+                    android:mimeType="text/plain"
+                    android:scheme="mailto" />
+            </intent-filter>
+            <intent-filter android:label="@string/action_saveas_kml">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="geo" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.APP_ERROR" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <!-- https://github.com/k3b/intent-intercept/blob/master/app/src/main/AndroidManifest.xml -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="true"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar.Invisible"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+            <!-- <meta-data android:name="android.service.chooser.chooser_target_service" android:value="androidx.sharetarget.ChooserTargetServiceCompat"/> -->
+
+
+            <!--
+            https://developer.android.com/guide/components/intents-filters#java
+
+            You can create a filter that includes more than one instance of <action>, <data>, or <category>.
+            If you do, you need to be certain that the component can handle any and all combinations of those filter elements.
+
+            When you want to handle multiple kinds of intents, but only in specific combinations of action, data, and category type, then you need to create multiple intent filters.
+
+            category:
+            For an intent to pass the category test, every category in the Intent must match a category in the filter.
+            The reverse is not necessary—the intent filter may declare more categories than are specified in the Intent and the Intent still passes.
+            Therefore, an intent with no categories always passes this test, regardless of what categories are declared in the filter.
+
+            data:
+            If a scheme is not specified, the host is ignored.
+            If a host is not specified, the port is ignored.
+            If both the scheme and host are not specified, the path is ignored.
+            -->
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download_video"
+                android:order="10">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- https://developer.android.com/guide/topics/manifest/data-element -->
+                <data
+                    android:host="imgur.com"
+                    android:pathPrefix="/gallery"
+                    android:scheme="https" />
+                <data
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/embed"
+                    android:scheme="https" />
+                <data
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/v"
+                    android:scheme="https" />
+                <data
+                    android:host="m.youtube.com"
+                    android:pathPrefix="/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="youtube.com"
+                    android:pathPrefix="/embed"
+                    android:scheme="https" />
+                <data
+                    android:host="youtube.com"
+                    android:pathPrefix="/v"
+                    android:scheme="https" />
+                <data
+                    android:host="youtube.com"
+                    android:pathPrefix="/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="youtu.be"
+                    android:scheme="https" />
+                <data
+                    android:host="v.redd.it"
+                    android:scheme="https" />
+                <data
+                    android:host="*.metacafe.com"
+                    android:pathPrefix="/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="gfycat.com"
+                    android:scheme="https" />
+                <data
+                    android:host="*.newyorker.com"
+                    android:pathPrefix="/video/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="*.wired.com"
+                    android:pathPrefix="/video/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="*.arstechnica.com"
+                    android:pathPrefix="/video/watch"
+                    android:scheme="https" />
+                <data
+                    android:host="*.nzz.ch"
+                    android:pathPrefix="/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/film/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/global/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/politics/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/sport/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/technology/video"
+                    android:scheme="https" />
+                <data
+                    android:host="www.theguardian.com"
+                    android:pathPrefix="/world/video"
+                    android:scheme="https" />
+                <data
+                    android:host="operavision.eu"
+                    android:pathPrefix="/de/bibliothek/auffuehrungen"
+                    android:scheme="https" />
+                <data
+                    android:host="operavision.eu"
+                    android:pathPrefix="/en/library/performances"
+                    android:scheme="https" />
+                <data
+                    android:host="operavision.eu"
+                    android:pathPrefix="/fr/bibliotheque/spectacles"
+                    android:scheme="https" />
+                <data
+                    android:host="www.loc.gov"
+                    android:pathPrefix="/item"
+                    android:scheme="https" />
+                <data
+                    android:host="*.france24.com"
+                    android:pathPattern="/.*/tv-shows/.*"
+                    android:scheme="https" />
+                <data
+                    android:host="*.ardmediathek.de"
+                    android:pathPattern="/.*/video/.*"
+                    android:scheme="https" />
+                <data
+                    android:host="*.filmothek.bundesarchiv.de"
+                    android:pathPrefix="/video"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download_image"
+                android:order="10">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- <category android:name="android.intent.category.ALTERNATIVE" /> -->
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- TODO this includes /gallery paths which do currently not work - they'd need a special Loader -->
+                <data
+                    android:host="postimg.cc"
+                    android:pathPrefix="/"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download"
+                tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="ftp" />
+                <data android:scheme="sftp" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="ftp" />
+                <data android:scheme="sftp" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download_all">
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download">
+                <action android:name="com.android.camera.action.REVIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SaveMailActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="true"
+            android:launchMode="standard"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar.Invisible"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter
+                android:autoVerify="false"
+                android:label="@string/action_download_mail">
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="mailto" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ImportArchiveActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:label="@string/action_import"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <service
+            android:name=".LoaderService"
+            android:description="@string/label_service_loader_desc"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
+        <service
+            android:name=".queue.QueueJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".BackupService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".ClipSpy"
+            android:description="@string/label_service_clipspy_desc"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <receiver
+            android:name=".UiActivity$SharedResultReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".BootReceiver"
+            android:directBootAware="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${fileproviderauth}"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:label="@string/label_files_from_the_cellar">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+        <provider
+            android:name=".Dogs"
+            android:authorities="${docsproviderauth}"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+    </application>
+
+</manifest>

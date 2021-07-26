@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ download_view.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/download_view_height"
+    android:orientation="horizontal"
+    android:padding="@dimen/download_view_padding"
+    >
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:tag="blank"
+        android:contentDescription="@null"
+        android:elevation="4dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/blank"
+        android:visibility="visible"
+        tools:src="@drawable/ic_file_24"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:ellipsize="marquee"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="top"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            tools:ignore="NestedWeights"
+            tools:text="Doodledoo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|bottom"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textSize="@dimen/text_size_2nd_row"
+                tools:ignore="RtlSymmetry"
+                tools:text="12.12.2020 12:12" />
+
+            <TextView
+                android:id="@+id/textViewSize"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="end|bottom"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingEnd="4dp"
+                android:singleLine="true"
+                android:textAlignment="viewEnd"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textSize="@dimen/text_size_2nd_row"
+                tools:ignore="RtlSymmetry"
+                tools:text="2.15 MB" />
+
+            <TextView
+                android:id="@+id/textViewType"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:ellipsize="start"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="end|bottom"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textSize="@dimen/text_size_2nd_row"
+                tools:ignore="RtlSymmetry"
+                tools:text="MP4 Video" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/buttonMore"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|end"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        />
+
+</LinearLayout>

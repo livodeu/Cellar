@@ -1,0 +1,3 @@
+rootProject.name = "Cellar"
+printf("Project name: %s", rootProject.name)
+include ':app'

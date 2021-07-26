@@ -1,0 +1,77 @@
+<!--
+  ~ help.htm
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title>Settings</title>
+        <link href="file:///android_res/raw/helpstyle.css" rel="stylesheet" type="text/css">
+    </head>
+    <body class="">
+        <div>
+            <ul>
+                <li>
+                    {pref_network_allow_metered}
+                    <p>Controls whether {app_name} is allowed to use network connections that are tagged as metered. Whether a connection is con&shy;sidered to be metered
+                    is deter&shy;mined at the dis&shy;cretion of the operating system. These are usually mobile data connections, like LTE.</p>
+                </li>
+                <li>
+                    {pref_proxy_type}
+                    <p>Allows the selection of a proxy type (HTTP or SOCKS). Wikipedia has infor&shy;mation about what a <a href="https://en.m.wikipedia.org/wiki/Proxy_server">proxy</a> is.</p>
+                </li>
+                <li>
+                    {pref_proxy}
+                    <p>This setting is visible only if a proxy type has been se&shy;lected. Enter the proxy address and, optionally, a port number here.</p>
+                </li>
+                <li>
+                    {pref_proxy_restrict}
+                    <p>This setting is visible only if a proxy type has been selected. The proxy server can be re&shy;stricted to be used for certain hosts only.</p>
+                </li>
+                <li>
+                    {pref_via_vpn}
+                    <p>Determines whether {app_name} should use VPN connections.</p>
+                </li>
+                <li>
+                    {pref_blacklist}
+                    <p>Set a black&shy;list provider, comparable to a browser's fil&shy;ter list. The app will not load any file from a host given on that list.
+                    The list will be up&shy;dated every {blacklist_update} hours, if possible.</p>
+                </li>
+                <li>
+                    {pref_night}
+                    <p>The app may either follow the system settings, or toggle the dark mode at specified hours of day. This is meant for older devices that do not support
+                    dark mode natively (Android up to version 9). If the device is in battery saver mode, it is possible that the dark mode does not change correctly.</p>
+                </li>
+                <li>
+                    {pref_clipspy}
+                    <p>This setting is avail&shy;able only up to Android 9. The app can ob&shy;serve the system clip&shy;board to detect URLs that point to down&shy;loadable resources.
+                    This is not possible any more from Android 10 on.</p>
+                </li>
+                <li>
+                    {pref_backup_restore}
+                    <p>The downloaded files can be com&shy;pressed into a zip file. You must select a target app to receive the zip file because apps, in&shy;cluding this one, are not allowed to access
+                    most parts of the file system, such as the down&shy;loads folder. If you enter a pass&shy;word, the zip file contents will be encrypted.</p>
+                </li>
+                <li>
+                    {action_systemsettings_app}
+                    <p>Have a look at the system settings for {app_name}.</p>
+                </li>
+                <li>
+                    {pref_licenses}
+                    <p>See the third-party libraries used by {app_name}.</p>
+                </li>
+                <li>
+                    {pref_share_this}
+                    <p>Export {app_name} as an apk file that can be in&shy;stalled on other devices. Note that the exported app will not run on every Android device.
+                    If your device is fairly new, the app will probably not run on a very old device.
+                    {app_name} has also not been designed to run on devices other than phones or tablets.</p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

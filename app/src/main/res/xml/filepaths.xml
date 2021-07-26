@@ -1,0 +1,13 @@
+<!--
+  ~ filepaths.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<paths>
+    <files-path path="downloads/" name="downloads" />
+    <cache-path path="apk/" name="apk" />
+    <cache-path path="backups/" name="backups" />
+    <cache-path path="logs/" name="logs" />
+    <cache-path path="icons/" name="icons" />
+</paths>

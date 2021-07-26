@@ -1,0 +1,79 @@
+<!--
+  ~ help.htm
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title>Einstellungen</title>
+        <link href="file:///android_res/raw/helpstyle.css" rel="stylesheet" type="text/css">
+    </head>
+    <body class="">
+        <div>
+            <ul>
+                <li>
+                    {pref_network_allow_metered}
+                    <p>Mit diesem Schalter kontrollieren Sie, ob {app_name} Daten&shy;ver&shy;bin&shy;dungen be&shy;nutzen darf, die als getaktet gekenn&shy;zeichnet sind.
+                    Dabei handelt es sich zumeist um Mobil&shy;funk&shy;verbindungen, wie etwa LTE.</p>
+                </li>
+                <li>
+                    {pref_proxy_type}
+                    <p>Bestimmen Sie, ob die App einen Proxy&shy;server verwenden soll. Wikipedia hat Informationen darüber was ein <a href="https://de.m.wikipedia.org/wiki/Proxy_(Rechnernetz)">Proxy</a> ist.</p>
+                </li>
+                <li>
+                    {pref_proxy}
+                    <p>Diese Einstellung ist nur sichtbar, wenn unter „{pref_proxy_type}“ eine Aus&shy;wahl getroffen wurde. Geben Sie hier die Adresse und ggf. die Port&shy;nummer des Proxy&shy;servers an.</p>
+                </li>
+                <li>
+                    {pref_proxy_restrict}
+                    <p>Diese Einstellung ist nur sichtbar, wenn unter „{pref_proxy_type}“ eine Aus&shy;wahl getroffen wurde. Die Ver&shy;wendung des Proxy&shy;servers kann auf be&shy;stimmte An&shy;bieter be&shy;schränkt werden.</p>
+                </li>
+                <li>
+                    {pref_via_vpn}
+                    <p>Legen Sie fest, ob VPN-Verbin&shy;dungen ver&shy;wendet werden sollen.</p>
+                </li>
+                <li>
+                    {pref_blacklist}
+                    <p>Bestimmen sie einen Anbieter einer Schwarzen Liste, ver&shy;gleichbar einer Filter&shy;liste in einem Browser. Es wer&shy;den dann keine Dateien geladen, die von einem auf
+                    dieser Liste ver&shy;merkten An&shy;bieter stammen. Die Liste wird, wenn mög&shy;lich, alle {blacklist_update} Stunden aktuali&shy;siert.</p>
+                </li>
+                <li>
+                    {pref_night}
+                    <p>Der Darstellungs&shy;modus der App kann entweder den System&shy;ein&shy;stellungen folgen oder aber den Nacht&shy;modus zu fest&shy;gelegten Zeiten ein- und ausschalten.
+                    Dies ist in erster Linie für Geräte vor&shy;gesehen, die noch keinen Nacht&shy;modus unter&shy;stützen (Android bis Version 9). Wenn sich das Gerät im
+                    Energie&shy;spar&shy;modus be&shy;findet, kann die Um&shy;stellung möglicher&shy;weise nicht korrekt erfolgen.</p>
+                </li>
+                <li>
+                    {pref_clipspy}
+                    <p>Diese Einstellung ist nur bis einschließlich Android 9 verfügbar. Die App kann die Zwischen&shy;ablage auf Änderungen hin beobachten, die möglicher&shy;weise die
+                        URL einer herunter&shy;ladbaren Datei beinhalten. Ab Android 10 ist dies lei&shy;der nicht mehr möglich!⁺</p>
+                </li>
+                <li>
+                    {pref_backup_restore}
+                    <p>Exportieren Sie sämtliche Dateien dieser App in eine ZIP-Datei. Die exportierte Datei kann optional mit einem Kenn&shy;wort ver&shy;sehen werden.
+                    Sie müssen eine Ziel-App aus&shy;wählen (beispiels&shy;weise eine Mail-App), die die ZIP-Datei in Empfang nimmt, da {app_name} die Datei nicht auf dem Gerät speichern kann.
+                    (Dies ist eine system&shy;seitige Beschränkung!⁺)</p>
+                </li>
+                <li>
+                    {action_systemsettings_app}
+                    <p>Sehen Sie sich die system&shy;seitig vorgesehenen Ein&shy;stellungen für {app_name} an.</p>
+                </li>
+                <li>
+                    {pref_licenses}
+                    <p>Bei Auswahl dieses Punktes wer&shy;den die von {app_name} ver&shy;wen&shy;deten Fremd&shy;bibliotheken genannt.</p>
+                </li>
+                <li>
+                    {pref_share_this}
+                    <p>Exportieren Sie {app_name} als installier&shy;bare APK-Datei. Beachten Sie, dass die exportierte App nicht auf allen von Android unter&shy;stützten Geräten laufen wird.
+                    Wenn Sie ein relativ neues Gerät ver&shy;wenden, wird die expor&shy;tierte App wahr&shy;scheinlich nicht auf sehr alten Geräten laufen.</p>
+                </li>
+            </ul>
+            ⁺: Danke für nix, Google!
+        </div>
+    </body>
+</html>

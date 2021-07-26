@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ filename_edit.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutEditFilename"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_filename"
+        app:boxStrokeErrorColor="@color/colorSecondary"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:helperTextTextAppearance="@style/HelperText"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editFilename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:filterTouchesWhenObscured="true"
+            android:fontFamily="sans-serif-condensed"
+            android:imeOptions="actionDone|flagNoPersonalizedLearning|flagForceAscii"
+            android:importantForAutofill="no"
+            android:inputType="text|textNoSuggestions"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:selectAllOnFocus="true"
+            tools:text="thenewfilename.txt"
+            >
+            <requestFocus />
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

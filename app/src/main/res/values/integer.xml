@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ integer.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <integer name="blacklist_update">168</integer>
+    <integer name="ui_columns">2</integer>
+    <integer name="night_from_default">18</integer>
+    <integer name="night_to_default">6</integer>
+    <integer name="night_max">23</integer>
+    <integer name="notification_text_maxlength">20</integer>
+    <!-- https://material.io/design/platform-guidance/android-notifications.html#style -->
+    <integer name="notification_title_maxlength">30</integer>
+</resources>

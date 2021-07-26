@@ -1,0 +1,33 @@
+buildscript {
+    
+    repositories {
+        google()
+        // https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/
+        //noinspection JcenterRepositoryObsolete
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        maven {
+            url "https://dl.bintray.com/videolan/Android"
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+        // https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/
+        //noinspection JcenterRepositoryObsolete
+        jcenter()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ keep.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<!-- see https://developer.android.com/studio/build/shrink-code.html#keep-resources -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/*.htm,@raw/*.css"
+    tools:shrinkMode="strict"/>

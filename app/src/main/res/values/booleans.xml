@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ booleans.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <bool name="grid_by_default">false</bool>
+    <bool name="night_mode_by_time">true</bool>
+</resources>

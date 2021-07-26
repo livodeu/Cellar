@@ -1,0 +1,327 @@
+<!--
+  ~ strings.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">Cellar</string>
+    <string name="app_desc">Cellar is a download manager.</string>
+    <string name="action_checksum">Checksum</string>
+    <string name="action_checksum_md5" translatable="false">MD5</string>
+    <string name="action_checksum_sha1" translatable="false">SHA-1</string>
+    <string name="action_checksum_sha256" translatable="false">SHA-256</string>
+    <string name="action_checksum_sha512" translatable="false">SHA-512</string>
+    <string name="action_create_download">New</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_delete_multi">Delete selected files</string>
+    <string name="action_defer">Defer</string>
+    <string name="action_defer_stop">Don\'t defer anymore</string>
+    <string name="action_download">Save</string>
+    <string name="action_download_all">Save all</string>
+    <string name="action_download_ask_cancel">Cancel?</string>
+    <string name="action_download_image">Save image</string>
+    <string name="action_download_mail">Save mail</string>
+    <string name="action_download_text">Save text</string>
+    <string name="action_download_video">Save video</string>
+    <string name="action_export_zip">Backup</string>
+    <string name="action_filter_reset">Reset filter</string>
+    <string name="action_help" translatable="false">\?</string>
+    <string name="action_import">Import</string>
+    <string name="action_install">Install</string>
+    <string name="action_install_cancel">Cancel installation</string>
+    <string name="action_layout_grid">Grid</string>
+    <string name="action_load">Load</string>
+    <string name="action_log" translatable="false">Log</string>
+    <string name="action_manage_credentials">Credentials</string>
+    <string name="action_manage_queue">Queue</string>
+    <string name="action_more_info">Info</string>
+    <string name="action_move_up">Push up</string>
+    <string name="action_network_info">Network info</string>
+    <string name="action_next_from_queue">Next, please!</string>
+    <string name="action_protect_from_deletion_off">Remove protection</string>
+    <string name="action_protect_from_deletion_on">Protect</string>
+    <string name="action_queue_add">Add to queue</string>
+    <string name="action_queue_clear">Clear queue</string>
+    <string name="action_rename">Rename</string>
+    <string name="action_restore">Restore</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_retry_authorization">Enter credentials</string>
+    <string name="action_saveas_kml">Save location</string>
+    <string name="action_saveas_text">Save as text</string>
+    <string name="action_saveas_vcalendar">Save as calendar file</string>
+    <string name="action_saveas_vcard">Save as contact file</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_share_multi">Share selected files</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_store_search">Search store</string>
+    <string name="action_systemsettings_app">App settings</string>
+    <string name="action_wallpaper">Use as wallpaper</string>
+    <string name="error_auth_unsupported">Unsupported authorization (\"%1$s\")!</string>
+    <string name="error_cant_delete">Cannot delete \"%1$s\"!</string>
+    <plurals name="error_cant_delete_count">
+        <item quantity="one">Cannot delete %1$d file!</item>
+        <item quantity="other">Cannot delete %1$d files!</item>
+    </plurals>
+    <string name="error_cant_handle">Cannot handle \"%1$s\"!</string>
+    <string name="error_cant_handle_that">Cannot handle that!</string>
+    <string name="error_checksum_failed">Checksum calculation failed!</string>
+    <string name="error_file_already_exists">This file already exists!</string>
+    <string name="error_import_failed">Import failed: %1$s</string>
+    <string name="error_import_failed_empty_file">Empty file!</string>
+    <string name="error_import_failed_invalid_file">Invalid file!</string>
+    <string name="error_import_failed_pwd">Import failed: Wrong passphrase!</string>
+    <string name="error_invalid_url">Invalid URL</string>
+    <string name="error_not_found">Not found: \"%1$s\"!</string>
+    <string name="error_own_file">%1$s passed one of %2$s\'s own files back to %3$s!</string>
+    <string name="error_own_file_naughty">A naughty app</string>
+    <string name="error_queue_pop_failed">No download has been started.</string>
+    <string name="error_rename_failed">Failed to rename \"%1$s\"!</string>
+    <string name="error_store_failed">The data cannot be stored.</string>
+    <string name="help_referer">Click here to ask Wikipedia about referers.</string>
+    <string name="help_referer_wp">https://en.m.wikipedia.org/wiki/HTTP_referer</string>
+    <string name="help_uri">The internet address (\"https://…\") that points to the file (text, picture, video, etc.) to load.</string>
+    <string name="hint_credential_realm">valid for \"%1$s\"</string>
+    <string name="hint_credential_userid">User ID \"%1$s\"</string>
+    <string name="hint_password">password</string>
+    <string name="hint_userid">user id</string>
+    <string name="http_useragent" translatable="false">Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101 Firefox/68.0</string>
+    <string name="label_audiocodec">Audio codec: %1$s</string>
+    <string name="label_author">Author: %1$s</string>
+    <string name="label_blacklist_age">%1$s\nUpdated: %2$s</string>
+    <string name="label_comment">Comment</string>
+    <string name="label_create">Create</string>
+    <string name="label_date">Date: %1$s</string>
+    <string name="label_deferred">deferred</string>
+    <string name="label_document_provider">&#127282;&#127284;&#127291;&#127291;&#127280;&#127297;</string>
+    <string name="label_duration">Duration: %1$s</string>
+    <string name="label_encrypted">Encrypted</string>
+    <string name="label_error_report">Report</string>
+    <string name="label_exposure">Shutter speed: 1/%1$s s</string>
+    <string name="label_extended">Extended</string>
+    <string name="label_file_justtext">Text from %1$s.txt</string>
+    <string name="label_filename">File name</string>
+    <string name="label_files_from_the_cellar">Files from the cellar</string>
+    <string name="label_filetype_application">%1$s file</string>
+    <string name="label_filetype_audio">%1$s audio</string>
+    <string name="label_filetype_image">%1$s image</string>
+    <string name="label_filetype_textcalendar">Calendar</string>
+    <string name="label_filetype_textplain">Plain text</string>
+    <string name="label_filetype_video">%1$s video</string>
+    <string name="label_filetype_xvcard" translatable="false">vcard</string>
+    <string name="label_fnumber">f-number: ƒ/%1$s</string>
+    <string name="label_fps">Frame rate: %1$d / s</string>
+    <string name="label_from">from</string>
+    <string name="label_from_host">From: %1$s</string>
+    <string name="label_ignore">Ignore</string>
+    <string name="label_invalid">⚡INVALID⚡</string>
+    <string name="label_iso" translatable="false">ISO: %1$d</string>
+    <string name="label_language">Language: %1$s</string>
+    <string name="label_later">Later</string>
+    <string name="label_load_later">Load later</string>
+    <string name="label_load_now">Load immediately</string>
+    <string name="label_location">Location: %1$s %2$s %3$s %4$s</string>
+    <string name="label_model">Model: %1$s</string>
+    <string name="label_network_address">Address</string>
+    <string name="label_network_metered">Metered</string>
+    <string name="label_network_metered_restrictions">Metered network restrictions</string>
+    <string name="label_new_download">New download</string>
+    <string name="label_no">No</string>
+    <string name="label_no_thanks">No, thanks</string>
+    <string name="label_notifications_channel">Notifications from the</string>
+    <string name="label_notifications_channel_important">Accentuated notifications from the</string>
+    <string name="label_or">or</string>
+    <string name="label_pages">Pages: %1$d</string>
+    <string name="label_permissions">Permissions</string>
+    <string name="label_playlist_audio">audio</string>
+    <string name="label_playlistitem" translatable="false">%1$dx%2$d, %3$d fps, %4$d kbps</string>
+    <string name="label_playlistitem_bps_nofps" translatable="false">%1$dx%2$d, %3$d kbps</string>
+    <string name="label_playlistitem_bps_nofps_nosize" translatable="false">%1$d kbps</string>
+    <string name="label_playlistitem_fps_nobps" translatable="false">%1$dx%2$d, %3$d fps</string>
+    <string name="label_playlistitem_nobps_nofps" translatable="false">%1$dx%2$d</string>
+    <string name="label_playlist_video">video</string>
+    <string name="label_progress">Progress %1$d %%</string>
+    <string name="label_pwd">Password</string>
+    <string name="label_quoted">\"%1$s\"</string>
+    <string name="label_referer" translatable="false">Referer</string>
+    <plurals name="label_root_summary">
+        <item quantity="one">%1$d file, %2$s</item>
+        <item quantity="other">%1$d files, %2$s</item>
+    </plurals>
+    <string name="label_root_summary_empty">No files</string>
+    <string name="label_service_clipspy_desc">Watches the system clipboard for downloadable resources.</string>
+    <string name="label_service_loader_desc">This is used to download files from the interweb.</string>
+    <string name="label_shrug" translatable="false">¯\_(ツ)_/¯</string>
+    <string name="label_signature">Signature</string>
+    <string name="label_size_bytes">File size: %1$s bytes</string>
+    <string name="label_size_xy">Size: %1$d × %2$d</string>
+    <string name="label_size_xy_mp">Size: %1$d × %2$d (%3$d MP)</string>
+    <string name="label_software" translatable="false">Software: %1$s</string>
+    <string name="label_title">Title: \"%1$s\"</string>
+    <string name="label_uncompressed_size">Uncompressed size: %1$s</string>
+    <string name="label_uri" translatable="false">URI</string>
+    <string name="label_use_aes">Use AES encryption</string>
+    <string name="label_use_aes_whats_that" translatable="false">AES?</string>
+    <string name="label_use_aes_whats_that_ttip">Wikipedia has a bit of information…</string>
+    <string name="label_videocodec">Video codec: %1$s</string>
+    <string name="label_yes">Yes</string>
+    <string name="msg_backup_finished">Backup finished.</string>
+    <string name="msg_backup_notpossible_active">Currently not possible. Another backup is in progress.</string>
+    <string name="msg_backup_notpossible_loading">Currently not possible. Download in progress.</string>
+    <string name="msg_blacklist_loaded" tools:ignore="PluralsCandidate">Loaded blacklist - %1$d hosts blocked.</string>
+    <string name="msg_blacklist_load_failed">Failed to load blacklist!</string>
+    <string name="msg_buffering">Buffering %1$d %%…</string>
+    <string name="msg_calculating_checksum">Calculating checksum…</string>
+    <string name="msg_cancelled">Cancelled.</string>
+    <string name="msg_clipspy_monitoring">Monitoring the clipboard…</string>
+    <string name="msg_confirmation">Confirmation</string>
+    <string name="msg_credential_deleted">Credential for %1$s deleted.</string>
+    <plurals name="msg_delete_all">
+        <item quantity="one">Do you want to delete the download?\nThis cannot be undone!</item>
+        <item quantity="other">Do you want to delete all %1$d downloads?\nThis cannot be undone!</item>
+    </plurals>
+    <plurals name="msg_delete_all_some_protected">
+        <item quantity="one">Do you want to delete the download?\nThis cannot be undone!</item>
+        <item quantity="other">Do you want to delete %1$d out of %2$d downloads?\nThis cannot be undone!</item>
+    </plurals>
+    <string name="msg_delete_all_protected">All files are protected from deletion.</string>
+    <string name="msg_download">Download the file \"%1$s\" from %2$s?</string>
+    <string name="msg_download_short">Download \"%1$s\"?</string>
+    <string name="msg_download_all" tools:ignore="PluralsCandidate">Download %1$d files of %2$s?</string>
+    <string name="msg_download_all_nosize" tools:ignore="PluralsCandidate">Download %1$d files?</string>
+    <plurals name="msg_download_all_count">
+        <item quantity="one">Downloaded %1$d file.</item>
+        <item quantity="other">Downloaded %1$d files.</item>
+    </plurals>
+    <string name="msg_downloaded_file">%1$s has been downloaded.</string>
+    <string name="msg_downloaded_file_304">%1$s already exists.</string>
+    <string name="msg_downloaded_file_401">Authorization required.</string>
+    <string name="msg_downloaded_file_403">Access to %1$s has been denied.</string>
+    <string name="msg_downloaded_file_404">%1$s has not been found.</string>
+    <string name="msg_downloaded_file_410">%1$s is not available anymore.</string>
+    <string name="msg_downloaded_file_429">Too many requests.</string>
+    <string name="msg_downloaded_file_451">%1$s is unavailable for legal reasons.</string>
+    <string name="msg_downloaded_file_503">%1$s is temporarily unavailable.</string>
+    <string name="msg_downloaded_file_1005">%1$s cannot be loaded because it has not been found.</string>
+    <string name="msg_downloaded_file_1008">%1$s cannot be loaded because the identity of %2$s could not be verified.</string>
+    <string name="msg_downloaded_file_1010">The download has been interrupted after %1$s.</string>
+    <string name="msg_downloaded_file_1010_nofile">The download has been interrupted.</string>
+    <string name="msg_downloaded_file_1011">Insecure HTTP communication with %1$s is not permitted.</string>
+    <string name="msg_downloaded_file_1012">Storage space running out. The file is too large!</string>
+    <string name="msg_downloaded_file_1012_ws">Storage space running out. The file is too large: %1$s</string>
+    <string name="msg_downloaded_file_1013">The host serving this file has been blocked!</string>
+    <string name="msg_downloaded_file_1014">Youtube thinks it should request a captcha here. 🖕.</string>
+    <string name="msg_downloaded_file_1015">SSL connection cannot be established.</string>
+    <string name="msg_downloaded_file_1017">This is a live stream which cannot be loaded.</string>
+    <string name="msg_downloaded_file_msg">%1$s cannot be loaded: %2$s.</string>
+    <string name="msg_downloaded_file_rc">%1$s cannot be loaded; error %2$d.</string>
+    <string name="msg_downloaded_cancelled">%1$s cancelled.</string>
+    <string name="msg_downloaded_deferred">%1$s deferred.</string>
+    <string name="msg_downloaded_mail">Mail text stored in \"%1$s\".</string>
+    <string name="msg_downloaded_mail_att">Attachment stored in \"%1$s\".</string>
+    <string name="msg_downloaded_mail_att_fail">Failed to store attachment \"%1$s\"!</string>
+    <string name="msg_downloaded_mail_fail">Failed to store mail text!</string>
+    <string name="msg_download_complete">Download complete.</string>
+    <string name="msg_download_cancelled">Download cancelled.</string>
+    <string name="msg_download_deferred">Download deferred.</string>
+    <string name="msg_download_error_connect">Couldn\'t connect to the server.</string>
+    <string name="msg_download_error_connect_to">Couldn\'t connect to \"%1$s\".</string>
+    <string name="msg_download_error_connect_to_proxy">Couldn\'t connect to proxy \"%1$s\".</string>
+    <string name="msg_download_failed">Download failed!</string>
+    <string name="msg_download_failed_no_more_info">Download failed! No further information is available.</string>
+    <string name="msg_download_failed_w_name">Download of \"%1$s\" failed!</string>
+    <string name="msg_download_stored">The data has been stored.</string>
+    <string name="msg_enter_credentials">Enter credentials for %1$s:</string>
+    <string name="msg_export_zip_comment">Cellar backup as of %1$s</string>
+    <string name="msg_import_inspecting_file">Inspecting the selected file…</string>
+    <string name="msg_import_skipped_some">One or more files have been skipped.</string>
+    <plurals name="msg_import_successful">
+        <item quantity="one">Import done. Extracted %1$d file.</item>
+        <item quantity="other">Import done. Extracted %1$d files.</item>
+    </plurals>
+    <string name="msg_import_w_count" tools:ignore="PluralsCandidate">Importing %1$d files.</string>
+    <string name="msg_installation_aborted">Installation aborted.</string>
+    <string name="msg_installation_failed">Installation failed!</string>
+    <string name="msg_installation_failed_w_label">Installation of %1$s failed!</string>
+    <string name="msg_installation_failed_w_reason">Installation failed: %1$s</string>
+    <string name="msg_installation_preparing">Preparing installation…</string>
+    <string name="msg_installation_successful">Installation successful.</string>
+    <string name="msg_installation_successful_w_label">Installation of %1$s successful.</string>
+    <string name="msg_installation_waiting">Waiting for user action…</string>
+    <string name="msg_just_a_moment">Just a moment, please…</string>
+    <string name="msg_network_conn_est">Network connection established.</string>
+    <string name="msg_network_conn_lost">No network connection.</string>
+    <string name="msg_network_conn_lost_queue">Currently the device does not have a network connection. Do you want to load the file later?</string>
+    <string name="msg_nightmode_not_during_battery_saver">The device is in battery saver mode. The mode might not change properly!</string>
+    <string name="msg_no_applications">No installed app can handle this!</string>
+    <string name="msg_no_applications_for">No app can handle %1$s!</string>
+    <string name="msg_no_credentials">No credentials available.</string>
+    <string name="msg_no_downloads">No downloads yet.</string>
+    <string name="msg_no_downloads_detailed">%1$s doesn\'t store any downloads currently.</string>
+    <string name="msg_progress">Progress: %1$d%%</string>
+    <string name="msg_progress_unknown">Progress: undetermined</string>
+    <string name="msg_progress_w_remaining">Progress: %1$d%%, ca. %2$s remaining</string>
+    <string name="msg_pwd_unzip">Enter a password to decrypt the file.</string>
+    <string name="msg_pwd_zip">You may enter a password to encrypt the file. Leave it empty to export without encryption.</string>
+    <string name="msg_queued_deleted">Queued file %1$s deleted.</string>
+    <string name="msg_really_delete">Really delete this download?</string>
+    <string name="msg_really_delete_credential">Really delete credential for \"%1$s\"?</string>
+    <string name="msg_really_delete_queued">Really delete queued download \"%1$s\"?</string>
+    <plurals name="msg_really_delete_selected">
+        <item quantity="one">Really delete the selected download?</item>
+        <item quantity="other">Really delete the selected downloads?</item>
+    </plurals>
+    <string name="msg_recorded">Recorded %1$s</string>
+    <string name="msg_recorded_w_remaining">Recorded %1$s, ca. %2$s remaining</string>
+    <string name="msg_rename">The file %1$s should have a %2$s extension. Rename?</string>
+    <string name="msg_select_variant">Please select variant</string>
+    <string name="msg_shared_with">\"%1$s\" has been passed to %2$s</string>
+    <string name="msg_warn_low_storage">Phone storage is almost full: %1$s left.</string>
+
+    <string name="pref_backup_restore">Backup / Restore</string>
+
+    <string name="pref_blacklist">Blacklist</string>
+
+    <string name="pref_cat_nightmode">Dark mode</string>
+    <string name="pref_cat_network">Network</string>
+    <string name="pref_cat_network_disabled">Temporarily deactivated.</string>
+
+    <string name="pref_clipspy">Monitor the clipboard</string>
+
+    <string name="pref_licenses">Licenses</string>
+
+    <string name="pref_network_allow_metered">Allow metered connections</string>
+    <string name="pref_network_allow_metered_summary_off">Downloads over metered connections are not allowed.</string>
+    <string name="pref_network_allow_metered_summary_on">Downloads over metered connections are allowed.</string>
+
+    <string name="pref_night">Time-dependent night mode</string>
+    <string name="pref_night_from">Dark mode from</string>
+    <string name="pref_night_summary_off">Night mode follows the system settings.</string>
+    <string name="pref_night_summary_on">Night mode is switched at the given times.</string>
+    <string name="pref_night_to">Dark mode until</string>
+    <string name="pref_night_value">%1$d o\'clock</string>
+
+    <string name="pref_proxy">Proxy server</string>
+    <string name="pref_proxy_hint">HOST:PORT</string>
+    <string name="pref_proxy_type">Proxy</string>
+    <string name="pref_proxy_type_default" translatable="false">DIRECT</string>
+    <string name="pref_proxy_type_direct">No proxy</string>
+
+    <string name="pref_proxy_restrict">Restrict proxy to</string>
+    <string name="pref_proxy_restrict_hint">\nEnter hosts that the proxy will be used for</string>
+    <string name="pref_proxy_restrict_to" tools:ignore="PluralsCandidate">%1$d hosts</string>
+
+    <string name="pref_share_this">Share this App</string>
+
+    <string name="pref_sort">Sort</string>
+    <string name="pref_sort_date">by date</string>
+    <string name="pref_sort_name">by name</string>
+    <string name="pref_sort_size">by size</string>
+    <string name="pref_sort_asc" translatable="false">▲</string>
+    <string name="pref_sort_dsc" translatable="false">▼</string>
+
+    <string name="pref_via_vpn">VPN connections</string>
+
+    <string name="url_zip_encryption" translatable="false">https://en.m.wikipedia.org/wiki/Zip_(file_format)#Encryption</string>
+</resources>

@@ -1,0 +1,77 @@
+<!--
+  ~ help.htm
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title>Paramètres</title>
+        <link href="file:///android_res/raw/helpstyle.css" rel="stylesheet" type="text/css">
+    </head>
+    <body class="">
+        <div>
+            <ul>
+                <li>
+                    {pref_network_allow_metered}
+                    <p>Contrôle si l’application est autorisée à utiliser des connexions réseau marquées comme limitées.
+                    Si une connexion est considérée comme mesurée est déterminée à la discrétion du système d'exploitation.</p>
+                </li>
+                <li>
+                    {pref_proxy_type}
+                    <p>Permet la sélection d'un type de proxy (HTTP ou SOCKS). Wikipédia a des informations sur ce qu’est un <a href="https://fr.m.wikipedia.org/wiki/Proxy">proxy</a>.</p>
+                </li>
+                <li>
+                    {pref_proxy}
+                    <p>Ce paramètre n'est visible que si un type de proxy a été sélectionné. Entrez l'adresse proxy et, éventuellement, un numéro de port ici. </p>
+                </li>
+                <li>
+                    {pref_proxy_restrict}
+                    <p>Ce paramètre n'est visible que si un type de proxy a été sélectionné. Le serveur proxy peut être limité à être utilisé pour certains hôtes uniquement.</p>
+                </li>
+                <li>
+                    {pref_via_vpn}
+                    <p>Détermine si le logiciel doit utiliser des connexions VPN.</p>
+                </li>
+                <li>
+                    {pref_blacklist}
+                    <p>Définir une liste de blocage. L’application ne chargera aucun fichier à partir d’un hôte figurant sur cette liste.
+                    La liste sera mise à jour toutes les {blacklist_update} heures, si possible.</p>
+                </li>
+                <li>
+                    {pref_night}
+                    <p>L'application peut soit suivre les paramètres du système, soit basculer le mode noir à des heures spécifiques de la journée.
+                    Ceci est destiné aux appareils plus anciens (avant la version 9).
+                    Si l’appareil est en mode économiseur de batterie, il est possible que le mode sombre ne change pas correctement.</p>
+                </li>
+                <li>
+                    {pref_clipspy}
+                    <p>L’application peut observer le presse-papiers du système pour détecter les URL qui pointent vers des ressources téléchargeables.
+                    Ce n’est plus possible à partir d’Android 10.</p>
+                </li>
+                <li>
+                    {pref_backup_restore}
+                    <p>Les fichiers téléchargés peuvent être compressés dans un fichier zip. Vous devez sélectionner une application cible pour recevoir le fichier zip.
+                    (Les applications ne sont pas autorisées à accéder à la plupart des parties du système de fichiers, telles que le dossier de téléchargements.)
+                    Si vous entrez un mot de passe, le contenu du fichier zip sera crypté.</p>
+                </li>
+                <li>
+                    {action_systemsettings_app}
+                    <p>Regardez les paramètres système du {app_name}.</p>
+                </li>
+                <li>
+                    {pref_licenses}
+                    <p>Voir les bibliothèques tierces utilisées par {app_name}.</p>
+                </li>
+                <li>
+                    {pref_share_this}
+                    <p>Exportez l’application en tant que fichier apk qui peut être installé sur d’autres appareils. Notez que l'application ne fonctionnera pas sur chaque appareil Android.</p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ arrays.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+
+    <string-array name="entries_list_proxytypes">
+        <item>none</item>
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_proxytypes">
+        <item>DIRECT</item>
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+
+    <string-array name="entries_list_vpn">
+        <item>permitted</item>
+        <item>always</item>
+        <item>never</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_vpn">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="entries_list_evil">
+        <item>None</item>
+        <item>Steven Black\'s</item>
+        <item>Peter Lowe\'s</item>
+        <item>Energized Blu</item>
+        <item>Urlhaus</item>
+    </string-array>
+
+    <!-- these hosts must supply lines that start with 0.0.0.0 or 127.0.0.1, followed by a space and finally the host name -->
+    <string-array name="entryvalues_list_evil" translatable="false">
+        <item />
+        <item>https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts</item>
+        <item>https://pgl.yoyo.org/as/serverlist.php?showintro=0&amp;mimetype=plaintext</item>
+        <item>https://block.energized.pro/blu/formats/hosts</item>
+        <item>https://curben.gitlab.io/malware-filter/urlhaus-filter-hosts.txt</item>
+    </string-array>
+
+</resources>

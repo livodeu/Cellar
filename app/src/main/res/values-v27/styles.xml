@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ styles.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <style name="AppTheme.NoActionBar.WithTranslucentNavigation">
+        <item name="android:navigationBarColor">@color/colorNavigationBackground</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowLightNavigationBar">@bool/windowLightNavigationBar</item>
+    </style>
+</resources>

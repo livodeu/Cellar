@@ -1,0 +1,142 @@
+<!--
+  ~ root_preferences.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_http_24"
+        app:key="netw"
+        app:title="@string/pref_cat_network"
+        >
+
+        <SwitchPreferenceCompat
+            android:key="pref_allow_metered"
+            android:summaryOff="@string/pref_network_allow_metered_summary_off"
+            android:summaryOn="@string/pref_network_allow_metered_summary_on"
+            android:title="@string/pref_network_allow_metered"
+            app:singleLineTitle="false"
+            />
+
+        <ListPreference
+            android:defaultValue="@string/pref_proxy_type_default"
+            android:entries="@array/entries_list_proxytypes"
+            android:entryValues="@array/entryvalues_list_proxytypes"
+            android:key="pref_proxy_type"
+            android:negativeButtonText="@null"
+            android:title="@string/pref_proxy_type"/>
+
+        <EditTextPreference
+            android:hint="@string/pref_proxy_hint"
+            android:inputType="textUri"
+            android:key="pref_proxy_server"
+            app:title="@string/pref_proxy"
+            />
+
+        <EditTextPreference
+            android:inputType="text|textUri|textMultiLine"
+            android:key="pref_proxy_restrict"
+            android:title="@string/pref_proxy_restrict"
+            />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/entries_list_vpn"
+            android:entryValues="@array/entryvalues_list_vpn"
+            android:key="pref_via_vpn"
+            android:negativeButtonText="@null"
+            android:title="@string/pref_via_vpn"/>
+
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/entries_list_evil"
+            android:entryValues="@array/entryvalues_list_evil"
+            android:key="pref_blacklist"
+            android:negativeButtonText="@null"
+            android:title="@string/pref_blacklist"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_brightness_2_24"
+        app:initialExpandedChildrenCount="3"
+        app:key="appr"
+        app:title="@string/pref_cat_nightmode"
+        >
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_night"
+            android:summaryOff="@string/pref_night_summary_off"
+            android:summaryOn="@string/pref_night_summary_on"
+            app:singleLineTitle="false"
+            app:title="@string/pref_night"
+            />
+
+        <net.cellar.supp.FormattedSeekBarPreference
+            android:defaultValue="@integer/night_from_default"
+            android:key="pref_night_from"
+            android:max="@integer/night_max"
+            app:dependency="pref_night"
+            app:title="@string/pref_night_from"
+            />
+
+        <net.cellar.supp.FormattedSeekBarPreference
+            android:defaultValue="@integer/night_to_default"
+            android:key="pref_night_to"
+            android:max="@integer/night_max"
+            app:dependency="pref_night"
+            app:title="@string/pref_night_to"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:icon="@drawable/ic_baseline_outbound_24"
+        app:key="bare"
+        app:title="@string/pref_backup_restore"
+        >
+
+        <Preference
+            android:key="pref_backup_zip"
+            android:title="@string/action_export_zip"
+            >
+        </Preference>
+
+        <Preference
+            android:key="pref_restore_zip"
+            android:title="@string/action_restore"
+            >
+        </Preference>
+    </PreferenceCategory>
+
+    <Preference
+        android:key="pref_network_system"
+        android:title="@string/action_systemsettings_app"
+        app:allowDividerAbove="true"
+        app:icon="@drawable/ic_baseline_app_settings_alt_24">
+        <intent android:action="android.settings.APPLICATION_DETAILS_SETTINGS" android:data="@string/application_details_settings"/>
+    </Preference>
+
+    <Preference
+        android:key="pref_licenses"
+        android:title="@string/pref_licenses"
+        app:icon="@drawable/ic_baseline_attribution_24"
+        app:allowDividerAbove="true"
+        >
+    </Preference>
+
+    <Preference
+        android:key="pref_share_this"
+        android:title="@string/pref_share_this"
+        app:icon="@drawable/ic_menu_share"
+        app:allowDividerAbove="true"
+        >
+    </Preference>
+
+</PreferenceScreen>

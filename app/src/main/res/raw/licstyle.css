@@ -1,0 +1,37 @@
+body {
+	background-color: #ffffff;
+	font-family: sans-serif;
+    padding: .8em;
+    margin: 0;
+}
+a {
+    color: #000000;
+}
+a::before {
+    content: '↗';
+    margin-right: 0.1em;
+    font-size: xx-small;
+}
+ul, menu, dir {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    padding-inline-start: 0px;
+}
+li {
+    list-style-type: none;
+ 	line-height: 2;
+    background-color: #FFD200;
+    border: 1px solid;
+    border-radius: 5px;
+    padding-left: 0.3m;
+    margin-left: 0em;
+    margin-bottom: 1em;
+    padding-inline-start: 0.5em;
+}
+img {
+    max-height:1em;
+}
+.wide {
+    font-stretch: extra-condensed;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ colors.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <color name="colorPrimary">#F5E33C</color>
+    <color name="colorPrimaryVariant">#A89802</color>
+
+    <!-- menu background -->
+    <color name="colorSurface">#ff0f0f00</color>
+    <!--<color name="colorOnSurface">#ff000000</color>-->
+
+    <!-- action bar title, basically all content -->
+    <color name="colorTextPrimary">#ffffffee</color>
+    <color name="colorTextPrimaryReddish">#bbff0000</color>
+    <!-- back arrow, overflow menu button, action bar icons, submenu arrows -->
+    <color name="colorTextSecondary">#fff5e33c</color>
+
+    <color name="colorDisabledText">#ff777777</color>
+
+    <color name="colorWindowBg">#ff000000</color>
+
+    <bool name="windowLightNavigationBar">false</bool>
+    <color name="colorNavigationBackground">#77bF7300</color>
+
+    <color name="colorSnackbarBackground">#eeffffff</color>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ menuitem.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:color="@color/colorDisabledText" android:state_enabled="false"/>
+    <item android:color="@color/colorTextPrimary"/>
+</selector>
+ 

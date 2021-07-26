@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ strings.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Keller</string>
+    <string name="app_desc">Keller ist ein Programm zum Laden von Dateien aus entfernten Quellen.</string>
+    <string name="action_checksum">Prüfsumme</string>
+    <string name="action_create_download">Neu</string>
+    <string name="action_defer">Zurückstellen</string>
+    <string name="action_defer_stop">Nicht mehr zurückstellen</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_delete_multi">Ausgewählte Dateien löschen</string>
+    <string name="action_download">Speichern</string>
+    <string name="action_download_all">Alle speichern</string>
+    <string name="action_download_ask_cancel">Abbrechen?</string>
+    <string name="action_download_image">Bild speichern</string>
+    <string name="action_download_mail">Mail speichern</string>
+    <string name="action_download_text">Text speichern</string>
+    <string name="action_download_video">Video speichern</string>
+    <string name="action_export_zip">Sicherung</string>
+    <string name="action_filter_reset">Filter entfernen</string>
+    <string name="action_import">Importieren</string>
+    <string name="msg_import_w_count" tools:ignore="PluralsCandidate">%1$d Dateien werden importiert.</string>
+    <string name="action_install">Installieren</string>
+    <string name="action_install_cancel">Installation abbrechen</string>
+    <string name="action_layout_grid">Gitteransicht</string>
+    <string name="action_load">Laden</string>
+    <string name="action_manage_credentials">Anmeldeinformationen</string>
+    <string name="action_manage_queue">Warteschlange</string>
+    <string name="action_more_info">Info</string>
+    <string name="action_move_up">Vorziehen</string>
+    <string name="action_network_info">Netzinformation</string>
+    <string name="action_next_from_queue">Der Nächste, bitte!</string>
+    <string name="action_protect_from_deletion_off">Schutz aufheben</string>
+    <string name="action_protect_from_deletion_on">Schützen</string>
+    <string name="action_queue_add">Später laden</string>
+    <string name="action_queue_clear">Eingereihte löschen</string>
+    <string name="action_rename">Umbenennen</string>
+    <string name="action_restore">Wiederherstellung</string>
+    <string name="action_retry">Erneut versuchen</string>
+    <string name="action_retry_authorization">Anmelden</string>
+    <string name="action_saveas_text">Als Text speichern</string>
+    <string name="action_saveas_vcalendar">Als Kalenderdatei speichern</string>
+    <string name="action_saveas_vcard">Als Visitenkarte speichern</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_share_multi">Ausgewählte Dateien teilen</string>
+    <string name="action_stop">Beenden</string>
+    <string name="action_store_search">Im „Store“ suchen</string>
+    <string name="action_systemsettings_app">Systemeinstellungen</string>
+    <string name="action_wallpaper">Als Hintergrund verwenden</string>
+    <string name="error_auth_unsupported">Das Authentifizierungsschema wird nicht unterstützt („%1$s“)!</string>
+    <string name="error_cant_delete">„%1$s“ kann nicht gelöscht werden!</string>
+    <plurals name="error_cant_delete_count">
+        <item quantity="one">%1$d Datei kann nicht gelöscht werden!</item>
+        <item quantity="other">%1$d Dateien können nicht gelöscht werden!</item>
+    </plurals>
+    <string name="error_cant_handle">Kann „%1$s“ nicht verarbeiten!</string>
+    <string name="error_cant_handle_that">Kann das nicht verarbeiten!</string>
+    <string name="error_checksum_failed">Berechnung der Prüfsumme fehlgeschlagen!</string>
+    <string name="error_file_already_exists">Diese Datei existiert bereits!</string>
+    <string name="error_import_failed">Import fehlgeschlagen: %1$s</string>
+    <string name="error_import_failed_empty_file">Leere Datei!</string>
+    <string name="error_import_failed_invalid_file">Ungültige Datei!</string>
+    <string name="error_import_failed_pwd">Import fehlgeschlagen: Falsches Kennwort!</string>
+    <string name="error_invalid_url">Ungültige URL</string>
+    <string name="error_not_found">Nicht gefunden: %1$s</string>
+    <string name="error_own_file">%1$s hat eine von %2$ss eigenen Dateien an %3$s zurückgesendet!</string>
+    <string name="error_own_file_naughty">Eine böse App</string>
+    <string name="error_queue_pop_failed">Es konnte kein Download gestartet werden.</string>
+    <string name="error_rename_failed">„%1$s“ konnte nicht umbenannt werden!</string>
+    <string name="error_store_failed">Die Daten können nicht gespeichert werden!</string>
+    <string name="help_referer">➪ Wikipedia</string>
+    <string name="help_referer_wp">https://de.m.wikipedia.org/wiki/Referrer</string>
+    <string name="help_uri">Die Internetadresse („https://…“) der Datei (Text, Bild, Video, etc.), die geladen werden soll.</string>
+    <string name="hint_credential_realm">gültig für „%1$s“</string>
+    <string name="hint_credential_userid">Benutzerkennung „%1$s“</string>
+    <string name="hint_password">Kennwort</string>
+    <string name="hint_userid">Benutzerkennung</string>
+    <string name="label_audiocodec">Audio-Codec: %1$s</string>
+    <string name="label_author">Autor: %1$s</string>
+    <string name="label_blacklist_age">%1$s\nAktualisiert: %2$s</string>
+    <string name="label_comment">Kommentar</string>
+    <string name="label_create">Start</string>
+    <string name="label_date">Datum: %1$s</string>
+    <string name="label_deferred">zurückgestellt</string>
+    <string name="label_document_provider">&#127290;&#127284;&#127291;&#127291;&#127284;&#127297;</string>
+    <string name="label_duration">Dauer: %1$s</string>
+    <string name="label_encrypted">Verschlüsselt</string>
+    <string name="label_error_report">Bericht</string>
+    <string name="label_exposure">Belichtung: 1/%1$s s</string>
+    <string name="label_extended">Erweitert</string>
+    <string name="label_file_justtext">Text von %1$s.txt</string>
+    <string name="label_filename">Dateiname</string>
+    <string name="label_files_from_the_cellar">Dateien aus dem Keller</string>
+    <string name="label_filetype_application">%1$s-Datei</string>
+    <string name="label_filetype_audio">%1$s-Audio</string>
+    <string name="label_filetype_image">%1$s-Bild</string>
+    <string name="label_filetype_textcalendar">Kalender</string>
+    <string name="label_filetype_textplain">Text</string>
+    <string name="label_filetype_video">%1$s-Video</string>
+    <string name="label_fnumber">Blendenzahl: ƒ/%1$s</string>
+    <string name="label_fps">Bildrate: %1$d / s</string>
+    <string name="label_from">aus</string>
+    <string name="label_from_host">Von: %1$s</string>
+    <string name="label_ignore">Ignorieren</string>
+    <string name="label_invalid">⚡UNGÜLTIG⚡</string>
+    <string name="label_language">Sprache: %1$s</string>
+    <string name="label_later">Später</string>
+    <string name="label_load_later">Später laden</string>
+    <string name="label_load_now">Sofort laden</string>
+    <string name="label_location">Ort: %1$s %2$s %3$s %4$s</string>
+    <string name="label_model">Modell: %1$s</string>
+    <string name="label_network_address">Adresse</string>
+    <string name="label_network_metered">Getaktet</string>
+    <string name="label_network_metered_restrictions">Limitierung getakteter Verbindungen</string>
+    <string name="label_new_download">Neuer Download</string>
+    <string name="label_no">Nein</string>
+    <string name="label_no_thanks">Nein, danke</string>
+    <string name="label_notifications_channel">Benachrichtigungen aus dem</string>
+    <string name="label_notifications_channel_important">Hervorgehobene Nachrichten aus dem</string>
+    <string name="label_or">oder</string>
+    <string name="label_pages">Seiten: %1$d</string>
+    <string name="label_permissions">Berechtigungen</string>
+    <string name="label_progress">Fortschritt %1$d %%</string>
+    <string name="label_pwd">Kennwort</string>
+    <string name="label_quoted">„%1$s“</string>
+    <plurals name="label_root_summary">
+        <item quantity="one">%1$d Datei, %2$s</item>
+        <item quantity="other">%1$d Dateien, %2$s</item>
+    </plurals>
+    <string name="label_root_summary_empty">Keine Dateien</string>
+    <string name="label_service_clipspy_desc">Beobachtet die Zwischenablage um herunterladbare Dateien zu entdecken.</string>
+    <string name="label_service_loader_desc">Dieser Dienst wird zum Herunterladen von Dateien aus dem Internet verwendet.</string>
+    <string name="label_signature">Signatur</string>
+    <string name="label_size_bytes">Dateigröße: %1$s Bytes</string>
+    <string name="label_size_xy">Größe: %1$d × %2$d</string>
+    <string name="label_size_xy_mp">Größe: %1$d × %2$d (%3$d MP)</string>
+    <string name="label_title">Titel: „%1$s“</string>
+    <string name="label_uncompressed_size">Ursprüngliche Größe: %1$s</string>
+    <string name="label_use_aes">AES-Verschlüsselung verwenden</string>
+    <string name="label_use_aes_whats_that_ttip">Wikipedia hat ein paar (englische) Infos…</string>
+    <string name="label_videocodec">Video-Codec: %1$s</string>
+    <string name="label_yes">Ja</string>
+    <string name="msg_backup_notpossible_loading">Momentan nicht möglich. Download aktiv.</string>
+    <string name="msg_blacklist_loaded">Schwarze Liste geladen - %1$d Anbieter blockiert.</string>
+    <string name="msg_blacklist_load_failed">Schwarze Liste konnte nicht geladen werden!</string>
+    <string name="msg_buffering">Puffere %1$d %%…</string>
+    <string name="msg_calculating_checksum">Berechne Prüfsumme…</string>
+    <string name="msg_cancelled">Abgebrochen.</string>
+    <string name="msg_clipspy_monitoring">Beobachte die Zwischenablage…</string>
+    <string name="msg_confirmation">Bestätigung</string>
+    <string name="msg_credential_deleted">Anmeldeinformation für %1$s wurde gelöscht.</string>
+    <plurals name="msg_delete_all">
+        <item quantity="one">Möchten Sie die geladene Datei löschen?\nDies kann nicht rückgängig gemacht werden!</item>
+        <item quantity="other">Möchten Sie alle %1$d geladenen Dateien löschen?\nDies kann nicht rückgängig gemacht werden!</item>
+    </plurals>
+    <plurals name="msg_delete_all_some_protected">
+        <item quantity="one">Möchten Sie die geladene Datei löschen?\nDies kann nicht rückgängig gemacht werden!</item>
+        <item quantity="other">Möchten Sie %1$d von %2$d geladenen Dateien löschen?\nDies kann nicht rückgängig gemacht werden!</item>
+    </plurals>
+    <string name="msg_download">Soll die Datei „%1$s“ von %2$s geladen werden?</string>
+    <string name="msg_download_short">Datei „%1$s“ laden?</string>
+    <string name="msg_download_all">%1$d Dateien mit insgesamt %2$s laden?</string>
+    <plurals name="msg_download_all_count">
+        <item quantity="one">%1$d Datei geladen.</item>
+        <item quantity="other">%1$d Dateien geladen.</item>
+    </plurals>
+    <string name="msg_download_all_nosize" tools:ignore="PluralsCandidate">%1$d Dateien laden?</string>
+    <string name="msg_downloaded_file">%1$s wurde geladen.</string>
+    <string name="msg_downloaded_file_304">%1$s existiert bereits.</string>
+    <string name="msg_downloaded_file_401">Autorisierung erforderlich.</string>
+    <string name="msg_downloaded_file_403">Der Zugriff auf „%1$s“ wurde verweigert.</string>
+    <string name="msg_downloaded_file_404">„%1$s“ wurde nicht gefunden.</string>
+    <string name="msg_downloaded_file_410">„%1$s“ ist nicht mehr verfügbar.</string>
+    <string name="msg_downloaded_file_429">Zu viele Anfragen.</string>
+    <string name="msg_downloaded_file_451">„%1$s“ wird aus rechtlichen Gründen nicht zur Verfügung gestellt.</string>
+    <string name="msg_downloaded_file_503">„%1$s“ ist vorübergehend nicht verfügbar.</string>
+    <string name="msg_downloaded_file_1005">„%1$s“ wurde nicht gefunden.</string>
+    <string name="msg_downloaded_file_1008">„%1$s“ konnte nicht geladen werden, da die Identität des Servers „%2$s“ nicht überprüft werden konnte.</string>
+    <string name="msg_downloaded_file_1010">Der Vorgang wurde nach %1$s unterbrochen.</string>
+    <string name="msg_downloaded_file_1010_nofile">Der Vorgang wurde unterbrochen.</string>
+    <string name="msg_downloaded_file_1011">Unverschlüsselte HTTP-Verbindungen zu %1$s sind nicht erlaubt.</string>
+    <string name="msg_downloaded_file_1012">Der Speicherplatz wird knapp. Die Datei ist zu groß!</string>
+    <string name="msg_downloaded_file_1012_ws">Der Speicherplatz wird knapp. Die Datei ist zu groß: %1$s</string>
+    <string name="msg_downloaded_file_1013">Der Anbieter dieser Datei wurde blockiert!</string>
+    <string name="msg_downloaded_file_1014">Youtube glaubt hier ein Captcha verlangen zu können. 🖕.</string>
+    <string name="msg_downloaded_file_1015">Die SSL-Verbindung konnte nicht hergestellt werden</string>
+    <string name="msg_downloaded_file_msg">Die Datei „%1$s“ konnte nicht geladen werden: %2$s.</string>
+    <string name="msg_downloaded_file_rc">Die Datei „%1$s“ konnte nicht geladen werden; Fehler %2$d.</string>
+    <string name="msg_downloaded_cancelled">%1$s abgebrochen.</string>
+    <string name="msg_downloaded_deferred">%1$s zurückgestellt.</string>
+    <string name="msg_downloaded_mail">Mailtext gespeichert in „%1$s“.</string>
+    <string name="msg_downloaded_mail_att">Anhang gespeichert in „%1$s“.</string>
+    <string name="msg_downloaded_mail_att_fail">Anhang „%1$s“ nicht gespeichert!</string>
+    <string name="msg_downloaded_mail_fail">Mailtext nicht gespeichert!</string>
+    <string name="msg_download_cancelled">Download abgebrochen.</string>
+    <string name="msg_download_complete">Download abgeschlossen.</string>
+    <string name="msg_download_error_connect">Verbindung zum Server konnte nicht hergestellt werden.</string>
+    <string name="msg_download_error_connect_to">Verbindung zu „%1$s“ konnte nicht hergestellt werden.</string>
+    <string name="msg_download_error_connect_to_proxy">Verbindung zum Proxy „%1$s“ konnte nicht hergestellt werden.</string>
+    <string name="msg_download_failed">Download fehlgeschlagen!</string>
+    <string name="msg_download_failed_no_more_info">Download fehlgeschlagen! Es liegen keine weiteren Informationen vor.</string>
+    <string name="msg_download_failed_w_name">Download von „%1$s“ fehlgeschlagen!</string>
+    <string name="msg_download_stored">Die Daten wurden gespeichert.</string>
+    <string name="msg_enter_credentials">Zugangsdaten für %1$s:</string>
+    <string name="msg_import_inspecting_file">Untersuche die gewählte Datei…</string>
+    <string name="msg_import_skipped_some">Eine oder mehrere Dateien wurden übersprungen.</string>
+    <plurals name="msg_import_successful">
+        <item quantity="one">Import beendet. %1$d Datei extrahiert.</item>
+        <item quantity="other">Import beendet. %1$d Dateien extrahiert.</item>
+    </plurals>
+    <string name="msg_installation_aborted">Installation abgebrochen.</string>
+    <string name="msg_installation_failed">Installation fehlgeschlagen!</string>
+    <string name="msg_installation_failed_w_label">Installation von %1$s fehlgeschlagen!</string>
+    <string name="msg_installation_preparing">Installation wird vorbereitet…</string>
+    <string name="msg_installation_successful">Installation erfolgreich.</string>
+    <string name="msg_installation_successful_w_label">Installation von %1$s erfolgreich.</string>
+    <string name="msg_installation_waiting">Installation wartet auf Benutzeraktion…</string>
+    <string name="msg_just_a_moment">Einen Moment, bitte…</string>
+    <string name="msg_network_conn_est">Datennetzverbindung hergestellt.</string>
+    <string name="msg_network_conn_lost">Kein Datennetz.</string>
+    <string name="msg_network_conn_lost_queue">Zur Zeit hat das Gerät keine Verbindung zu einem Datennetz. Möchten Sie die Datei später laden?</string>
+    <string name="msg_nightmode_not_during_battery_saver">Das Gerät ist im Energiesparmodus. Es ist möglich, dass der Modus nicht korrekt wechselt!</string>
+    <string name="msg_no_applications">Keine installierte App kann diese daten verarbeiten!</string>
+    <string name="msg_no_applications_for">Keine installierte App kann %1$s verarbeiten!</string>
+    <string name="msg_no_credentials">Keine Anmeldeinformationen verfügbar.</string>
+    <string name="msg_no_downloads">Keine Downloads</string>
+    <string name="msg_no_downloads_detailed">%1$s beinhaltet zur Zeit keine Downloads.</string>
+    <string name="msg_progress">Fortschritt: %1$d%%</string>
+    <string name="msg_progress_unknown">Fortschritt: unbestimmt</string>
+    <string name="msg_progress_w_remaining">Fortschritt: %1$d%%, noch ca. %2$s</string>
+    <string name="msg_pwd_zip">Sie können ein Kenn&#173;wort ein&#173;geben um die Datei zu ver&#173;schlüsseln. Las&#173;sen Sie das Eingabe&#173;feld leer um ohne Ver&#173;schlüsselung zu ex&#173;por&#173;tieren.</string>
+    <string name="msg_queued_deleted">Eingereihter Download %1$s gelöscht.</string>
+    <string name="msg_really_delete">Diese Datei wirklich löschen?</string>
+    <string name="msg_really_delete_credential">Anmeldeinformation für „%1$s“ wirklich löschen?</string>
+    <string name="msg_really_delete_queued">Eingereihten Download „%1$s“ wirklich löschen?</string>
+    <plurals name="msg_really_delete_selected">
+        <item quantity="one">Die ausgewählte Datei wirklich löschen?</item>
+        <item quantity="other">Die ausgewählten Dateien wirklich löschen?</item>
+    </plurals>
+    <string name="msg_recorded">Aufnahme: %1$s</string>
+    <string name="msg_recorded_w_remaining">Aufnahme: %1$s, noch ca. %2$s</string>
+    <string name="msg_rename">Die Datei „%1$s“ sollte die Erweiterung %2$s aufweisen. Umbenennen?</string>
+    <string name="msg_select_variant">Bitte Variante wählen</string>
+    <string name="msg_shared_with">„%1$s“ wurde für %2$s freigegeben</string>
+    <string name="msg_warn_low_storage">Speicher ist fast voll: %1$s übrig.</string>
+
+    <string name="pref_backup_restore">Sicherung / Wiederherstellung</string>
+
+    <string name="pref_blacklist">Schwarze Liste</string>
+
+    <string name="pref_cat_nightmode">Nachtmodus</string>
+    <string name="pref_cat_network">Netz</string>
+    <string name="pref_cat_network_disabled">Vorübergehend deaktiviert.</string>
+
+    <string name="pref_clipspy">Zwischenablage überwachen</string>
+
+    <string name="pref_licenses">Lizenzen</string>
+
+    <string name="pref_network_allow_metered">Getaktete Verbindungen</string>
+    <string name="pref_network_allow_metered_summary_off">Das Laden über getaktete Verbindungen ist nicht erlaubt.</string>
+    <string name="pref_network_allow_metered_summary_on">Das Laden über getaktete Verbindungen ist erlaubt.</string>
+
+    <string name="pref_night">Nachtmodus</string>
+    <string name="pref_night_from">Nachtmodus von</string>
+    <string name="pref_night_summary_off">Der Nachtmodus folgt den Systemeinstellungen.</string>
+    <string name="pref_night_summary_on">Der Nachtmodus wird zu den angegebenen Zeiten umgeschaltet.</string>
+    <string name="pref_night_to">Nachtmodus bis</string>
+    <string name="pref_night_value">%1$d Uhr</string>
+
+    <string name="pref_proxy">Proxyserver</string>
+    <string name="pref_proxy_hint">HOST:PORT</string>
+    <string name="pref_proxy_type">Proxy</string>
+    <string name="pref_proxy_type_direct">Kein Proxy</string>
+
+    <string name="pref_proxy_restrict">Proxy beschränken auf</string>
+    <string name="pref_proxy_restrict_hint">\nAnbieter eingeben, auf die der Proxy beschränkt wird</string>
+    <string name="pref_proxy_restrict_to" tools:ignore="PluralsCandidate">%1$d Anbieter</string>
+
+    <string name="pref_share_this">Diese App weitergeben</string>
+
+    <string name="pref_sort">Sortieren</string>
+    <string name="pref_sort_date">nach Datum</string>
+    <string name="pref_sort_name">nach Name</string>
+    <string name="pref_sort_size">nach Größe</string>
+
+    <string name="pref_via_vpn">VPN-Verbindungen</string>
+    <string name="msg_backup_finished">Sicherung beendet.</string>
+    <string name="msg_installation_failed_w_reason">Installation fehlgeschlagen: %1$s</string>
+    <string name="action_saveas_kml">Als KML speichern</string>
+    <string name="msg_pwd_unzip">Bitte Kennwort für die Entschlüsselung eingeben.</string>
+    <string name="msg_export_zip_comment">Sicherung vom %1$s</string>
+    <string name="msg_backup_notpossible_active">Momentan nicht möglich.</string>
+    <string name="msg_delete_all_protected">Alle Dateien sind geschützt.</string>
+    <string name="msg_downloaded_file_1017">Dies ist eine Direktsendung die nicht heruntergeladen werden kann.</string>
+    <string name="label_playlist_audio">audio</string>
+    <string name="label_playlist_video">video</string>
+    <string name="msg_download_deferred">Download zurückgestellt</string>
+
+</resources>

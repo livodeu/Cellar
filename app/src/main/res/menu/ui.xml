@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ ui.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_create_download"
+        android:contentDescription="@string/action_create_download"
+        android:orderInCategory="200"
+        android:title="@string/action_create_download"
+        android:tooltipText="@string/action_create_download"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_layout_grid"
+        android:checkable="true"
+        android:contentDescription="@string/action_layout_grid"
+        android:orderInCategory="300"
+        android:title="@string/action_layout_grid"
+        android:tooltipText="@string/action_layout_grid"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_filter_reset"
+        android:contentDescription="@string/action_filter_reset"
+        android:orderInCategory="350"
+        android:title="@string/action_filter_reset"
+        android:tooltipText="@string/action_filter_reset"
+        android:visible="false"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_sort"
+        android:contentDescription="@string/pref_sort"
+        android:orderInCategory="400"
+        android:title="@string/pref_sort"
+        android:tooltipText="@string/pref_sort"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute">
+        <menu>
+            <item
+                android:id="@+id/action_sort_date"
+                android:checkable="false"
+                android:contentDescription="@string/pref_sort_date"
+                android:orderInCategory="10"
+                android:title="@string/pref_sort_date"
+                android:tooltipText="@string/pref_sort_date"
+                app:showAsAction="never"
+                tools:ignore="UnusedAttribute" />
+
+            <item
+                android:id="@+id/action_sort_name"
+                android:checkable="false"
+                android:contentDescription="@string/pref_sort_name"
+                android:orderInCategory="20"
+                android:title="@string/pref_sort_name"
+                android:tooltipText="@string/pref_sort_name"
+                app:showAsAction="never"
+                tools:ignore="UnusedAttribute" />
+
+            <item
+                android:id="@+id/action_sort_size"
+                android:checkable="false"
+                android:contentDescription="@string/pref_sort_size"
+                android:orderInCategory="30"
+                android:title="@string/pref_sort_size"
+                android:tooltipText="@string/pref_sort_size"
+                app:showAsAction="never"
+                tools:ignore="UnusedAttribute" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_manage_queue"
+        android:contentDescription="@string/action_manage_queue"
+        android:orderInCategory="800"
+        android:title="@string/action_manage_queue"
+        android:tooltipText="@string/action_manage_queue"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_manage_credentials"
+        android:contentDescription="@string/action_manage_credentials"
+        android:orderInCategory="900"
+        android:title="@string/action_manage_credentials"
+        android:tooltipText="@string/action_manage_credentials"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_network_info"
+        android:contentDescription="@string/action_network_info"
+        android:orderInCategory="950"
+        android:title="@string/action_network_info"
+        android:tooltipText="@string/action_network_info"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_settings"
+        android:contentDescription="@string/action_settings"
+        android:orderInCategory="1000"
+        android:title="@string/action_settings"
+        android:tooltipText="@string/action_settings"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+    <!-- the share and delete menu items are only visibile when there is a file selection -->
+    <item
+        android:id="@+id/action_share_item"
+        android:contentDescription="@string/action_share_multi"
+        android:icon="@drawable/ic_menu_share"
+        android:orderInCategory="5000"
+        android:title="@string/action_share_multi"
+        android:tooltipText="@string/action_share_multi"
+        android:visible="false"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_delete"
+        android:contentDescription="@string/action_delete_multi"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:orderInCategory="5001"
+        android:title="@string/action_delete_multi"
+        android:tooltipText="@string/action_delete_multi"
+        android:visible="false"
+        tools:ignore="UnusedAttribute" />
+    <item
+        android:id="@+id/action_log"
+        android:contentDescription="@string/action_log"
+        android:orderInCategory="10000"
+        android:title="@string/action_log"
+        android:tooltipText="@string/action_log"
+        android:visible="false"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+</menu>

@@ -1,0 +1,106 @@
+<!--
+  ~ styles.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+
+        <item name="colorControlHighlight">@color/colorSecondary</item>
+
+        <item name="colorError">#ffff2200</item>
+
+        <!-- menu background -->
+        <item name="colorSurface">@color/colorSurface</item>
+
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <item name="android:navigationBarColor">?attr/colorOnSecondary</item>
+
+        <item name="android:windowBackground">@color/colorWindowBg</item>
+
+        <item name="snackbarStyle">@style/Snakebar</item>
+
+        <!-- https://github.com/material-components/material-components-android/blob/master/docs/components/Menu.md#material-styles -->
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.MenuItem</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.MenuItem</item>
+        <item name="textAppearancePopupMenuHeader">@style/TextAppearance.MenuItem</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.MenuItem</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/TextAppearance.MenuItem</item>
+
+        <item name="alertDialogTheme">@style/AppTheme.AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/AppTheme.AlertDialog</item>
+
+    </style>
+
+    <style name="TextAppearance.MenuItem" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/menuitem</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- https://developer.android.com/reference/android/R.styleable#WindowAnimation -->
+
+    <style name="AppTheme.Launcher" parent="AppTheme">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="colorAccent">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/color_primary_to_grey_gradient</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.WithTranslucentNavigation">
+        <item name="android:navigationBarColor">@color/colorSecondary</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Invisible">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textColor">@color/colorError</item>
+    </style>
+
+    <style name="HelperText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:lineSpacingMultiplier">1.9</item>
+    </style>
+
+    <style name="Snakebar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">@null</item>
+        <item name="android:layout_marginBottom">?attr/actionBarSize</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="backgroundTint">@color/colorSnackbarBackground</item>
+    </style>
+
+    <style name="AppTheme.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="android:colorForeground">?attr/colorOnSurface</item>  <!-- the text color for title and message -->
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
+
+</resources>

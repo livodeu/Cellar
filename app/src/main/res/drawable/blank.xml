@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ blank.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<!-- see <platform>/data/res/drawable/dialog_background_material.xml-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+   <solid android:color="?attr/colorSurface" />
+</shape>

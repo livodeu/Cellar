@@ -1,0 +1,40 @@
+body {
+	font-family: sans-serif;
+    padding: .8em;
+    margin: 0;
+}
+body.day {
+    background-color: #ffffff;
+    color: #000000;
+}
+body.night {
+    background-color: #000000;
+    color: #efefef;
+}
+a {
+    color: #ffd200;
+}
+a::before {
+    content: '↗';
+    margin-right: 0.1em;
+    font-size: xx-small;
+}
+ul {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    padding-inline-start: 0px;
+}
+li {
+    list-style-type: none;
+ 	line-height: 1.25;
+ 	text-align: justify;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-left: 0em;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    padding-inline-start: 0.5em;
+    padding-inline-end: 0.5em;
+}
+

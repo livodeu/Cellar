@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ booleans.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+    <!-- https://developer.android.com/guide/topics/ui/look-and-feel/darktheme -->
+    <bool name="night_mode_by_time">false</bool>
+</resources>

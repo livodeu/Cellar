@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ colors.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+
+    <!-- material textfield border -->
+    <color name="colorPrimary">#ffffe603</color>  <!-- ffffe603 -->
+    <!-- actionbar/toolbar background (set in activity layouts), statusbar background (set in styles.xml) -->
+    <color name="colorPrimaryVariant">#FFD200</color>   <!-- ffffeb3b -->
+    <color name="colorSecondary">#ffff9800</color>
+    <color name="colorSecondarySemiTrans">#77FF9800</color>
+    <color name="colorAccent">#ffd81b40</color>
+
+    <color name="colorError">#ffb00020</color>
+
+    <color name="colorCredBasic">#ffd81b40</color>
+    <color name="colorCredFtp">#ffff9800</color>
+    <color name="colorCredSftp">#ffd9c300</color>
+
+    <!-- menu background -->
+    <color name="colorSurface">#ffffffff</color>
+    <!--<color name="colorOnSurface">#ff000000</color>-->
+
+    <color name="colorTextPrimary">#ff000000</color>
+    <color name="colorTextPrimaryReddish">#77dd3300</color>
+    <!-- back arrow, overflow menu button, action bar icons, submenu arrows -->
+    <color name="colorTextSecondary">#ff444444</color>
+
+    <color name="colorDisabledText">#ff888888</color>
+
+    <color name="colorWindowBg">#ffffffff</color>
+
+    <bool name="windowLightNavigationBar">true</bool>
+    <color name="colorNavigationBackground">#c3ff9800</color>
+
+    <color name="colorSnackbarBackground">#cc000000</color>
+
+</resources>

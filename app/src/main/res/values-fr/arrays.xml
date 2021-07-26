@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ arrays.xml
+  ~ Copyright (c) livodeu 2021.
+  ~ This source code is subject to the license to be found in the file LICENSE.
+  -->
+
+<resources>
+
+    <string-array name="entries_list_proxytypes">
+        <item>sans</item>
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+    
+    <string-array name="entryvalues_list_proxytypes">
+        <item>DIRECT</item>
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
+
+    <string-array name="entries_list_vpn">
+        <item>autorisé</item>
+        <item>toujours</item>
+        <item>jamais</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_vpn">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="entries_list_evil">
+        <item>Aucun</item>
+        <item>Steven Black\'s</item>
+        <item>Peter Lowe\'s</item>
+        <item>Energized Blu</item>
+        <item>Urlhaus</item>
+    </string-array>
+
+</resources>
