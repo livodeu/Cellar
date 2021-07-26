@@ -1,0 +1,8 @@
+Cellar is a download manager.
+It is meant to intercept most data that is shared between apps on an Android device and to store that data in a file.
+Supports HTTP(S), FTP, SFTP protocols as well as local files.
+Cellar supports streaming video (except live video) and it can download videos hosted by certain sites, too.
+
+Cellar needs Android 5 or newer to run.
+
+It is not meant to be run (= it has not been tested) on devices other than phones or tablets.
