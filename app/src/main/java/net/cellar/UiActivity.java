@@ -806,7 +806,7 @@ public class UiActivity extends BaseActivity
         itemSortName.setTitle(sort == App.SORT_NAME ? (reverse ? getString(R.string.pref_sort_name) + "  " + getString(R.string.pref_sort_dsc) : getString(R.string.pref_sort_name) + "  " + getString(R.string.pref_sort_asc)) : getString(R.string.pref_sort_name));
         itemSortSize.setTitle(sort == App.SORT_SIZE ? (reverse ? getString(R.string.pref_sort_size) + "  " + getString(R.string.pref_sort_dsc) : getString(R.string.pref_sort_size) + "  " + getString(R.string.pref_sort_asc)) : getString(R.string.pref_sort_size));
 
-        itemNetwork.setVisible(!hasSelection);
+        itemNetwork.setVisible(BuildConfig.DEBUG && !hasSelection);
         itemSettings.setVisible(!hasSelection);
 
         itemShare.setVisible(hasSelection);
