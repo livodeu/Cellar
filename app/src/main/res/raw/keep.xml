@@ -8,4 +8,4 @@
 <!-- see https://developer.android.com/studio/build/shrink-code.html#keep-resources -->
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:keep="@raw/*.htm,@raw/*.css"
-    tools:shrinkMode="strict"/>
+/>
