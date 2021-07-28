@@ -32,7 +32,8 @@ android {
         resConfigs "en", "de", "fr"
         def filesAuthority = defaultConfig.applicationId + ".fileprovider"
         def dogsAuthority = defaultConfig.applicationId + ".dogs"
-        manifestPlaceholders = [fileproviderauth: filesAuthority, docsproviderauth: dogsAuthority]
+        def appLabel = "@string/app_name"
+        manifestPlaceholders = [fileproviderauth: filesAuthority, docsproviderauth: dogsAuthority, applabel: appLabel]
         buildConfigField("String", "FILEPROVIDER_AUTH", "\"" + filesAuthority + "\"")
         buildConfigField("String", "DOCSPROVIDER_AUTH", "\"" + dogsAuthority + "\"")
         resValue "string", "application_details_settings", "package:" + defaultConfig.applicationId
@@ -74,7 +75,8 @@ android {
             versionNameSuffix "-debug"
             def filesAuthority = defaultConfig.applicationId + ".debug.fileprovider"
             def dogsAuthority = defaultConfig.applicationId + ".debug.dogs"
-            manifestPlaceholders = [fileproviderauth: filesAuthority, docsproviderauth: dogsAuthority]
+            def appLabel = "@string/app_name_debug"
+            manifestPlaceholders = [fileproviderauth: filesAuthority, docsproviderauth: dogsAuthority, applabel: appLabel]
             buildConfigField("String", "FILEPROVIDER_AUTH", "\"" + filesAuthority + "\"")
             buildConfigField("String", "DOCSPROVIDER_AUTH", "\"" + dogsAuthority + "\"")
             resValue "string", "application_details_settings", "package:" + defaultConfig.applicationId + applicationIdSuffix
