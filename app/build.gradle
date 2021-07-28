@@ -88,6 +88,7 @@ android {
             crunchPngs true
             aaptOptions {
                 cruncherEnabled true
+                ignoreAssetsPattern "*.lua"
             }
             signingConfig signingConfigs.release
         }
