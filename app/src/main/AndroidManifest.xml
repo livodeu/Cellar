@@ -79,7 +79,8 @@
             android:label="${applabel}"
             android:launchMode="standard"
             android:theme="@style/AppTheme.Launcher"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -502,7 +503,8 @@
             android:exported="false" />
         <receiver
             android:name=".BootReceiver"
-            android:directBootAware="false">
+            android:directBootAware="false"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
