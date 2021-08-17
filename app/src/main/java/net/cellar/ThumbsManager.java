@@ -96,8 +96,10 @@ public class ThumbsManager {
         try {
             FFmpegMediaMetadataRetriever.IN_PREFERRED_CONFIG = Bitmap.Config.RGB_565;
         } catch (UnsatisfiedLinkError ule) {
-            if (BuildConfig.DEBUG) Log.e(TAG, "Some FFmpegMediaMetadataRetriever component is missing: " + ule);
-            System.exit(-3);
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "Some FFmpegMediaMetadataRetriever component is missing: " + ule);
+                System.exit(-3);
+            }
         }
         OPTS_RGB_565.inPreferredConfig = Bitmap.Config.RGB_565;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
