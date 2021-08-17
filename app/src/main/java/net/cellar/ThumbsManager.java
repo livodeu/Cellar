@@ -84,6 +84,8 @@ public class ThumbsManager {
     private static final int MAX_SOURCE_BMP_SIZE = 10_000;
     /** min. width and max. height of a source bitmap [pixels] */
     private static final int MIN_SOURCE_BMP_SIZE = 64;
+    /** if tif thumbnail creation fails, the memory limit may be too low! */
+    private static final long MAX_MEM_TIFF_CREATION = 1_048_576L << 3;
     @RequiresApi(Build.VERSION_CODES.O)
     private static final BitmapFactory.Options OPTS_HW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? new BitmapFactory.Options() : null;
     private static final BitmapFactory.Options OPTS_RGB_565 = new BitmapFactory.Options();
@@ -105,7 +107,8 @@ public class ThumbsManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             OPTS_HW.inPreferredConfig = Bitmap.Config.HARDWARE;
         }
-        TIF_OPTS.inAvailableMemory = 1_024_576L;
+        // note: if tif thumbnail creation fails, the memory limit may be too low!
+        TIF_OPTS.inAvailableMemory = MAX_MEM_TIFF_CREATION;
         TIF_OPTS.inThrowException = false;
         TIF_OPTS.inPreferredConfig = TiffBitmapFactory.ImageConfig.RGB_565;
     }
