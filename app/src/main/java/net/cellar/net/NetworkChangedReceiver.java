@@ -173,8 +173,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
                 boolean notRoaming = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
                 sb.append("<br>").append("Roaming").append(": ").append(notRoaming ? a.getString(R.string.label_no) : a.getString(R.string.label_yes));
             }
-            //boolean notVpn = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
-            //sb.append("<br>").append("VPN").append(": ").append(notVpn ? a.getString(R.string.label_no) : a.getString(R.string.label_yes));
 
             if (n.equals(active)) sb.append("</p>");
             sb.append("</p>\n");
