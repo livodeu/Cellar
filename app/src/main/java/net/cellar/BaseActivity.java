@@ -38,6 +38,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 
 /**
  *
@@ -221,13 +222,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case App.SORT_SIZE:
                 // ascending (arrow up): largest at the top; descending (arrow down): smallest at the top
-                if (inv) Arrays.sort(files, (o1, o2) -> Long.compare(o1.length(), o2.length()));
+                if (inv) Arrays.sort(files, Comparator.comparingLong(File::length));
                 else Arrays.sort(files, (o1, o2) -> Long.compare(o2.length(), o1.length()));
                 break;
             case App.SORT_DATE:
             default:
                 // ascending (arrow up): newest at the top; descending (arrow down): oldest at the top
-                if (inv) Arrays.sort(files, (o1, o2) -> Long.compare(o1.lastModified(), o2.lastModified()));
+                if (inv) Arrays.sort(files, Comparator.comparingLong(File::lastModified));
                 else Arrays.sort(files, (o1, o2) -> Long.compare(o2.lastModified(), o1.lastModified()));
         }
         synchronized (this.downloads) {
