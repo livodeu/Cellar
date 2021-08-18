@@ -590,11 +590,11 @@ public final class Dogs extends DocumentsProvider {
                         else Collections.sort(this.downloads, (o1, o2) -> o2.getName().compareToIgnoreCase(o1.getName()));
                         break;
                     case DocumentsContract.Document.COLUMN_SIZE:
-                        if (ascending) Collections.sort(this.downloads, (o1, o2) -> Long.compare(o1.length(), o2.length()));
+                        if (ascending) Collections.sort(this.downloads, Comparator.comparingLong(File::length));
                         else Collections.sort(this.downloads, (o1, o2) -> Long.compare(o2.length(), o1.length()));
                         break;
                     case DocumentsContract.Document.COLUMN_LAST_MODIFIED:
-                        if (ascending) Collections.sort(this.downloads, (o1, o2) -> Long.compare(o1.lastModified(), o2.lastModified()));
+                        if (ascending) Collections.sort(this.downloads, Comparator.comparingLong(File::lastModified));
                         else Collections.sort(this.downloads, (o1, o2) -> Long.compare(o2.lastModified(), o1.lastModified()));
                         break;
                     case DocumentsContract.Document.COLUMN_MIME_TYPE:
