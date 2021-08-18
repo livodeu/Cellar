@@ -2325,13 +2325,6 @@ public class UiActivity extends BaseActivity
                 this.viewStacker = new ViewStacker(layout, stack, parent);
                 this.viewStacker.start();
             }
-            /*
-            // in grid view, this shakes things up a little…
-            if (viewType != 1) {
-                v.setElevation(v.getElevation() + (float) (Math.random() * 8.) - 4f);
-                v.setRotation((float) (Math.random() * 4.) - 2f);
-            }
-             */
             return new UiActivity.ViewHolder(v, layout);
         }
 
