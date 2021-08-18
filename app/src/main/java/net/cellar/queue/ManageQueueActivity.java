@@ -259,21 +259,9 @@ public class ManageQueueActivity extends AppCompatActivity implements QueueManag
         /** {@inheritDoc} */
         @Override
         public void onClick(View v) {
-            /*Context ctx = v.getContext();
-            if (!(ctx instanceof ManageQueueActivity)) {
-                return;
-            }
-            final ManageQueueActivity activity = (ManageQueueActivity)ctx;*/
             int position = getAdapterPosition();
             if (position == RecyclerView.NO_POSITION) return;
-            /*final Wish wish;
-            synchronized (activity.wishes) {
-                wish = activity.wishes.get(position);
-            }
-            if (wish == null) return;*/
-            /*if (v == buttonDelete) {
-                activity.deleteWish(wish);
-            } else*/ if (v == buttonMoveUp) {
+            if (v == buttonMoveUp) {
                 if (position < 1) return;
                 QueueManager.getInstance().moveUp(position);
             }
