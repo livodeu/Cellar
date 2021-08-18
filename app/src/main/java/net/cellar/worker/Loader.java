@@ -421,23 +421,6 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
             if (deltaTime == 0L) return;
             this.speed = deltaValue / (float)deltaTime;
             this.remainingSec = target > 0f ? ((target - value) / this.speed / 1_000f) : Float.MAX_VALUE;
-            /*if (BuildConfig.DEBUG) {
-                switch (this.unit) {
-                    case UNIT_BYTES:
-                        Log.i(Speed.class.getSimpleName(), "Recording at a rate of " + speed + " bytes/ms; remaining ca. " + remainingSec + " sec.");
-                        break;
-                    case UNIT_FRACTION:
-                        Log.i(Speed.class.getSimpleName(), "Recording at a rate of " + (100_000f * speed) + " %/s; remaining ca. " + remainingSec + " sec.");
-                        break;
-                    case UNIT_MS:
-                        Log.i(Speed.class.getSimpleName(), "Recording at a rate of " + speed + " ms/ms; remaining ca. " + remainingSec + " sec.");
-                        break;
-                    case UNIT_UNDEFINED:
-                    default:
-                        Log.e(Speed.class.getSimpleName(), "Invalid unit!");
-                        break;
-                }
-            }*/
         }
 
         @Retention(RetentionPolicy.SOURCE)
