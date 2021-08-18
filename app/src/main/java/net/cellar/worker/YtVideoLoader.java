@@ -92,9 +92,6 @@ public class YtVideoLoader extends Streamer {
             final YoutubeStreamExtractor yse = new YoutubeStreamExtractor(ServiceList.YouTube, YoutubeStreamLinkHandlerFactory.getInstance().fromUrl(order.getUrl()));
             yse.fetchPage();
             StreamType streamType = yse.getStreamType();
-            /*if (streamType == StreamType.LIVE_STREAM || streamType == StreamType.AUDIO_LIVE_STREAM) {
-                return new Delivery(order, LoaderService.ERROR_YOUTUBE_LIVESTREAM, destinationFile, null);
-            }*/
 
             // try to get a video name
             try {
@@ -198,10 +195,6 @@ public class YtVideoLoader extends Streamer {
             }
             videoOrder.setDestinationFilename(destinationFilename);
 
-            /*if (videoPick.isVideoOnly && !audios.isEmpty()) {
-                videoOrder.addAudioUrl(audios.get(0).url);
-                if (BuildConfig.DEBUG) Log.i(TAG, "Audio stream is " + audios.get(0).getFormat());
-            }*/
             // pass the new Order to the Streamer
             return super.load(videoOrder, progressBefore, progressPerOrder);
         } catch (ContentNotAvailableException e) {
