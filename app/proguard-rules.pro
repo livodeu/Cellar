@@ -1,11 +1,7 @@
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# this does not seem to hurt much as far as the apk size is concerned
+-keep class org.videolan.libvlc.** { *; }
 
 -keep class org.beyka.tiffbitmapfactory.** { *; }
 
@@ -15,4 +11,3 @@
 -keepclassmembers class net.cellar.R$raw {
     public *;
 }
--printusage ../doc/removedby4r8.txt
