@@ -216,10 +216,6 @@ public final class MetadataReader {
         TYPE_MAPPING.put(ExifInterface.TAG_Y_RESOLUTION, TYPE_DOUBLE);
     }
 
-    /*static {
-        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }*/
-
     /**
      * Retrieves EXIF data from a stream.
      *
