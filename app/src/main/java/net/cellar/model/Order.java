@@ -169,20 +169,6 @@ public class Order implements Parcelable {
         in.readStringList(this.additionalAudioUrls);
     }
 
-    /*
-    @NonNull
-    @Override
-    public Order clone() throws CloneNotSupportedException {
-        final Order klon = (Order)super.clone();
-        klon.destinationFilename = destinationFilename;
-        klon.destinationFolder = destinationFolder;
-        klon.mime = mime;
-        klon.referer = referer;
-        klon.group = group;
-        if (additionalAudioUrls != null) klon.additionalAudioUrls = new ArrayList<>(additionalAudioUrls);
-        return klon;
-    }*/
-
     public void addAudioUrl(@Nullable String url) {
         if (url == null) return;
         if (this.additionalAudioUrls == null) this.additionalAudioUrls = new ArrayList<>(4);
