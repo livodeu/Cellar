@@ -311,6 +311,7 @@ public final class Dogs extends DocumentsProvider {
         if (ExifInterface.isSupportedMimeType(getMime(documentId))) {
             InputStream in = null;
             try {
+                //noinspection RedundantFileCreation
                 in = new FileInputStream(new File(documentId)); // does not have to be a BufferedInputStream; ExifInterface constructs one by itself
                 metadata = MetadataReader.getMetadata(in, null);
             } catch (FileNotFoundException e) {
