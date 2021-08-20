@@ -479,10 +479,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
             final int n = this.loaders.size();
             for (int i = 0; i < n; i++) {
                 Loader loader = this.loaders.valueAt(i);
-                /*if (BuildConfig.DEBUG) {
-                    if (loader.getOrders() != null && loader.getOrders().length > 0) Log.i(TAG, "Loader " + i + ": " + loader.getOrders()[0].getDestinationFilename() + "; status: " + loader.getStatus());
-                    else Log.e(TAG, "Loader " + i + ": <no orders>; status: " + loader.getStatus());
-                }*/
                 if (loader.getStatus() == AsyncTask.Status.FINISHED) continue;
                 Order[] orders = loader.getOrders();
                 if (orders == null) continue;
@@ -555,7 +551,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     //@SuppressWarnings("JavaReflectionMemberAccess")
     @Override
     public void onCreate() {
-        long start = System.currentTimeMillis();
         super.onCreate();
 
         android.os.StrictMode.setVmPolicy(android.os.StrictMode.VmPolicy.LAX);
@@ -594,7 +589,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
         PendingIntent piCheckNight = PendingIntent.getService(this, 798, intentCheckNight, PendingIntent.FLAG_UPDATE_CURRENT);
         long at = System.currentTimeMillis() + (secondsToFullHour * 1_000L + 2000L);
         am.setRepeating(AlarmManager.RTC, at, 3_600_000L, piCheckNight);
-        //if (BuildConfig.DEBUG) Log.i(TAG, "Night mode will be checked at " + new Date(at) + " and every hour from that point on");
         try {
             startService(intentCheckNight);
         } catch (Throwable e) {
@@ -623,16 +617,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
             this.ncImportant.setSound(null, null);
             this.ncImportant.setShowBadge(false);
             nm.createNotificationChannel(this.ncImportant);
-
-            /*if (BuildConfig.DEBUG) {
-                List<NotificationChannel> channels = nm.getNotificationChannels();
-                for (NotificationChannel channel : channels) {
-                    String id = channel.getId();
-                    if (!appName.equals(id) && !(appName + "-important").equals(id)) {
-                        nm.deleteNotificationChannel(id);
-                    }
-                }
-            }*/
         }
 
         this.thumbsManager = new ThumbsManager(this);
@@ -644,7 +628,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
             public void run() {
                 App.this.evilBlocker = new EvilBlocker(App.this);
                 makeOkhttpClient();
-                //Loader.setEvilBlocker(App.this.evilBlocker);
             }
         };
         okHttpClientMaker.setPriority(Thread.NORM_PRIORITY - 1);
@@ -693,10 +676,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
         }
 
         SettingsActivity.clearSharedApkDirectory(this);
-
-        Log.i(TAG, "Start took " + (System.currentTimeMillis() - start) + " ms");
-
-        Log.k(TAG, getResources().openRawResource(R.raw.sk));
     }
 
     /** {@inheritDoc} */
