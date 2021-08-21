@@ -1,5 +1,10 @@
 package net.cellar;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ClipData;
@@ -9,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Looper;
 import android.service.notification.StatusBarNotification;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.GuardedBy;
 import androidx.test.filters.FlakyTest;
@@ -22,11 +26,6 @@ import net.cellar.supp.IdSupply;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Succeeded 2021-07-01
@@ -66,12 +65,10 @@ public class ClipSpyTest implements ClipboardManager.OnPrimaryClipChangedListene
         cm = (ClipboardManager)ctx.getSystemService(Context.CLIPBOARD_SERVICE);
         assertNotNull(cm);
         cm.addPrimaryClipChangedListener(this);
-        InputMethodManager im = (InputMethodManager)ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override
     public void onPrimaryClipChanged() {
-        android.util.Log.i(getClass().getSimpleName(), "onPrimaryClipChanged()");
         synchronized (cdsync) {
             cd = cm.getPrimaryClip();
             android.util.Log.i(getClass().getSimpleName(), "onPrimaryClipChanged() - ClipData is " + (cd == null ? "<null>" : cd.toString()));
