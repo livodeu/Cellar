@@ -237,6 +237,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
                 else if (isTheSame(i, 0, "wOF2")) extension = ".woff2";
                 else if (isTheSame(i, 0, "ISc(")) extension = ".cab";
                 else if (isTheSame(i, 0, "KCMS")) extension = ".icm";
+                else if (isTheSame(i, 0, "FLV") && i[3] == 0x01) extension = ".flv";
                 else if (i[0] == 0xed && i[1] == 0xab && i[2] == 0xee && i[3] == 0xdb) extension = ".rpm";
                 else if (i[0] == 0x61 && i[1] == 0x6a && i[2] == 0x6b && i[3] == 0x67) extension = ".shn";
                 else if (isTheSame(i, 0, "%!PS")) extension = ".ps";
@@ -258,6 +259,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
             if (extension == null && read >= 2) {
                 if (i[0] == 0x0b && i[1] == 0x77) extension = ".ac3";
                 else if (i[0] == 0xff && (i[1] == 0xfb || i[1] == 0xf3 || i[1] == 0xf2)) extension = ".mp3";
+                else if (i[0] == 0xff && i[1] == 0xf1) extension = ".aac";
                 else if (isTheSame(i, 0, "PK")) {
                     inspectZip(f, suggestions);
                 }
@@ -305,12 +307,13 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
                 int colon = line.lastIndexOf(':');
                 if (colon < 0) continue;
                 final String content = line.substring(colon + 1).trim();
-                //if (BuildConfig.DEBUG && !"data".equals(content)) Log.i(TAG, line);
+                if (BuildConfig.DEBUG && !"data".equals(content)) Log.i(TAG, line);
                 if (content.startsWith("PNG image data")) extension = ".png";
                 else if (content.startsWith("JPEG image data")) {extension = ".jpg"; alt = new String[] {".jpeg"};}
                 else if (content.startsWith("GIF image data")) extension = ".gif";
-                else if (content.startsWith("Ogg data, vorbis audio")) {extension = ".ogg"; alt = new String[] {".oga"};}
                 else if (content.startsWith("Ogg data, theora video")) {extension = ".ogv"; alt = new String[] {".ogg"};}
+                else if (content.startsWith("Ogg data, vorbis audio")) {extension = ".ogg"; alt = new String[] {".oga"};}
+                else if (content.startsWith("Ogg data")) {extension = ".ogg"; alt = new String[] {".oga", ".ogv"};}
                 else if ("data".equals(content)) extension = inspectFile(file, suggestions);
                 else if ("ASCII text".equals(content)) {
                     extension = inspectFile(file, suggestions);
