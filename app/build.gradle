@@ -163,7 +163,7 @@ dependencies {
     // https://github.com/Beyka/Android-TiffBitmapFactory
     implementation 'com.github.beyka:androidtiffbitmapfactory:0.9.8.7'  // MIT License
     // https://github.com/TeamNewPipe/NewPipeExtractor & https://teamnewpipe.github.io/documentation/
-    implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.21.8'
+    implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.21.11'
     // https://commons.apache.org/proper/commons-net/ & https://github.com/apache/commons-net
     implementation 'commons-net:commons-net:3.8.0'
     // https://github.com/srikanth-lingala/zip4j
