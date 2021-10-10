@@ -7,6 +7,9 @@
 
 -keep class wseemann.media.FFmpegMediaMetadataRetriever { *; }
 
+-keep class org.schabi.** { *; }
+-keep class org.mozilla.** { *; }
+
 -keep public class net.cellar.R$raw
 -keepclassmembers class net.cellar.R$raw {
     public *;
