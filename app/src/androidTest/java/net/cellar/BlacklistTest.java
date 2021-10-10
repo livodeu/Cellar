@@ -91,16 +91,16 @@ public class BlacklistTest {
         App app = (App)ctx.getApplicationContext();
         try {
             // wait for a moment - there is a Thread in App.onCreate()
-            Thread.sleep(1500);
+            Thread.sleep(1_500);
             //
             final String evil = "googletagmanager.com";
-            if (PreferenceManager.getDefaultSharedPreferences(app).getString(App.PREF_BLACKLIST, App.PREF_BLACKLIST_DEFAULT) == null) {
+            if (TextUtils.isEmpty(PreferenceManager.getDefaultSharedPreferences(app).getString(App.PREF_BLACKLIST, App.PREF_BLACKLIST_DEFAULT))) {
                 assertFalse(app.getEvilBlocker().isEvil(evil));
                 List<InetAddress> ias = app.getOkHttpClient().dns().lookup(evil);
                 assertNotNull(ias);
                 return;
             }
-            assertTrue(app.getEvilBlocker().isEvil(evil));
+            assertTrue(evil + " is allegedly not evil", app.getEvilBlocker().isEvil(evil));
             List<InetAddress> ias = app.getOkHttpClient().dns().lookup(evil);
             fail("Got Inetaddresses for " + evil + ": " + ias);
         } catch (InterruptedException e) {
