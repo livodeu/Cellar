@@ -8,6 +8,7 @@ package net.cellar.worker;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
@@ -199,6 +200,9 @@ public class HtmlShredderVideoLoader extends Downloader implements MediaPlayer.E
                 } else {
                     if (BuildConfig.DEBUG) Log.i(TAG, "Trying to load '" + mime + "' medium from '" + videoUri + "'");
                     Order order2 = new Order(order.getWish(), videoUri);
+                    if (Build.VERSION.SDK_INT >= 24 && !LoaderService.isProtocolAllowed(order2.getUri())) {
+                        order2 = Order.toHttps(order2);
+                    }
                     order2.setDestinationFolder(realDownloadsFolder);
                     order2.setDestinationFilename(this.overriddenTitle != null ? this.overriddenTitle : videoUri.getLastPathSegment());
                     order2.setMime(mime);
@@ -252,7 +256,8 @@ public class HtmlShredderVideoLoader extends Downloader implements MediaPlayer.E
         @Override
         @Nullable
         String extract(@NonNull String line) {
-            int start = line.indexOf("<meta property=\"og:video\"");
+            int start = line.indexOf("<meta property=\"og:video:secure_url\"");
+            if (start < 0) start = line.indexOf("<meta property=\"og:video\"");
             if (start < 0) return null;
             int end = line.indexOf('>', start + 25);
             if (end < 0) return null;
