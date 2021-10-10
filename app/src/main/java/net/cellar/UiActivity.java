@@ -552,7 +552,7 @@ public class UiActivity extends BaseActivity
 
         if (BuildConfig.DEBUG) {
             ActionBar ab = delegate.getSupportActionBar();
-            if (ab != null) ab.setTitle(getString(R.string.app_name) + "-DEBUG" + (BuildConfig.CANARY ? " \uD83D\uDC26" : ""));
+            if (ab != null) ab.setTitle(getString(R.string.app_name) + (BuildConfig.CANARY ? " \uD83D\uDC26" : ""));
         }
 
         this.coordinatorLayout = delegate.findViewById(R.id.coordinator_layout);

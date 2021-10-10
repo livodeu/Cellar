@@ -7,7 +7,6 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Keller</string>
-    <string name="app_name_debug">Keller-Ⓓ</string>
     <string name="app_desc">Keller ist ein Programm zum Laden von Dateien aus entfernten Quellen.</string>
     <string name="action_checksum">Prüfsumme</string>
     <string name="action_create_download">Neu</string>
