@@ -374,7 +374,6 @@ public class UiActivity extends BaseActivity
     @WorkerThread
     private void install(@NonNull File apk) {
         if (!apk.isFile() || ((App)getApplicationContext()).isBeingDownloaded(apk)) return;
-        if (BuildConfig.DEBUG) Log.i(TAG, "install(\"" + apk + "\")");
         PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(apk.getAbsolutePath(), PackageManager.GET_META_DATA);
         if (packageInfo != null) {
             if (BuildConfig.DEBUG) Log.i(TAG, "Installing " + packageInfo.packageName + ' ' + packageInfo.versionName);
@@ -508,7 +507,6 @@ public class UiActivity extends BaseActivity
     @MainThread
     @Override
     public void onConnectivityChanged(@NonNull final NetworkInfo.State old, @NonNull final NetworkInfo.State state) {
-        //if (BuildConfig.DEBUG) Log.i(TAG, "onConnectivityChanged("  + old + ", " + state + ")");
         super.handler.removeCallbacks(this.toolbarSubtitleResetter);
         if (state == NetworkInfo.State.CONNECTED) {
             if (old == NetworkInfo.State.DISCONNECTED || old == NetworkInfo.State.SUSPENDED) {
@@ -528,8 +526,6 @@ public class UiActivity extends BaseActivity
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //if (BuildConfig.DEBUG) Log.i(TAG, "onCreate(" + savedInstanceState + ") - from " + new Throwable().getStackTrace()[1]);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(App.PREF_TRANSLUCENT_NAVIGATION, App.PREF_TRANSLUCENT_NAVIGATION_DEFAULT)) {
             setTheme(R.style.AppTheme_NoActionBar_WithTranslucentNavigation);
@@ -543,9 +539,7 @@ public class UiActivity extends BaseActivity
 
         final AppCompatDelegate delegate = getDelegate();
 
-        //long start = System.currentTimeMillis();
         delegate.setContentView(R.layout.activity_downloads);
-        //if (BuildConfig.DEBUG) Log.i(TAG, "setContentView() took " + (System.currentTimeMillis() - start) + " ms");
 
         this.toolbar = delegate.findViewById(R.id.toolbar);
         delegate.setSupportActionBar(this.toolbar);
@@ -587,8 +581,6 @@ public class UiActivity extends BaseActivity
         });
         selectLayoutManager();
 
-        //this.recyclerViewDownloads.setRecyclerListener(holder -> ((ViewHolder) holder).logoView.removeCallbacks(((ViewHolder)holder).imageSetter));
-
         this.clipboardListener = new ClipboardListener(this);
 
         SharedResultReceiver.refSnackbarDisplayer = new WeakReference<>(this);
@@ -624,7 +616,6 @@ public class UiActivity extends BaseActivity
     /** {@inheritDoc} */
     @Override
     protected void onNewIntent(Intent intent) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onNewIntent(" + intent + ")");
         super.onNewIntent(intent);
         handleIntent(intent);
     }
@@ -730,7 +721,6 @@ public class UiActivity extends BaseActivity
     /** {@inheritDoc} */
     @Override
     protected void onPause() {
-        //if (BuildConfig.DEBUG) Log.i(TAG, "onPause()");
         this.recyclerViewDownloads.suppressLayout(true);
         NetworkChangedReceiver.getInstance().removeListener(this);
         if (this.checksumCalculator != null && this.checksumCalculator.isAlive()) {
@@ -836,7 +826,6 @@ public class UiActivity extends BaseActivity
     /** {@inheritDoc} */
     @Override
     protected void onRestart() {
-        //if (BuildConfig.DEBUG) Log.i(TAG, "onRestart() - needsRestart: " + needsRestart);
         super.onRestart();
         if (this.needsRestart) {
             this.needsRestart = false;
@@ -904,7 +893,6 @@ public class UiActivity extends BaseActivity
     /** {@inheritDoc} */
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onServiceDisconnected(" + name + ")");
         if (ClipSpy.class.getName().equals(name.getClassName())) {
             this.clipSpy = null;
         }
@@ -913,7 +901,6 @@ public class UiActivity extends BaseActivity
     /** {@inheritDoc} */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onSharedPreferenceChanged(…, " + key + ")");
         if (App.PREF_TRANSLUCENT_NAVIGATION.equals(key)) {
             // we cannot simply apply the new style here - the window must apparently be re-created
             this.needsRestart = true;
@@ -937,7 +924,6 @@ public class UiActivity extends BaseActivity
     @Override
     @UiThread
     int refresh() {
-        //if (BuildConfig.DEBUG) Log.i(TAG, "refresh()");
         int n = super.refresh();
         n = updateFilter(n);
         this.viewNoDownloads.setVisibility(n == 0 ? View.VISIBLE : View.GONE);
