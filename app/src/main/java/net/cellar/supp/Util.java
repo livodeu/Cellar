@@ -6,6 +6,7 @@
 
 package net.cellar.supp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ApplicationErrorReport;
 import android.app.PendingIntent;
@@ -272,6 +273,7 @@ public final class Util {
         PackageManager pm = ctx.getPackageManager();
         try {
             ApplicationInfo ai = pm.getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
+            @SuppressLint("DiscouragedPrivateApi")
             java.lang.reflect.Field fabi = ai.getClass().getDeclaredField("primaryCpuAbi");
             return (String) fabi.get(ai);
         } catch (Throwable e) {
@@ -940,7 +942,9 @@ public final class Util {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             Intent callback = new Intent(ctx, UiActivity.SharedResultReceiver.class);
             callback.putExtra(UiActivity.SharedResultReceiver.EXTRA_FILE, file.getName());
-            PendingIntent pi = PendingIntent.getBroadcast(ctx, 1, callback, PendingIntent.FLAG_UPDATE_CURRENT);
+            @SuppressLint("InlinedApi")
+            int pFlags = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE) : PendingIntent.FLAG_UPDATE_CURRENT;
+            PendingIntent pi = PendingIntent.getBroadcast(ctx, 1, callback, pFlags);
             chooserIntent = Intent.createChooser(shareIntent, null, pi.getIntentSender());
         } else {
             chooserIntent = Intent.createChooser(shareIntent, null);
