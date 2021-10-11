@@ -413,7 +413,7 @@ public class UiActivity extends BaseActivity
             if (BuildConfig.DEBUG) Log.i(TAG, "Data copied.");
             Intent i = new Intent(this, LoaderService.class);
             i.setAction(ACTION_INSTALL);
-            session.commit(PendingIntent.getService(this, id, i, PendingIntent.FLAG_UPDATE_CURRENT).getIntentSender());
+            session.commit(PendingIntent.getService(this, id, i, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT).getIntentSender());
             if (BuildConfig.DEBUG) Log.i(TAG, "Session committed.");
         } catch (IOException e) {
             if (BuildConfig.DEBUG) Log.e(TAG, "While trying to install \"" + apk + "\": " + e.toString());

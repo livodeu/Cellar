@@ -6,6 +6,7 @@
 
 package net.cellar;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -171,7 +172,8 @@ public class BackupService extends Service {
         }
         Intent intentCancel = new Intent(this, getClass());
         intentCancel.setAction(ACTION_ZIP_CANCEL);
-        PendingIntent piCancel = PendingIntent.getService(this, 1, intentCancel, PendingIntent.FLAG_UPDATE_CURRENT);
+        @SuppressLint("InlinedApi")
+        PendingIntent piCancel = PendingIntent.getService(this, 1, intentCancel, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
         this.builder.addAction(UiUtil.makeNotificationAction(this, android.R.drawable.ic_menu_close_clear_cancel, android.R.string.cancel, piCancel));
         this.notification = this.builder.build();
         startForeground(IdSupply.NOTIFICATION_ID_BACKUP, this.notification);
@@ -361,7 +363,8 @@ public class BackupService extends Service {
 
             Intent ui = new Intent(this, UiActivity.class);
             ui.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent piUiActivity = PendingIntent.getActivity(this, 1, ui, PendingIntent.FLAG_UPDATE_CURRENT);
+            @SuppressLint("InlinedApi")
+            PendingIntent piUiActivity = PendingIntent.getActivity(this, 1, ui,  (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
             String msg = getResources().getQuantityString(R.plurals.msg_import_successful, extracted, extracted);
             if (skipped > 0) msg = msg + '\n' + getString(R.string.msg_import_skipped_some);
             this.builder

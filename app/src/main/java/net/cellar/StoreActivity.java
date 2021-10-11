@@ -109,7 +109,7 @@ public final class StoreActivity extends AppCompatActivity {
                     .setContentTitle(getString(R.string.msg_download_stored))
                     .setContentText(getString(R.string.msg_downloaded_file, dest.getName()))
                     .setCategory(Notification.CATEGORY_STATUS)
-                    .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, 0))
+                    .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0))
             ;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 builder.setChannelId(((App)getApplicationContext()).getNc().getId());

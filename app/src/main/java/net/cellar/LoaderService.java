@@ -373,7 +373,7 @@ public class LoaderService extends Service implements LoaderListener {
                         intentUnqueue.setAction(ACTION_UNQUEUE);
                         intentUnqueue.putParcelableArrayListExtra(EXTRA_UNQUEUE_US, queuedForCulprit);
                         intentUnqueue.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-                        PendingIntent piUnqueue = PendingIntent.getService(this, REQUEST_CODE_UNQUEUE, intentUnqueue, PendingIntent.FLAG_UPDATE_CURRENT);
+                        PendingIntent piUnqueue = PendingIntent.getService(this, REQUEST_CODE_UNQUEUE, intentUnqueue, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
                         cancelQueuedAction = UiUtil.makeNotificationAction(this, android.R.drawable.ic_delete, R.string.action_queue_clear, piUnqueue);
                     }
 
@@ -503,7 +503,7 @@ public class LoaderService extends Service implements LoaderListener {
 
         Intent intentUiActivity = new Intent(this, UiActivity.class);
         intentUiActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        final PendingIntent pendingIntentUiActivity = PendingIntent.getActivity(this, 1, intentUiActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent pendingIntentUiActivity = PendingIntent.getActivity(this, 1, intentUiActivity, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
 
         app.removeNotificationBuilder(downloadId);
         CharSequence notificationTitle = cancelled ? getString(R.string.msg_download_cancelled)
@@ -655,7 +655,7 @@ public class LoaderService extends Service implements LoaderListener {
             Intent stop = new Intent(this, LoaderService.class);
             stop.setAction(ACTION_STOP);
             stop.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_stop_24, R.string.action_stop, piStop));
             this.stopActionAdded.add(downloadId);
             // we don not have to update the notification here because a regular progress*() call will follow now (See Loader.onProgressUpdate())
@@ -786,7 +786,7 @@ public class LoaderService extends Service implements LoaderListener {
         intentDeleteFile.setAction(ACTION_DELETE);
         intentDeleteFile.putExtra(EXTRA_FILE, file.getAbsolutePath());
         intentDeleteFile.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-        PendingIntent piDeleteFile = PendingIntent.getService(this, REQUEST_CODE_DELETE, intentDeleteFile, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piDeleteFile = PendingIntent.getService(this, REQUEST_CODE_DELETE, intentDeleteFile, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
         return UiUtil.makeNotificationAction(this, android.R.drawable.ic_menu_delete, R.string.action_delete, piDeleteFile);
     }
 
@@ -840,14 +840,14 @@ public class LoaderService extends Service implements LoaderListener {
         final Intent cancel = new Intent(this, LoaderService.class);
         cancel.setAction(ACTION_CANCEL);
         cancel.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-        PendingIntent piCancel = PendingIntent.getService(this, REQUEST_CODE_CANCEL, cancel, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent piCancel = PendingIntent.getService(this, REQUEST_CODE_CANCEL, cancel, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
         builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_delete_24, android.R.string.cancel, piCancel));
 
         if (addDefer) {
             final Intent defer = new Intent(this, LoaderService.class);
             defer.setAction(ACTION_DEFER);
             defer.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-            PendingIntent piDefer = PendingIntent.getService(this, REQUEST_CODE_DEFER, defer, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent piDefer = PendingIntent.getService(this, REQUEST_CODE_DEFER, defer, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
             //TODO better icon for defer
             builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_queue_24, R.string.action_defer, piDefer));
         }
@@ -856,7 +856,7 @@ public class LoaderService extends Service implements LoaderListener {
             final Intent stop = new Intent(this, LoaderService.class);
             stop.setAction(ACTION_STOP);
             stop.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
             builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_stop_24, R.string.action_stop, piStop));
             // as there is no "getActions()" method in Notification.Builder, we must remember this in some other way:
             this.stopActionAdded.add(downloadId);
@@ -879,7 +879,7 @@ public class LoaderService extends Service implements LoaderListener {
         intentQueue.setAction(LoaderService.ACTION_QUEUE);
         intentQueue.putExtra(EXTRA_ORDER, order);
         intentQueue.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-        PendingIntent piQueue = PendingIntent.getService(this, 1, intentQueue, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piQueue = PendingIntent.getService(this, 1, intentQueue, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
         return UiUtil.makeNotificationAction(this, R.drawable.ic_baseline_refresh_24, R.string.action_queue_add, piQueue);
     }
 
@@ -906,7 +906,7 @@ public class LoaderService extends Service implements LoaderListener {
         intentRetry401.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
         intentRetry401.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
         intentRetry401.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent piRetryWithAuthorization = PendingIntent.getActivity(this, REQUEST_CODE_RETRY, intentRetry401, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piRetryWithAuthorization = PendingIntent.getActivity(this, REQUEST_CODE_RETRY, intentRetry401, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
         return UiUtil.makeNotificationAction(this, R.drawable.ic_baseline_refresh_24, R.string.action_retry_authorization, piRetryWithAuthorization);
     }
 
@@ -927,7 +927,7 @@ public class LoaderService extends Service implements LoaderListener {
         intentRetry.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
         intentRetry.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ActivityOptions options = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? ActivityOptions.makeBasic() : null);
-        PendingIntent piRetry = PendingIntent.getActivity(this, 1, intentRetry, PendingIntent.FLAG_UPDATE_CURRENT, options != null ? options.toBundle() : null);
+        PendingIntent piRetry = PendingIntent.getActivity(this, 1, intentRetry, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT, options != null ? options.toBundle() : null);
         return UiUtil.makeNotificationAction(this, R.drawable.ic_baseline_refresh_24, R.string.action_retry, piRetry);
     }
 
@@ -1145,14 +1145,14 @@ public class LoaderService extends Service implements LoaderListener {
                     builder.setShowWhen(true);
                     if (packageName != null) {
                         Intent contentIntent = getPackageManager().getLaunchIntentForPackage(packageName);
-                        if (contentIntent != null) builder.setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, 0));
+                        if (contentIntent != null) builder.setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0));
                     }
                 } else if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
                     Intent cancelIntent = new Intent(this, LoaderService.class);
                     cancelIntent.setAction(ACTION_CANCEL_INSTALLATION);
                     cancelIntent.putExtra(PackageInstaller.EXTRA_SESSION_ID, id);
                     cancelIntent.putExtra(EXTRA_NOTIFICATION_ID, IdSupply.NOTIFICATION_ID_INSTALL_OFFSET + id);
-                    PendingIntent pi = PendingIntent.getService(this, id, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent pi = PendingIntent.getService(this, id, cancelIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
                     Notification.Action cancelAction = UiUtil.makeNotificationAction(this, R.drawable.ic_baseline_stop_24, R.string.action_install_cancel, pi);
                     builder.addAction(cancelAction);
                 }
@@ -1279,7 +1279,7 @@ public class LoaderService extends Service implements LoaderListener {
                 .setOngoing(true)
                 .setShowWhen(true)
                 .setAutoCancel(true)
-                .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, 0))
+                .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0))
                 ;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId(((App)getApplicationContext()).getNc().getId());

@@ -6,6 +6,7 @@
 
 package net.cellar;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -147,7 +148,8 @@ public final class ClipSpy extends Service implements ClipboardManager.OnPrimary
             Intent intentStop = new Intent(this, ClipSpy.class);
             intentStop.setAction(ACTION_STOP);
             intentStop.putExtra(EXTRA_FLIP_PREF, Boolean.TRUE);
-            PendingIntent pi = PendingIntent.getService(this, 1, intentStop, PendingIntent.FLAG_UPDATE_CURRENT);
+            @SuppressLint("InlinedApi")
+            PendingIntent pi = PendingIntent.getService(this, 1, intentStop, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
             this.stdNotificationBuilder.addAction(UiUtil.makeNotificationAction(this, R.drawable.ic_baseline_stop_24, R.string.action_stop, pi));
         }
         return this.stdNotificationBuilder.build();
@@ -238,9 +240,8 @@ public final class ClipSpy extends Service implements ClipboardManager.OnPrimary
         intentYes.setAction(ACTION_YESPLEASE);
         intentYes.setData(clip);
         if (title != null) intentYes.putExtra(Intent.EXTRA_TITLE, title);
-        piYes = PendingIntent.getService(this, 1, intentYes, 0);
-
-        piNo = PendingIntent.getService(this, 1, this.intentNo, 0);
+        piYes = PendingIntent.getService(this, 1, intentYes, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+        piNo = PendingIntent.getService(this, 1, this.intentNo, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
 
         builder.addAction(UiUtil.makeNotificationAction(this, R.drawable.ic_file_download_black_24dp, R.string.label_yes, piYes));
         builder.addAction(UiUtil.makeNotificationAction(this, android.R.drawable.ic_delete, R.string.label_no_thanks, piNo));

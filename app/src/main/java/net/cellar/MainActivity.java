@@ -556,12 +556,12 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         intentPleaseEnqueue.setComponent(getComponentName());
         intentPleaseEnqueue.putExtra(EXTRA_WISH, this.wish);
         intentPleaseEnqueue.putExtra(LoaderService.EXTRA_NOTIFICATION_ID, IdSupply.NOTIFICATION_ID_ENQUEUE);
-        PendingIntent piEnqueue = PendingIntent.getActivity(app, 1, intentPleaseEnqueue, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piEnqueue = PendingIntent.getActivity(app, 1, intentPleaseEnqueue, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
 
         final Intent intentNoThanks = new Intent(this, MainActivity.class);
         intentNoThanks.setAction(ACTION_JUST_REMOVE_NOTIFICATION);
         intentNoThanks.putExtra(LoaderService.EXTRA_NOTIFICATION_ID, IdSupply.NOTIFICATION_ID_ENQUEUE);
-        PendingIntent piNoThanks = PendingIntent.getActivity(app, 1, intentNoThanks, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piNoThanks = PendingIntent.getActivity(app, 1, intentNoThanks, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_UPDATE_CURRENT);
 
         final Notification.Builder builder = new Notification.Builder(this)
                 .setDefaults(Notification.DEFAULT_SOUND)
@@ -1004,7 +1004,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                                     .setAutoCancel(true)
                                     .setVisibility(Notification.VISIBILITY_PRIVATE)
                                     .setCategory(Notification.CATEGORY_STATUS)
-                                    .setContentIntent(PendingIntent.getActivity(MainActivity.this, 1, contentIntent, 0))
+                                    .setContentIntent(PendingIntent.getActivity(MainActivity.this, 1, contentIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0))
                                     .setOngoing(false)
                                     ;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

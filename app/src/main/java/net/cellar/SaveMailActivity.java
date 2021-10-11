@@ -180,7 +180,7 @@ public class SaveMailActivity extends Activity {
                     .setContentTitle(hooray ? getString(R.string.msg_download_complete) : getString(R.string.msg_download_failed))
                     .setAutoCancel(true)
                     .setShowWhen(true)
-                    .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, PendingIntent.FLAG_CANCEL_CURRENT))
+                    .setContentIntent(PendingIntent.getActivity(this, 1, contentIntent, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT : PendingIntent.FLAG_CANCEL_CURRENT))
             ;
             if (msg.length() > getResources().getInteger(R.integer.notification_text_maxlength)) {
                 // do not set summary text because that would end up in the place of the notification's subtext

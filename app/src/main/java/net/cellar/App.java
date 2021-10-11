@@ -6,6 +6,7 @@
 
 package net.cellar;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -586,7 +587,9 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
         int secondsToFullHour = 60 - cal.get(Calendar.SECOND) + (59 - cal.get(Calendar.MINUTE)) * 60;
         Intent intentCheckNight = new Intent(this, LoaderService.class);
         intentCheckNight.setAction(ACTION_CHECK_NIGHT);
-        PendingIntent piCheckNight = PendingIntent.getService(this, 798, intentCheckNight, PendingIntent.FLAG_UPDATE_CURRENT);
+        @SuppressLint("InlinedApi")
+        int pFlags = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? (PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE) : PendingIntent.FLAG_UPDATE_CURRENT;
+        PendingIntent piCheckNight = PendingIntent.getService(this, 798, intentCheckNight, pFlags);
         long at = System.currentTimeMillis() + (secondsToFullHour * 1_000L + 2000L);
         am.setRepeating(AlarmManager.RTC, at, 3_600_000L, piCheckNight);
         try {
@@ -662,7 +665,8 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
                 // it's none of their business (actually it is, but it shouldn't be)
                 chooser.putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, new ComponentName[] {new ComponentName("com.google.android.gms", "com.google.android.gms.feedback.FeedbackActivity")});
             }
-            PendingIntent piBugReport = PendingIntent.getActivity(this, 1, chooser, 0);
+            @SuppressLint("InlinedApi")
+            PendingIntent piBugReport = PendingIntent.getActivity(this, 1, chooser, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ? PendingIntent.FLAG_IMMUTABLE : 0);
             builder.addAction(UiUtil.makeNotificationAction(this, R.mipmap.ic_launcher, R.string.label_error_report, piBugReport));
             NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
             if (notificationManager != null) notificationManager.notify(IdSupply.NOTIFICATION_ID_WTF, builder.build());
