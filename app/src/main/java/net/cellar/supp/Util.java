@@ -86,7 +86,7 @@ public final class Util {
     private static final CharSequence EMPTY_CHARSEQUENCE = new StringBuilder(0);
     @Size(16) private static final char[] HEX = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     /** supported extensions of movie files */
-    private static final String[] MOVIES = new String[] {".flv", ".m2ts", ".mkv", ".mpg", ".mp4", ".nsv", ".ogv", ".rv", ".vob", ".webm", ".wmv"};
+    private static final String[] MOVIES = new String[] {".flv", ".m2ts", ".mkv", ".mov", ".mpg", ".mp4", ".nsv", ".ogv", ".rv", ".vob", ".webm", ".wmv"};
     /** supported extensions of picture files (excludes tiff files) */
     private static final String[] PICTURES =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
