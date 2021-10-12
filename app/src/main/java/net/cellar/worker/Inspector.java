@@ -197,7 +197,8 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
             }
             if (extension == null && read >= 8) {
                 if (i[0] == '.' && i[1] == 'R' && i[2] == 'M' && i[3] == 'F' && i[4] == 0 && i[5] == 0 && i[6] == 0 && i[7] == 0x12) extension = ".ra";
-                if (i[0] == 0x89 && i[1] == 'H' && i[2] == 'D' && i[3] == 'F' && i[4] == 0x0d && i[5] == 0x0a && i[6] == 0x1a && i[7] == 0x0a) {extension = ".hdf"; alt = new String[] {".h4", ".hdf4", ".h5", ".hdf5", ".he2", ".he5"};}
+                else if (i[0] == 0x89 && i[1] == 'H' && i[2] == 'D' && i[3] == 'F' && i[4] == 0x0d && i[5] == 0x0a && i[6] == 0x1a && i[7] == 0x0a) {extension = ".hdf"; alt = new String[] {".h4", ".hdf4", ".h5", ".hdf5", ".he2", ".he5"};}
+                else if (isTheSame(i, 4, "moov")) {extension = ".mov";}
             }
             if (extension == null && read >= 7) {
                 if (isTheSame(i, 0, "#EXTM3U")) {extension = ".m3u"; alt = new String[] {".m3u8"};}
