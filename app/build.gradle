@@ -9,7 +9,6 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 31
-    ndkVersion '21.3.6528147'
 
     splits {
         abi {
@@ -90,25 +89,6 @@ android {
         }
     }
 
-    flavorDimensions "canary"
-
-    productFlavors {
-        std {
-            dimension "canary"
-            buildConfigField("Boolean", "CANARY", "false")
-        }
-        canary {
-            dimension "canary"
-            buildConfigField("Boolean", "CANARY", "true")
-        }
-    }
-
-    variantFilter { variant ->
-        if (variant.name == "canaryRelease") {
-            setIgnore(true)
-        }
-    }
-
     tasks.withType(JavaCompile) {
         options.compilerArgs += [
                 '-Xlint:all',
@@ -171,10 +151,6 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    // https://github.com/square/leakcanary/tree/main/plumber-android
-    //implementation 'com.squareup.leakcanary:plumber-android:2.7'
-    // https://github.com/square/leakcanary
-    canaryImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
     //noinspection GradleDependency
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 

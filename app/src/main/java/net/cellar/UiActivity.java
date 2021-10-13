@@ -6,6 +6,9 @@
 
 package net.cellar;
 
+import static android.provider.DocumentsContract.buildDocumentUri;
+import static android.provider.DocumentsContract.buildTreeDocumentUri;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -149,9 +152,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
-
-import static android.provider.DocumentsContract.buildDocumentUri;
-import static android.provider.DocumentsContract.buildTreeDocumentUri;
 
 
 /**
@@ -546,7 +546,7 @@ public class UiActivity extends BaseActivity
 
         if (BuildConfig.DEBUG) {
             ActionBar ab = delegate.getSupportActionBar();
-            if (ab != null) ab.setTitle(getString(R.string.app_name) + (BuildConfig.CANARY ? " \uD83D\uDC26" : ""));
+            if (ab != null) ab.setTitle(getString(R.string.app_name));
         }
 
         this.coordinatorLayout = delegate.findViewById(R.id.coordinator_layout);
