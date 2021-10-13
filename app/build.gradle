@@ -36,12 +36,6 @@ android {
         testInstrumentationRunnerArguments disableAnalytics: 'true', listener: 'net.cellar.LoggingListener'
     }
 
-    dexOptions {
-        maxProcessCount 8
-        javaMaxHeapSize "4g"
-        preDexLibraries true
-    }
-
     lintOptions {
         checkReleaseBuilds false
         abortOnError true
