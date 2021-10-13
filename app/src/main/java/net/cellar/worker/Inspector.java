@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -64,7 +65,8 @@ import wseemann.media.FFmpegMediaMetadataRetriever;
 
 
 /**
- * https://github.com/landley/toybox/blob/master/toys/posix/file.c
+ * Inspects files to determine whether they carry the correct extension.
+ * If the extension seems to be wrong, displays a dialog asking the user to rename the file.
  */
 public class Inspector extends AsyncTask<File, Float, Map<File, String>> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -88,14 +90,19 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
             ".atom", ".gpx", ".kml", ".mathml", ".xspf",
             ".rss", ".xsd", ".svg", ".xmi"
     };
-
+    private static final Set<String> EMPTY_STRING_SET = new HashSet<>(0);
 
     /**
-     * https://en.wikipedia.org/wiki/Magic_number_(programming)
-     * https://en.wikipedia.org/wiki/List_of_file_signatures
-     * https://www.filesignatures.net/index.php?page=all
-     * https://mark0.net/soft-trid-deflist.html
+     * Interesting reading is here:
+     * <ol>
+     * <li><a href="https://en.wikipedia.org/wiki/Magic_number_(programming)">Magic_number_(programming)</a></li>
+     * <li><a href="https://en.wikipedia.org/wiki/List_of_file_signatures">List_of_file_signatures</a></li>
+     * <li><a href="https://www.filesignatures.net/index.php?page=all">filesignatures.net</a></li>
+     * <li><a href="https://mark0.net/soft-trid-deflist.html">mark0.net</a></li>
+     * </ol>
      * @param f File to inspect
+     * @param suggestions Map to add suggestion to
+     * @return suggested extension
      */
     @VisibleForTesting
     public static String inspectFile(@NonNull File f, @NonNull Map<File, String> suggestions) {
@@ -225,6 +232,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
             }
             if (extension == null && read >= 5) {
                 if (isTheSame(i, 0, "%PDF-")) extension = ".pdf";
+                else if (isTheSame(i, 0, "<svg ")) extension = ".svg";
                 else if (i[0] == '.' && i[1] == 'r' && i[2] == 'a' && i[3] == 0xfd && i[4] == 0) extension = ".ra";
             }
             if (extension == null && read >= 4) {
@@ -291,6 +299,12 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
         return extension;
     }
 
+    /**
+     * See <a href="https://github.com/landley/toybox/blob/master/toys/posix/file.c">https://github.com/landley/toybox/blob/master/toys/posix/file.c</a>
+     * @param file File to inspect
+     * @param suggestions map to add a suggestion to
+     * @return suggested extension (only used in tests)
+     */
     @VisibleForTesting
     public static String inspectViaToybox(@NonNull File file, @NonNull Map<File, String> suggestions) {
         BufferedReader in = null;
@@ -308,7 +322,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
                 int colon = line.lastIndexOf(':');
                 if (colon < 0) continue;
                 final String content = line.substring(colon + 1).trim();
-                if (BuildConfig.DEBUG && !"data".equals(content)) Log.i(TAG, line);
+                //if (BuildConfig.DEBUG && !"data".equals(content)) Log.i(TAG, line);
                 if (content.startsWith("PNG image data")) extension = ".png";
                 else if (content.startsWith("JPEG image data")) {extension = ".jpg"; alt = new String[] {".jpeg"};}
                 else if (content.startsWith("GIF image data")) extension = ".gif";
@@ -330,7 +344,11 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
                 if (BuildConfig.DEBUG) Log.e(TAG, line);
             }
             if (isAlive(p)) {
-                p.waitFor();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    p.waitFor(60, TimeUnit.SECONDS);
+                } else {
+                    p.waitFor();
+                }
             }
         } catch (Exception e) {
             if (BuildConfig.DEBUG) Log.e(TAG, "While inspecting \"" + file + "\": " + e.toString());
@@ -360,6 +378,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
      * Inspects the given zip file.
      * @param f zip file
      * @param suggestions map to add the file extension to
+     * @throws NullPointerException if any parameter is null
      */
     private static String inspectZip(@NonNull final File f, @NonNull final Map<File, String> suggestions) {
         if (!f.isFile()) return null;
@@ -534,11 +553,12 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
     /**
      * Removes entries from the ignore Set whose files do not exist any more.
      * @param ctx Context
+     * @throws NullPointerException if {@code ctx} is {@code null}
      */
     @VisibleForTesting
     public int cleanIgnoreSet(@NonNull Context ctx) {
         int n;
-        synchronized (ignoreUs) {
+        synchronized (this.ignoreUs) {
             if (this.ignoreUs.isEmpty()) {
                 return 0;
             }
@@ -602,7 +622,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
         if (toyboxAvailable == TOYBOX_UNAVAILABLE) {
             for (File file : files) {
                 if (isCancelled()) break;
-                synchronized (ignoreUs) {
+                synchronized (this.ignoreUs) {
                     if (this.ignoreUs.contains(file.getName())) continue;
                 }
                 if (app.isBeingDownloaded(file) || file.length() == 0L || !file.isFile()) continue;
@@ -614,7 +634,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
         // for devices that do have toybox
         for (File file : files) {
             if (isCancelled()) break;
-            synchronized (ignoreUs) {
+            synchronized (this.ignoreUs) {
                 if (this.ignoreUs.contains(file.getName())) continue;
             }
             if (app.isBeingDownloaded(file) || file.length() == 0L || !file.isFile()) continue;
@@ -627,18 +647,19 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
      * Completes initialisation.
      * @param ctx Context
      * @return Set of names of files to ignore
+     * @throws NullPointerException if {@code ctx} is {@code null}
      */
     @NonNull
     private Set<String> init(@NonNull Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         prefs.registerOnSharedPreferenceChangeListener(this);
         //noinspection ConstantConditions
-        return prefs.getStringSet(PREF_INSPECTOR_IGNORED, new HashSet<>(0));
+        return prefs.getStringSet(PREF_INSPECTOR_IGNORED, EMPTY_STRING_SET);
     }
 
     /** {@inheritDoc} */
     @Override
-    protected void onCancelled(Map<File, String> suggestions) {
+    protected void onCancelled(@Nullable Map<File, String> ignored) {
         Context c = this.refa != null ? this.refa.get() : null;
         if (c == null) c = ctx; // <- test only
         if (c != null) {
@@ -696,18 +717,22 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
         this.refa.clear();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (PREF_INSPECTOR_IGNORED.equals(key)) {
-            synchronized (ignoreUs) {
+            synchronized (this.ignoreUs) {
                 if (BuildConfig.DEBUG) Log.i(TAG, "Reloading file names to ignore.");
                 this.ignoreUs.clear();
                 //noinspection ConstantConditions
-                this.ignoreUs.addAll(prefs.getStringSet(PREF_INSPECTOR_IGNORED, new HashSet<>(0)));
+                this.ignoreUs.addAll(prefs.getStringSet(PREF_INSPECTOR_IGNORED, EMPTY_STRING_SET));
             }
         }
     }
 
+    /**
+     * Implemented when information is required when a file has been renamed.
+     */
     public interface Listener {
         /** a file has been renamed */
         void renamed();
@@ -718,13 +743,12 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
      */
     private static class XmlInspecter extends DefaultHandler {
         private static SAXParserFactory SAXPARSER_FACTORY = null;
-        private StringBuilder builder;
         private String schema = "xml";
 
         /**
          * Inspects an xml file.
          * @param file File to inspect
-         * @return name of the root node
+         * @return name of the root node or {@code null}
          */
         @Nullable
         String inspect(@NonNull File file) {
@@ -748,23 +772,7 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
 
         /** {@inheritDoc} */
         @Override
-        public void characters(final char[] ch, int start, int length) {
-            if (BuildConfig.DEBUG) Log.i(XmlInspecter.class.getSimpleName(), "characters(" + ch.length + ", " + start + ", " + length + ")");
-            // limit the length to sensible values to avoid nasty input data
-            if (this.builder.length() > 4096) return;
-            //
-            this.builder.append(ch, start, length);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void startDocument() {
-            this.builder = new StringBuilder(128);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void startElement(String uri, String localName, String name, final Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String name, Attributes ignored) throws SAXException {
             if (!TextUtils.isEmpty(localName)) {
                 // The Exception is abused here to return the result. Good grief.
                 throw new SAXException(localName.toLowerCase(java.util.Locale.US));
