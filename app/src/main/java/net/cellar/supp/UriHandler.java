@@ -226,6 +226,12 @@ public final class UriHandler implements Parcelable {
     @VisibleForTesting
     public static final Pattern PATTERN_YOUTU_BE = Pattern.compile("https?://youtu\\.be/\\w+.+");
 
+    /**
+     * This should match https://zvideox.net/watch/videoid/…
+     */
+    @VisibleForTesting
+    public static final Pattern PATTERN_ZVIDEOX = Pattern.compile("https?://zvideox\\.net/watch/.+");
+
     /** separates individual elements */
     private static final String SEP = "⁜";
     private static final String TAG = "UriHandler";
@@ -268,6 +274,10 @@ public final class UriHandler implements Parcelable {
             String q = uri.getQueryParameter("q");
             if (q != null && (q.startsWith("http://") || q.startsWith("https://"))) {
                 return new UriHandler(Uri.parse(q), null, null);
+            }
+        } else if (PATTERN_ZVIDEOX.matcher(uris).matches()) {
+            if (ps != null && ps.size() >= 2) {
+                return new UriHandler(Uri.parse(YtVideoLoader.PREFIX + ps.get(1)), YtVideoLoader.class, null);
             }
         } else if (PATTERN_IMGUR.matcher(uris).matches()) {
              return new UriHandler(uri, ImgurLoader.class, null);

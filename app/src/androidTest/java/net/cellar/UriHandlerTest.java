@@ -118,6 +118,10 @@ public class UriHandlerTest {
 
         testPattern(UriHandler.PATTERN_POX, "https://www.dropbox.com/s/ptz4qc9r7zzblxp/4692.jpg?dl=0", true);
         testPattern(UriHandler.PATTERN_POX, "https://dl.dropbox.com/s/ptz4qc9r7zzblxp/4692.jpg?dl=2", false);
+
+        testPattern(UriHandler.PATTERN_ZVIDEOX, "https://zvideox.net/watch/vC8NZH3ZRb0/how-to-use-kde-connect-to-connect-your-phone-to-your-pc/", true);
+        testPattern(UriHandler.PATTERN_ZVIDEOX, "https://zvideox.net/witch/vC8NZH3ZRb0/how-to-use-kde-connect-to-connect-your-phone-to-your-pc/", false);
+        testPattern(UriHandler.PATTERN_ZVIDEOX, "https://zvideox.net/", false);
     }
 
 }
