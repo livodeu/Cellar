@@ -76,6 +76,7 @@
     <string name="error_not_found">Not found: \"%1$s\"!</string>
     <string name="error_own_file">%1$s passed one of %2$s\'s own files back to %3$s!</string>
     <string name="error_own_file_naughty">A naughty app</string>
+    <string name="error_packageinfo">Apparently this file does not contain a valid application!</string>
     <string name="error_queue_pop_failed">No download has been started.</string>
     <string name="error_rename_failed">Failed to rename \"%1$s\"!</string>
     <string name="error_store_failed">The data cannot be stored.</string>

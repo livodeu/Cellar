@@ -59,6 +59,7 @@
     <string name="error_import_failed_invalid_file">Fichier non valide!</string>
     <string name="error_invalid_url">URL n\'est pas valide</string>
     <string name="error_not_found">Pas trouvé: %1$s!</string>
+    <string name="error_packageinfo">Apparemment, ce fichier ne contient pas d\'application valide!</string>
     <string name="help_referer">➪ Wikipédia</string>
     <string name="help_referer_wp">https://fr.m.wikipedia.org/wiki/R%C3%A9f%C3%A9rent_(informatique)</string>
     <string name="hint_credential_userid">Nom d\'utilisateur «%1$s»</string>

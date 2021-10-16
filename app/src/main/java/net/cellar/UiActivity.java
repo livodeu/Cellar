@@ -1043,7 +1043,11 @@ public class UiActivity extends BaseActivity
             PackageManager pm = getPackageManager();
             final PackageInfo packageInfo = pm.getPackageArchiveInfo(file.getAbsolutePath(),
                     PackageManager.GET_PERMISSIONS | PackageManager.GET_SIGNATURES);
-            if (packageInfo == null) return;
+            if (packageInfo == null) {
+                if (BuildConfig.DEBUG) Log.e(TAG, "Did not get PackageInfo for " + file);
+                Snackbar.make(UiActivity.this.coordinatorLayout, R.string.error_packageinfo, Snackbar.LENGTH_LONG).show();
+                return;
+            }
             if (packageInfo.packageName != null) {
                 titleWithoutQuotes = true;
                 title = packageInfo.packageName;

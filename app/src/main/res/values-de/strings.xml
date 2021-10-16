@@ -71,6 +71,7 @@
     <string name="error_not_found">Nicht gefunden: %1$s</string>
     <string name="error_own_file">%1$s hat eine von %2$ss eigenen Dateien an %3$s zurückgesendet!</string>
     <string name="error_own_file_naughty">Eine böse App</string>
+    <string name="error_packageinfo">Die Datei scheint keine gültige Anwendung zu beinhalten!</string>
     <string name="error_queue_pop_failed">Es konnte kein Download gestartet werden.</string>
     <string name="error_rename_failed">„%1$s“ konnte nicht umbenannt werden!</string>
     <string name="error_store_failed">Die Daten können nicht gespeichert werden!</string>
