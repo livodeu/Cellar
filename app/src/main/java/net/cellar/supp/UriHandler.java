@@ -25,7 +25,6 @@ import net.cellar.worker.ImgurLoader;
 import net.cellar.worker.LaGuardiaVideoLoader;
 import net.cellar.worker.Loader;
 import net.cellar.worker.MetaContenturlLoader;
-import net.cellar.worker.MetacafeLoader;
 import net.cellar.worker.NyLoader;
 import net.cellar.worker.NzzLoader;
 import net.cellar.worker.OperavisionVideoLoader;
@@ -144,15 +143,6 @@ public final class UriHandler implements Parcelable {
      */
     @VisibleForTesting
     public static final Pattern PATTERN_LOCGOV = Pattern.compile("https?://(www\\.)?loc\\.gov/item/.+");
-    /**
-     * These should match:
-     * <ul>
-     * <li>https://www.metacafe.com/watch/12345678/some-video-title-is-given-here/</li>
-     * <li>https://cdn.mcstatic.com/videos/12345000/12345678/12345678.m3u8</li>
-     * </ul>
-     */
-    @VisibleForTesting
-    public static final Pattern PATTERN_METACAFE = Pattern.compile("https?://((www\\.metacafe\\.com/watch)|(cdn\\.mcstatic\\.com/videos))/\\d{5,}/.*");
     /**
      * This should match:
      * <ul>
@@ -287,8 +277,6 @@ public final class UriHandler implements Parcelable {
             return new UriHandler(uri, OperavisionVideoLoader.class, uri.getLastPathSegment());
         } else if (PATTERN_GUARDIAN.matcher(uris).matches()) {
             return new UriHandler(uri, LaGuardiaVideoLoader.class, uri.getLastPathSegment());
-        } else if (PATTERN_METACAFE.matcher(uris).matches()) {
-            return new UriHandler(uri, MetacafeLoader.class, null);
         } else if (PATTERN_POSTIMG.matcher(uris).matches()) {
             return new UriHandler(uri, HtmlShredderImageLoader.class, null);
         } else if (PATTERN_RED.matcher(uris).matches()) {

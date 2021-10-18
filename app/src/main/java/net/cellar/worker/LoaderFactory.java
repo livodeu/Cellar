@@ -59,9 +59,6 @@ public final class LoaderFactory {
         if (clazz == MetaContenturlLoader.class) {
             return new MetaContenturlLoader(id, this.app, this.app.getOkHttpClient(), listener);
         }
-        if (clazz == MetacafeLoader.class) {
-            return new MetacafeLoader(id, this.app, this.app.getOkHttpClient(), listener);
-        }
         if (clazz == LaGuardiaVideoLoader.class) {
             return new LaGuardiaVideoLoader(id, this.app, this.app.getOkHttpClient(), listener);
         }

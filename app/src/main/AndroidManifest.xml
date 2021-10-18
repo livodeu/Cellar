@@ -286,10 +286,6 @@
                     android:host="v.redd.it"
                     android:scheme="https" />
                 <data
-                    android:host="*.metacafe.com"
-                    android:pathPrefix="/watch"
-                    android:scheme="https" />
-                <data
                     android:host="gfycat.com"
                     android:scheme="https" />
                 <data
