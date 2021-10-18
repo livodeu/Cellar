@@ -63,13 +63,6 @@ public class UriHandlerTest {
         testPattern(UriHandler.PATTERN_IMGUR, "https://imgur.com/", false);
         testPattern(UriHandler.PATTERN_IMGUR, "https://imgur.com/abracadabra/", false);
 
-        testPattern(UriHandler.PATTERN_METACAFE, "https://www.metacafe.com/watch/12345678/some-video-title-is-given-here/", true);
-        testPattern(UriHandler.PATTERN_METACAFE, "https://cdn.mcstatic.com/videos/12345000/12345678/12345678.m3u8", true);
-        testPattern(UriHandler.PATTERN_METACAFE, "https://www.metacafe.com/", false);
-        testPattern(UriHandler.PATTERN_METACAFE, "https://www.metacafe.com", false);
-        testPattern(UriHandler.PATTERN_METACAFE, "https://cdn.mcstatic.com/", false);
-        testPattern(UriHandler.PATTERN_METACAFE, "https://cdn.mcstatic.com", false);
-
         testPattern(UriHandler.PATTERN_OPERAVISION, "https://operavision.eu/en/library/performances/operas/les-contes-dhoffmann-komische-oper-berlin", true);
         testPattern(UriHandler.PATTERN_OPERAVISION, "https://operavision.eu/fr/bibliotheque/spectacles/operas/les-contes-dhoffmann-komische-oper-berlin", true);
         testPattern(UriHandler.PATTERN_OPERAVISION, "https://operavision.eu/de/bibliothek/auffuehrungen/opern/les-contes-dhoffmann-komische-oper-berlin", true);
