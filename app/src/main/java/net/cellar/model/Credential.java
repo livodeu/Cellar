@@ -140,7 +140,6 @@ public final class Credential implements Comparable<Credential> {
         try {
             String what = null;
             reader = new BufferedReader(new InputStreamReader(in));
-            int counter = 0;
             for (;;) {
                 String line = reader.readLine();
                 if (line == null) break;
@@ -153,9 +152,7 @@ public final class Credential implements Comparable<Credential> {
                     what = credential.type == TYPE_FTP ? "FTP" : (credential.type == TYPE_HTTP_BASIC ? "HTTP Basic" : "SFTP");
                 }
                 list.add(credential);
-                counter++;
             }
-            if (BuildConfig.DEBUG) Log.i(Credential.class.getSimpleName(), "Loaded " + counter + " " + what + " credential(s) from a file");
         } finally {
             Util.close(reader);
         }
@@ -178,7 +175,6 @@ public final class Credential implements Comparable<Credential> {
         try {
             String what = null;
             reader = new BufferedReader(new InputStreamReader(in));
-            int counter = 0;
             for (;;) {
                 String line = reader.readLine();
                 if (line == null) break;
@@ -194,9 +190,7 @@ public final class Credential implements Comparable<Credential> {
                     what = credential.type == TYPE_FTP ? "FTP" : (credential.type == TYPE_HTTP_BASIC ? "HTTP Basic" : "SFTP");
                 }
                 list.add(credential);
-                counter++;
             }
-            if (BuildConfig.DEBUG) Log.i(Credential.class.getSimpleName(), "Loaded " + counter + " " + what + " credential(s) from a file");
         } finally {
             Util.close(reader);
         }
@@ -212,8 +206,6 @@ public final class Credential implements Comparable<Credential> {
      */
     @RequiresApi(Build.VERSION_CODES.M)
     public static void store(@NonNull Context ctx, @NonNull EncryptionHelper eh, @NonNull File dest, @NonNull final Collection<Credential> credentials) {
-        if (BuildConfig.DEBUG) Log.i(Credential.class.getSimpleName(), "store(…, " + dest + ", " + credentials + ")");
-
         BufferedWriter writer = null;
         try {
             final File tmpdir = ctx.getFilesDir();
@@ -233,8 +225,6 @@ public final class Credential implements Comparable<Credential> {
             if (!tmp.renameTo(dest)) {
                 if (BuildConfig.DEBUG) Log.e(Credential.class.getSimpleName(), "Failed to rename \"" + tmp + "\" to \"" + dest + "\"");
                 Util.deleteFile(tmp);
-            } else if (BuildConfig.DEBUG) {
-                Log.i(Credential.class.getSimpleName(), "Stored " + credentials.size() + " credentials in \"" + dest + "\"");
             }
         } catch (IOException | GeneralSecurityException e) {
             if (BuildConfig.DEBUG) Log.e(Credential.class.getSimpleName(), "While writing: " + e.toString(), e);
@@ -312,10 +302,6 @@ public final class Credential implements Comparable<Credential> {
         return Objects.equals(this.realm, that.realm) &&
                 Objects.equals(this.userid, that.userid) &&
                 this.type == that.type;
-    }
-
-    public long getModified() {
-        return this.modified;
     }
 
     @Nullable
