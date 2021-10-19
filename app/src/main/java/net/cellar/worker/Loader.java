@@ -50,6 +50,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
@@ -194,7 +195,7 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
     @Nullable @Size(min = 1) private Order[] orders;
     /** used when not using okhttp with {@link net.cellar.App.Hal Hal} as its {@link okhttp3.Dns Dns} implementation */
     @Nullable private Mores mores;
-    private boolean deferred;
+    private volatile boolean deferred;
 
     /**
      * Constructor.
@@ -221,28 +222,29 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
      */
     protected void cleanup() {}
 
+    /**
+     * Sets the {@link #isDeferred() deferred} flag and {@link #cancel(boolean) cancels} the task.
+     */
     public final void defer() {
         this.deferred = true;
         super.cancel(true);
     }
 
-    protected boolean isDeferred() {
-        return this.deferred;
-    }
-
-    /** {@inheritDoc} */
+    /** {@inheritDoc}<br><br><hr><br>
+     * The orders that are passed to this method will be available as instance variables via {@link #getOrders()}.
+     */
     @Override
     @NonNull
     protected final Set<Delivery> doInBackground(@Size(min = 1) final Order... orders) {
-        this.orders = orders;
-        if (orders == null || orders.length == 0) {
+        setOrders(orders);
+        if (this.orders == null || this.orders.length == 0) {
             publishProgress(Progress.COMPLETE);
             return NO_DELIVERIES;
         }
-        final Set<Delivery> deliveries = new HashSet<>(orders.length);
-        @FloatRange(from = 0f, to = 1f) final float progressPerOrder = 1f / orders.length;
+        final Set<Delivery> deliveries = new HashSet<>(this.orders.length);
+        @FloatRange(from = 0f, to = 1f) final float progressPerOrder = 1f / this.orders.length;
         @FloatRange(from = 0f, to = 1f) float progress = 0f;
-        for (Order order : orders) {
+        for (Order order : this.orders) {
             if (BuildConfig.DEBUG) Log.i(Loader.class.getSimpleName(), "Processing " + order);
             if (isCancelled()) break;
             if (order != null) {
@@ -299,6 +301,15 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
     }
 
     /**
+     * Tells whether this Loader has been deferred.
+     * If true, this task has already been cancelled.
+     * @return true / false
+     */
+    public final boolean isDeferred() {
+        return this.deferred;
+    }
+
+    /**
      * Fulfills a particular Order.
      * @param order Order to fulfil
      * @param progressBefore progress before fulfilling the given Order
@@ -340,7 +351,6 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
     @UiThread
     protected final void onProgressUpdate(Progress... values) {
         if (this.refListener == null || values == null || values.length == 0) return;
-        //if (BuildConfig.DEBUG) Log.i(Loader.class.getSimpleName(), "onProgressUpdate(" + values[0] + ")");
         final LoaderListener l = this.refListener.get();
         if (l == null) return;
         final Progress p = values[0];
@@ -381,11 +391,16 @@ abstract public class Loader extends AsyncTask<Order, Loader.Progress, Set<Deliv
         this.mores = mores;
     }
 
+    private void setOrders(@Nullable Order[] orders) {
+        if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "Setting orders: " + Arrays.toString(orders));
+        this.orders = orders;
+    }
+
     /** {@inheritDoc} */
     @Override
     @NonNull
     public String toString() {
-        return getClass().getSimpleName() + " " + this.id;
+        return getClass().getSimpleName() + " " + this.id + " with orders " + Arrays.toString(this.orders);
     }
 
     private static class Speed {
