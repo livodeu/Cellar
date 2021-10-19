@@ -616,7 +616,6 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     /** {@inheritDoc} */
     @Override
     protected void onPause() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onPause()");
         super.onPause();
         UiUtil.dismissDialog(this.dialogVariantSelector, this.dialogCredentials, this.dialogConfirmMulti);
         this.dialogVariantSelector = this.dialogCredentials = this.dialogConfirmMulti = null;
@@ -631,7 +630,6 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     /** {@inheritDoc} */
     @Override
     protected void onResume() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onResume()");
         try {
             super.onResume();
             bindService(new Intent(this, LoaderService.class), this, BIND_AUTO_CREATE | BIND_IMPORTANT);
@@ -866,10 +864,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     /**
      * Proceed to load a resource that is referred to in a playlist file stored on the device.
      * @param localPlaylistUri Uri pointing to a local playlist file
-     * @param localPlaylistMime MIME type as returned by the remote host when the playlist has been loaded ({@code null} if the playlist was sourced locally, via content: or file:)
      */
-    private void proceedWithLocalPlaylist(@NonNull final Uri localPlaylistUri, final @Nullable String localPlaylistMime) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "Parsing local playlist file \"" + localPlaylistUri + "\", mime: " + (localPlaylistMime != null ? '"' + localPlaylistMime + '"' : "<null>"));
+    private void proceedWithLocalPlaylist(@NonNull final Uri localPlaylistUri) {
         PlaylistParser pp = new PlaylistParser(this, new PlaylistParser.Listener() {
             /** {@inheritDoc} */
             @SuppressWarnings("ConstantConditions")
@@ -937,6 +933,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                     final int nItems = playlistItems.size();
                     if (nItems == 1) {
                         // nothing to select
+                        if (DebugUtil.TEST) {
+                            Intent i = new Intent(App.ACTION_DOWNLOAD_FILE_RENAMED);
+                            i.putExtra(LoaderService.EXTRA_FILE, playlistItems.get(0).getUri().getLastPathSegment());
+                            sendBroadcast(i);
+                        }
                         MainActivity.this.service.stream(playlistItems.get(0), title, null);
                         setResult(RESULT_OK);
                         Util.deleteFile(localPlaylistfile);
@@ -1035,7 +1036,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         if (UriUtil.isSupportedRemoteScheme(uri.getScheme())) {
             if (BuildConfig.DEBUG) Log.i(TAG, "Loading remote playlist \"" + uri + "\"…");
             this.playlistLoaderListener = (id, complete, deliveries) -> {
-                if (BuildConfig.DEBUG) Log.i(TAG, "Loaded remote playlist. Complete: " + complete);
+                if (BuildConfig.DEBUG && complete) Log.i(TAG, "Loaded remote playlist.");
                 if (!complete) {
                     if (BuildConfig.DEBUG) Log.i(TAG, "Cancelled download from " + uri);
                     setResult(RESULT_CANCELED);
@@ -1109,12 +1110,13 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 }
                 if (BuildConfig.DEBUG) Log.i(TAG, "Delivery received by playlist download: " + delivery);
                 if (DebugUtil.TEST) sendBroadcast(new Intent(App.ACTION_DOWNLOAD_PLAYLIST_LOADED));
-                proceedWithLocalPlaylist(Uri.fromFile(playlist), delivery.getMediaType());
+                proceedWithLocalPlaylist(Uri.fromFile(playlist));
             };
             this.service.loadPlaylist(this.wish, this.playlistLoaderListener);
+            if (DebugUtil.TEST) sendBroadcast(new Intent(App.ACTION_DOWNLOAD_STARTED));
         } else if (UriUtil.isSupportedLocalScheme(uri.getScheme())) {
             // this.uri points to data on the device
-            proceedWithLocalPlaylist(uri, null);
+            proceedWithLocalPlaylist(uri);
         } else {
             if (BuildConfig.DEBUG) Log.e(TAG,"Unsupported scheme: " + uri);
             setResult(RESULT_CANCELED);
