@@ -194,7 +194,6 @@ public class ProxyPicker extends ProxySelector {
         if (proxy == null) proxy = Proxy.NO_PROXY;
         this.list.clear();
         this.list.add(proxy);
-        if (BuildConfig.DEBUG) Log.i(TAG, "Returning proxy " + this.list.get(0) + " for " + uri);
         return this.list;
     }
 
@@ -204,7 +203,6 @@ public class ProxyPicker extends ProxySelector {
         if (proxy == null) proxy = Proxy.NO_PROXY;
         this.list.clear();
         this.list.add(proxy);
-        if (BuildConfig.DEBUG) Log.i(TAG, "Returning proxy " + this.list.get(0) + " for " + host);
         return this.list;
     }
 

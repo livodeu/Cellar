@@ -257,14 +257,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
                 }
             }
             this.listeners.add(new WeakReference<>(listener));
-            if (BuildConfig.DEBUG) {
-                StringBuilder sb = new StringBuilder().append(listeners.size()).append(" listener").append(listeners.size() > 1 ? "s: " : ": ");
-                for (Reference<ConnectivityChangedListener> li : listeners) {
-                    sb.append(li.get()).append(", ");
-                }
-                if (sb.length() > 2) sb.delete(sb.length() - 2, sb.length());
-                Log.i(getClass().getSimpleName(), sb.toString());
-            }
         }
         listener.onConnectivityChanged(NetworkInfo.State.UNKNOWN, this.state);
     }
@@ -283,7 +275,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UiThread
     public void init(@NonNull final App app) {
-        if (BuildConfig.DEBUG) Log.i(NetworkChangedReceiver.class.getSimpleName(), "init(…)");
         this.app = app;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(app);
         if (!this.prefsChangeListenerAdded) {
@@ -307,16 +298,12 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         } catch (Throwable e) {
             if (BuildConfig.DEBUG) Log.e(NetworkChangedReceiver.class.getSimpleName(), e.toString());
         }
-
-        if (BuildConfig.DEBUG) Log.i(NetworkChangedReceiver.class.getSimpleName(), "after init(…) - state is " + this.state);
     }
 
     private synchronized void notifyListeners(@NonNull final NetworkInfo.State oldState) {
         if (oldState == this.state) {
-            if (BuildConfig.DEBUG) Log.w(getClass().getSimpleName(), "Not notifying listeners because new state == old state == " + oldState);
             return;
         }
-        if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "notifyListeners - " + oldState + " -> " + this.state + " - called from " + new Throwable().getStackTrace()[2]);
         this.handler.post(() -> {
             synchronized (this.listeners) {
                 for (Reference<ConnectivityChangedListener> l : this.listeners) {
@@ -331,7 +318,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
     /** {@inheritDoc} */
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "onReceive(…, " + intent + ")");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && ConnectivityManager.ACTION_RESTRICT_BACKGROUND_CHANGED.equals(intent.getAction())) {
             ConnectivityManager cm = (ConnectivityManager) ctx.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             int restrict = cm.getRestrictBackgroundStatus();
@@ -353,7 +339,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
     /** {@inheritDoc} */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (BuildConfig.DEBUG) Log.i(NetworkChangedReceiver.class.getSimpleName(), "onSharedPreferenceChanged(…, \"" + key + "\")");
         if (App.PREF_ALLOW_METERED.equals(key) || App.PREF_VIA_VPN.equals(key)) {
             updateSituation(prefs);
         }
@@ -402,13 +387,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
      */
     private void updateSituation(boolean allowMetered, @App.ViaVpn int viaVpn) {
         ConnectivityManager cm = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Network a = cm.getActiveNetwork();
-            NetworkInfo ni = cm.getNetworkInfo(a);
-            if (ni != null) Log.i(getClass().getSimpleName(), "Active network: " + ni.getTypeName() + " - id: " + (a != null ? a.hashCode() / 11 : -1) + " - " + ni.getDetailedState() + " - metered: " + cm.isActiveNetworkMetered());
-            else Log.i(getClass().getSimpleName(), "Active network: <null>");
-        }
-
         // get current situation
         Network active = null;
         NetworkInfo nia = null;
@@ -433,7 +411,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
             boolean isVpn = !isNotVpn;
             boolean isNotMetered = nc == null || nc.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
             boolean isMetered = !isNotMetered;
-            if (BuildConfig.DEBUG) Log.i(NetworkChangedReceiver.class.getSimpleName(), "Active network " + active + " is " + (isVpn ? "" : "not ") + "a VPN and is " + (isMetered ? "" : "not ") + "metered.");
             if (isMetered && !allowMetered) {
                 this.state = NetworkInfo.State.DISCONNECTED;
             } else {
@@ -454,7 +431,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         } else {
             this.state = NetworkInfo.State.DISCONNECTED;
         }
-        if (BuildConfig.DEBUG) Log.i(NetworkChangedReceiver.class.getSimpleName(), "after updateSituation(" + allowMetered + ", " + viaVpn + "): active network: " + active + " - state: " + state);
     }
 
     /**
@@ -486,7 +462,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         /** {@inheritDoc} */
         @Override
         public void onAvailable(@NonNull Network network) {
-            if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "onAvailable(" + networkToString(app, network) + ")");
             Network active;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 active = ((ConnectivityManager) app.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetwork();
@@ -506,7 +481,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         /** {@inheritDoc} */
         @Override
         public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {
-            //if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "onBlockedStatusChanged(" + networkToString(app, network) + ", " + blocked + ")");
             NetworkInfo.State oldState = NetworkChangedReceiver.this.state;
             NetworkChangedReceiver.this.state = blocked ? NetworkInfo.State.DISCONNECTED : NetworkInfo.State.CONNECTED;
             notifyListeners(oldState);
@@ -525,7 +499,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         /** {@inheritDoc} */
         @Override
         public void onLosing(@NonNull Network network, int maxMsToLive) {
-            if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "onLosing(" + networkToString(app, network) + ", " + maxMsToLive + ")");
             Network active;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 active = ((ConnectivityManager) app.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetwork();
@@ -544,7 +517,6 @@ public final class NetworkChangedReceiver extends BroadcastReceiver implements S
         /** {@inheritDoc} */
         @Override
         public void onLost(@NonNull Network network) {
-            if (BuildConfig.DEBUG) Log.i(getClass().getSimpleName(), "onLost(" + networkToString(app, network) + ")");
             Network active;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 active = ((ConnectivityManager) app.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetwork();
