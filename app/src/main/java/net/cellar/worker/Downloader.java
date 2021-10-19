@@ -266,7 +266,6 @@ public class Downloader extends Loader {
             final boolean gzip = "gzip".equals(contentEncoding) || "x-gzip".equals(contentEncoding);
             final boolean deflate = "deflate".equals(contentEncoding);  // <- should not happen unless we had given "deflate" in the "Accept-Encoding" request header
             InputStream bodyByteStream = body.byteStream();
-            if (BuildConfig.DEBUG) Log.i(TAG, "InputStream: " + bodyByteStream.getClass().getName());
             if (gzip && !(bodyByteStream instanceof GZIPInputStream)) {
                 in = new CountingGZIPInputStream(bodyByteStream);
             } else if (deflate && !(bodyByteStream instanceof InflaterInputStream)) {
@@ -274,7 +273,6 @@ public class Downloader extends Loader {
             } else {
                 in = bodyByteStream;
             }
-            //body.source();
             if (BuildConfig.DEBUG && (resourceLength <= 0L || this.ignoreListener)) Log.w(TAG, "No progress will be reported!");
             Progress progress = null;
             @FloatRange(from = 0, to = 1) float latestProgressReport = 0f;
@@ -308,8 +306,8 @@ public class Downloader extends Loader {
             Util.close(out, in, body);
             Arrays.fill(this.buffer, (byte)0);
             if (isCancelled()) {
-                if (BuildConfig.DEBUG) Log.i(TAG, "Download " + super.id + " cancelled");
-                if (destinationFile.isFile() && !destinationFileExistedBefore) destinationFile.delete();
+                if (BuildConfig.DEBUG) Log.i(TAG, "Download " + super.id + (isDeferred() ? " deferred" : " cancelled (not deferred)"));
+                if (destinationFile.isFile() && !destinationFileExistedBefore && !isDeferred()) destinationFile.delete();
                 return new Delivery(order, isDeferred() ? LoaderService.ERROR_DEFERRED : LoaderService.ERROR_CANCELLED, destinationFile, mediaType != null ? mediaType.toString() : null);
             }
             if (BuildConfig.DEBUG) Log.i(TAG, "Downloaded " + order.getUrl() + " - HTTP " + response.code() + " " + response.message() + " - media type: '" + mediaType + "', total: " + totalBytesFromThisDownload);
@@ -323,7 +321,7 @@ public class Downloader extends Loader {
         }
         Util.close(out, in, body);
         if (isCancelled()) {
-            if (BuildConfig.DEBUG) Log.i(TAG, "Download " + super.id + (isDeferred() ? " deferred" : " cancelled"));
+            if (BuildConfig.DEBUG) Log.i(TAG, "Download " + super.id + (isDeferred() ? " deferred" : " cancelled (not deferred)"));
             if (destinationFile.isFile() && !destinationFileExistedBefore && !isDeferred()) destinationFile.delete();
             return new Delivery(order, isDeferred() ? LoaderService.ERROR_DEFERRED : LoaderService.ERROR_CANCELLED, destinationFile, null);
         }
