@@ -9,25 +9,23 @@ package net.cellar.worker;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+
 import net.cellar.BuildConfig;
 import net.cellar.model.UriPair;
-import net.cellar.model.pl.Playlist;
 import net.cellar.model.pl.M3UPlaylist;
+import net.cellar.model.pl.Playlist;
 import net.cellar.model.pl.PlsPlaylist;
 import net.cellar.model.pl.RamPlaylist;
-import net.cellar.supp.Util;
 import net.cellar.supp.Log;
+import net.cellar.supp.Util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
-import java.text.NumberFormat;
-import java.util.Arrays;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.Size;
 
 /**
  *
@@ -40,7 +38,6 @@ public class PlaylistParser extends AsyncTask<UriPair, Float, Playlist> {
             2. parse playlist for source entries (e.g. "https://www.folkalley.com/folkalley.ram")
             3. download suitable source entry (HEAD should be enough)
             3a. watch response headers for "Content-Type" (e.g. "audio/x-pn-realaudio")
-
              */
 
     private static final String TAG = "PlaylistParser";
@@ -63,7 +60,6 @@ public class PlaylistParser extends AsyncTask<UriPair, Float, Playlist> {
     @NonNull
     protected Playlist doInBackground(@Size(min = 1) UriPair... uriPairs) {
         // e.g. UriPair{local=file:///data/user/0/net.cellar/cache/classic_fm.pls, remote=http://www.abc.net.au/res/streaming/audio/mp3/classic_fm.pls}
-        if (BuildConfig.DEBUG) Log.i(TAG, "doInBackground(" + Arrays.toString(uriPairs) + ")");
         BufferedReader reader = null;
         UriPair uriPair = uriPairs[0];
         final Playlist playlist;
@@ -84,11 +80,9 @@ public class PlaylistParser extends AsyncTask<UriPair, Float, Playlist> {
         }
         try {
             reader = new BufferedReader(new InputStreamReader(ctx.getContentResolver().openInputStream(uriPair.getLocal())));
-            int lineNumber = 1; // <- for debugging
             while (!isCancelled()) {
                 String line = reader.readLine();
                 if (line == null) break;
-                if (BuildConfig.DEBUG) Log.i(TAG, "--- "  + (lineNumber < 10 ? " " : "") + NumberFormat.getIntegerInstance().format(lineNumber++) + " --- " + line);
                 playlist.parseLine(line);
             }
         } catch (Exception e) {
