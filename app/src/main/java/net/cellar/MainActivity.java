@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.FileUtils;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -267,18 +268,29 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         }
 
-        if (Intent.ACTION_VIEW.equals(action)
-                && intent.getType() != null && intent.getType().startsWith("vnd.")) {
-            intent.setComponent(null);
-            final Intent chooserIntent = Intent.createChooser(intent, null);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                chooserIntent.putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, new ComponentName[] {new ComponentName(this, MainActivity.class)});
+        if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null && "content".equals(intent.getScheme())) {
+            // we may need to determine the mime type because sometimes (e.g. emulator api 31) it is not set yet
+            final String mime = intent.resolveType(this);
+            //
+            if (DocumentsContract.Root.MIME_TYPE_ITEM.equals(mime)) {
+                // this is apparently a request to view all the files ("vnd.android.document/root"), so UiActivity will be launched
+                startActivity(new Intent(this, UiActivity.class));
+                setResult(RESULT_OK);
+                finish();
+                return;
             }
-            startActivity(chooserIntent);
+            if (mime != null && mime.startsWith("vnd.")) {
+                intent.setComponent(null);
+                final Intent chooserIntent = Intent.createChooser(intent, null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    chooserIntent.putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, new ComponentName[]{new ComponentName(this, MainActivity.class)});
+                }
+                startActivity(chooserIntent);
 
-            setResult(RESULT_CANCELED);
-            finishAndRemoveTask();
-            return;
+                setResult(RESULT_CANCELED);
+                finishAndRemoveTask();
+                return;
+            }
         }
 
         // if we got a notification id, this means that the corresponding notification should be removed
@@ -853,7 +865,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 finish();
             }
         } else {
-            notifyError(this, getString(R.string.error_cant_handle, this.wish.getUriHandler().toString()));
+            notifyError(this, getString(R.string.error_cant_handle_that));
             if (finish) {
                 setResult(RESULT_CANCELED);
                 finishAndRemoveTask();
