@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ AndroidManifest.xml
-  ~ Copyright (c) livodeu 2021.
-  ~ This source code is subject to the license to be found in the file LICENSE.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.cellar"
@@ -15,8 +9,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission-sdk-23 android:name="android.permission.FOREGROUND_SERVICE" />
 
     <queries>
@@ -473,7 +468,15 @@
             android:label="@string/action_import"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".CancelActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar.Invisible"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <service
             android:name=".LoaderService"
             android:description="@string/label_service_loader_desc"

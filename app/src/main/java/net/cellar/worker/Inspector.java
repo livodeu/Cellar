@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +72,8 @@ import wseemann.media.FFmpegMediaMetadataRetriever;
 public class Inspector extends AsyncTask<File, Float, Map<File, String>> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     /** String Set: names of files that will be ignored by Inspector */
-    @VisibleForTesting public static final String PREF_INSPECTOR_IGNORED = "pref_inspector_ignored";
+    public static final String PREF_INSPECTOR_IGNORED = "pref_inspector_ignored";
+    private static final Set<String> EMPTY_STRING_SET = new HashSet<>(0);
     private static final String KEY = "pref_toybox";
     private static final String P1 = "file";
     private static final String PROG = "/system/bin/toybox";
@@ -81,16 +83,15 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
     private static final int TOYBOX_UNKNOWN = 0;
     @Size(16) private static final int[] WMV = new int[] {0x30, 0x26, 0xb2, 0x75, 0x8e, 0x66, 0xcf, 0x11, 0xa6, 0xd9, 0x00, 0xaa, 0x00, 0x62, 0xce, 0x6c};
     @Size(16) private static final int[] WTV = new int[] {0xb7, 0xd8, 0x00, 0x20, 0x37, 0x49, 0xda, 0x11, 0xa6, 0x4e, 0x00, 0x07, 0xe9, 0x5e, 0xad, 0x8d};
+    @Size(9) private static final String[] XML_EXTENSIONS = new String[] {
+            ".atom", ".gpx", ".kml", ".mathml", ".xspf",
+            ".rss", ".xsd", ".svg", ".xmi"
+    };
     /** See https://en.wikipedia.org/wiki/List_of_XML_schemas */
     @Size(9) private static final String[] XML_SCHEMAS = new String[] {
             "atom", "gpx", "kml", "math", "playlist",
             "rss", "schema", "svg", "xmi"
     };
-    @Size(9) private static final String[] XML_EXTENSIONS = new String[] {
-            ".atom", ".gpx", ".kml", ".mathml", ".xspf",
-            ".rss", ".xsd", ".svg", ".xmi"
-    };
-    private static final Set<String> EMPTY_STRING_SET = new HashSet<>(0);
 
     /**
      * Interesting reading is here:
@@ -517,6 +518,36 @@ public class Inspector extends AsyncTask<File, Float, Map<File, String>> impleme
             Util.close(in, err);
         }
         return ok;
+    }
+
+    /**
+     * Adds or removes a file to/from the ignore list.
+     * @param ctx Context
+     * @param fileName name of file to add/remove
+     * @param ignore {@code true} to add, {@code false} to remove
+     * @throws NullPointerException if {@code ctx} is {@code null}
+     */
+    public static void toggleIgnoreFile(@NonNull Context ctx, @NonNull String fileName, boolean ignore) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        @NonNull final Set<String> ignored = Objects.requireNonNull(prefs.getStringSet(PREF_INSPECTOR_IGNORED, EMPTY_STRING_SET));
+        SharedPreferences.Editor ed;
+        Set<String> newIgnored;
+        if (ignore) {
+            if (ignored.contains(fileName)) return;
+            ed = prefs.edit();
+            newIgnored = new HashSet<>(ignored.size() + 1);
+            newIgnored.addAll(ignored);
+            ignored.add(fileName);
+            if (BuildConfig.DEBUG) Log.i(TAG, "Inspector will ignore \"" + fileName + "\"");
+        } else {
+            if (!ignored.contains(fileName)) return;
+            ed = prefs.edit();
+            newIgnored = new HashSet<>(ignored);
+            newIgnored.remove(fileName);
+            if (BuildConfig.DEBUG) Log.i(TAG, "Inspector will not ignore \"" + fileName + "\" anymore");
+        }
+        ed.putStringSet(PREF_INSPECTOR_IGNORED, newIgnored);
+        ed.apply();
     }
 
     /** Non-null under normal circumstances - null under test conditions */

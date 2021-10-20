@@ -131,8 +131,8 @@ public class LoaderService extends Service implements LoaderListener {
     public static final int ERROR_YOUTUBE_CAPTCHA = 1014;
     @LoadError
     public static final int ERROR_YOUTUBE_LIVESTREAM = 1017;
-    /** contains the absolute path of a file */
-    @VisibleForTesting
+    /** contains the absolute path of a file (sometimes just the name, though) */
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public static final String EXTRA_FILE = BuildConfig.APPLICATION_ID + ".file";
     /** replacement char for {@link File#separatorChar} in file names */
     public static final char REPLACEMENT_FOR_FILESEPARATOR = '_';
@@ -665,6 +665,7 @@ public class LoaderService extends Service implements LoaderListener {
 
     /**
      * Initiates a download via HTTP(S).
+     * If the file already exists, the remote host will probably send HTTP 304.
      * @param wish Wish, encompassing Uri to load from and optional title which will be shown in the notification (if null, the uri's last path segment will be shown)
      */
     @MainThread
@@ -686,6 +687,12 @@ public class LoaderService extends Service implements LoaderListener {
         keepAwake();
     }
 
+    /**
+     * Loads a remote playlist.
+     * Does not show a notification and does not assign a download id.
+     * @param wish Wish
+     * @param l LoaderListener
+     */
     @MainThread
     void loadPlaylist(@NonNull Wish wish, @NonNull LoaderListener l) {
         App app = (App)getApplicationContext();
@@ -840,23 +847,22 @@ public class LoaderService extends Service implements LoaderListener {
         final Intent cancel = new Intent(this, LoaderService.class);
         cancel.setAction(ACTION_CANCEL);
         cancel.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-        PendingIntent piCancel = PendingIntent.getService(this, REQUEST_CODE_CANCEL, cancel, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
-        builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_delete_24, android.R.string.cancel, piCancel));
+        PendingIntent piCancel = PendingIntent.getService(this, REQUEST_CODE_CANCEL, cancel, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+        builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_cancel_24, android.R.string.cancel, piCancel));
 
         if (addDefer) {
             final Intent defer = new Intent(this, LoaderService.class);
             defer.setAction(ACTION_DEFER);
             defer.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-            PendingIntent piDefer = PendingIntent.getService(this, REQUEST_CODE_DEFER, defer, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
-            //TODO better icon for defer
-            builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_queue_24, R.string.action_defer, piDefer));
+            PendingIntent piDefer = PendingIntent.getService(this, REQUEST_CODE_DEFER, defer, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
+            builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_watch_later_24, R.string.action_defer, piDefer));
         }
 
         if (addStop) {
             final Intent stop = new Intent(this, LoaderService.class);
             stop.setAction(ACTION_STOP);
             stop.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
-            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT : PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent piStop = PendingIntent.getService(this, REQUEST_CODE_STOP, stop, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0);
             builder.addAction(UiUtil.makeNotificationAction(app, R.drawable.ic_baseline_stop_24, R.string.action_stop, piStop));
             // as there is no "getActions()" method in Notification.Builder, we must remember this in some other way:
             this.stopActionAdded.add(downloadId);
@@ -1015,10 +1021,12 @@ public class LoaderService extends Service implements LoaderListener {
                     if (BuildConfig.DEBUG) Log.i(TAG, "Cancelling " + loader);
                     loader.cancel(true);
                 } else {
-                    if (BuildConfig.DEBUG) Log.w(TAG, "Cannot cancel loader " + downloadId);
+                    if (BuildConfig.DEBUG) Log.e(TAG, "Cannot cancel loader " + downloadId);
                     this.nm.cancel(IdSupply.progressNotificationId(downloadId));
                 }
-            } else if (BuildConfig.DEBUG) Log.e(TAG, "No ID");
+            } else if (BuildConfig.DEBUG) {
+                Log.e(TAG, "No ID given with ACTION_CANCEL");
+            }
             letSleep();
             return START_REDELIVER_INTENT;
         } else if (ACTION_DEFER.equals(action)) {
@@ -1034,15 +1042,7 @@ public class LoaderService extends Service implements LoaderListener {
                         QueueManager queueManager = QueueManager.getInstance();
                         for (Order order : orders) {
                             if (order == null) continue;
-                            // http://archive.org/download/gd88-07-03.sbd.ststephen.3908.sbeok.shnf/gd88-07-03d1t01.mp3
-                            Wish wish = order.getWish();
-                            if (wish == null) {
-                                if (BuildConfig.DEBUG) Log.e(TAG, "Cannot queue " + order + ": no Wish!");
-                                continue;
-                            }
-                            if (BuildConfig.DEBUG) Log.i(TAG, "Adding to queue " + wish);
-                            wish.setHeld(true);
-                            queueManager.add(wish);
+                            queueManager.addDeferredDownload(order);
                         }
                     }
                 } else {
@@ -1061,7 +1061,7 @@ public class LoaderService extends Service implements LoaderListener {
                     if (BuildConfig.DEBUG) Log.i(TAG, "Stopping " + d);
                     d.holdon();
                 } else if (BuildConfig.DEBUG) {
-                    Log.w(TAG, "Cannot stop loader " + id);
+                    Log.e(TAG, "Cannot stop loader " + id);
                     this.nm.cancel(IdSupply.progressNotificationId(id));
                 }
             } else if (BuildConfig.DEBUG) Log.e(TAG, "No ID");
@@ -1383,14 +1383,18 @@ public class LoaderService extends Service implements LoaderListener {
             }
         }
         order.setDestinationFilename(fileName.endsWith(fileExtension) ? fileName : fileName + fileExtension);
+        if (DebugUtil.TEST) {
+            Intent i = new Intent(App.ACTION_DOWNLOAD_FILE_RENAMED);
+            i.putExtra(LoaderService.EXTRA_FILE, order.getDestinationFilename());
+            sendBroadcast(i);
+        }
 
         final int downloadId = nextDownloadId();
-        foreground(downloadId, makeNotification(downloadId, item.getUri(), title, true, true));
-        final Streamer s = new Streamer(downloadId, this, this);
-        ((App)getApplicationContext()).addLoader(downloadId, s);
+        // don't add a defer action because deferring a stream is not possible because there is no way to resume at an exact given point
+        foreground(downloadId, makeNotification(downloadId, item.getUri(), title, true, false));
+        final Streamer streamer = new Streamer(downloadId, this, this);
+        ((App)getApplicationContext()).addLoader(downloadId, streamer);
 
-        // https://apasfiis.sf.apa.at/ipad/cms-worldwide/2021-01-08_1930_tl_02_ZIB-1_Buerger--ORF--u__14077665__o__1686697666__s14832459_9__BCK2HD_19333600P_19354616P_Q4A.mp4/playlist.m3u8
-        // https://abc-iview-mediapackagestreams-2.akamaized.net/out/v1/6e1cc6d25ec0480ea099a5399d73bc4b/index.m3u8
         String alt = Util.suggestAlternativeFilename(new File(order.getDestinationFolder(), order.getDestinationFilename()));
         if (alt != null) {
             order.setDestinationFilename(alt);
@@ -1399,7 +1403,7 @@ public class LoaderService extends Service implements LoaderListener {
         if (additionalAudioUrls != null) {
             for (String additionalUrl : additionalAudioUrls) order.addAudioUrl(additionalUrl);
         }
-        s.executeOnExecutor(this.loaderExecutor, order);
+        streamer.executeOnExecutor(this.loaderExecutor, order);
         keepAwake();
         if (DebugUtil.TEST) sendBroadcast(new Intent(App.ACTION_DOWNLOAD_STREAMING_STARTED));
     }

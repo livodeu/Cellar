@@ -30,12 +30,14 @@ import net.cellar.App;
 import net.cellar.BuildConfig;
 import net.cellar.MainActivity;
 import net.cellar.model.Delivery;
+import net.cellar.model.Order;
 import net.cellar.model.Wish;
 import net.cellar.net.NetworkChangedReceiver;
 import net.cellar.supp.DebugUtil;
 import net.cellar.supp.Log;
 import net.cellar.supp.UriHandler;
 import net.cellar.supp.Util;
+import net.cellar.worker.Inspector;
 
 import org.jetbrains.annotations.TestOnly;
 
@@ -132,14 +134,14 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
     @RequiresApi(21)
     public int add(@Nullable final Wish... wishes) {
         //TODO make sure that added Wishes get the same treatment as in UiActivity - looking at you, UriHandler! (Don't load Youtube files as html!)
-        if (BuildConfig.DEBUG) Log.i(TAG, "addWish(" + java.util.Arrays.toString(wishes) + ") - called from " + new Throwable().getStackTrace()[1]);
+        //if (BuildConfig.DEBUG) Log.i(TAG, "addWish(" + java.util.Arrays.toString(wishes) + ")");
         if (wishes == null) return 0;
         final long now = System.currentTimeMillis();
         int count = 0;
         synchronized (this.wishes) {
             for (Wish wish : wishes) {
                 if (wish == null || wish.getUri().equals(Uri.EMPTY)) continue;
-                if (BuildConfig.DEBUG) Log.i(TAG, "Adding " + wish + " - has UriHandler: " + wish.getUriHandler());
+                if (BuildConfig.DEBUG) Log.i(TAG, "Adding " + wish.getUri().getLastPathSegment() + " - has UriHandler: " + wish.getUriHandler());
                 if ("content".equals(wish.getUri().getScheme())) {
                     if (BuildConfig.DEBUG) Log.e(TAG, "Cannot add content Uri: " + wish.getUri());
                     continue;
@@ -158,7 +160,6 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
                 }
                 if (this.wishes.offerLast(wish)) {
                     count++;
-                    if (BuildConfig.DEBUG) Log.i(TAG, "Queued: " + wish);
                     if (DebugUtil.TEST) {
                         app.sendBroadcast(new Intent(App.ACTION_DOWNLOAD_QUEUED));
                     }
@@ -172,6 +173,22 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
 
         notifyListeners();
         return count;
+    }
+
+    /**
+     * Enqueues a deferred download.
+     * @param order Order
+     * @throws NullPointerException if {@code order} is {@code null}
+     */
+    public void addDeferredDownload(@NonNull final Order order) {
+        //TODO when the download has been resumed, the file name must be removed from PREF_INSPECTOR_IGNORED!
+        Inspector.toggleIgnoreFile(this.app, order.getDestinationFilename(), true);
+        final Wish wish = new Wish(order.getUri());
+        wish.setMime(order.getMime());
+        wish.setFileName(order.getDestinationFilename());
+        wish.setHeld(true);
+        if (BuildConfig.DEBUG) Log.i(TAG, "Queueing deferred download: " + wish);
+        add(wish);
     }
 
     /**
@@ -240,7 +257,7 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
         return list;
     }
 
-    @NonNull@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    @NonNull @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public Deque<Wish> getWishes() {
         return this.wishes;
     }
@@ -318,6 +335,10 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
         notifyListeners();
     }
 
+    /**
+     * Moves the Wish, positioned at the given index, up to the next preceding position.
+     * @param position position
+     */
     void moveUp(int position) {
         if (position < 1) return;
         synchronized (this.wishes) {
@@ -332,12 +353,28 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
         this.handler.postDelayed(this.storer, STORE_DELAY);
     }
 
+    @TestOnly
+    public void moveUp(int position, final int steps) {
+        if (position < steps) return;
+        synchronized (this.wishes) {
+            if (position >= this.wishes.size()) return;
+            for (int i = 0; i < steps; i++, position--) {
+                Wish wish = this.wishes.get(position);
+                Wish previous = this.wishes.get(position - 1);
+                this.wishes.set(position - 1, wish);
+                this.wishes.set(position, previous);
+            }
+        }
+        notifyListeners();
+        this.handler.removeCallbacks(this.storer);
+        this.handler.postDelayed(this.storer, STORE_DELAY);
+    }
+
     /**
      * Initiates the download of the next queued item.
      * @return {@code true} if a Wish has been taken from the queue and the {@link MainActivity} has been invoked
      */
     public synchronized boolean nextPlease() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "nextPlease() - called from " + new Throwable().getStackTrace()[1]);
         return nextPlease(false);
     }
 
@@ -347,7 +384,6 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
      * @return {@code true} if a Wish has been taken from the queue and the {@link MainActivity} has been invoked
      */
     public synchronized boolean nextPlease(boolean force) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "nextPlease(" + force + ") - called from " + new Throwable().getStackTrace()[1]);
         assert this.app != null;
         long now = System.currentTimeMillis();
         if (!force && (now - this.latestCheck < MIN_CHECK_INTERVAL)) {
@@ -391,7 +427,7 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
                 pickThisOne = i;
             }
             if (pickThisOne < 0) {
-                if (BuildConfig.DEBUG) Log.i(TAG, "All queued downloads have been deferred.");
+                //if (BuildConfig.DEBUG) Log.i(TAG, "All queued downloads have been deferred.");
                 return false;
             }
             wish = this.wishes.remove(pickThisOne);
@@ -497,7 +533,9 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
         if (removed) {
             notifyListeners();
             this.handler.removeCallbacks(this.storer);
-            this.handler.postDelayed(this.storer, STORE_DELAY);
+            // in tests, store immediately because the process might be killed shortly
+            if (DebugUtil.TEST) this.handler.post(this.storer);
+            else this.handler.postDelayed(this.storer, STORE_DELAY);
         }
         return removed;
     }
@@ -556,7 +594,7 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
         boolean allowMetered = PreferenceManager.getDefaultSharedPreferences(this.app).getBoolean(App.PREF_ALLOW_METERED, App.PREF_ALLOW_METERED_DEFAULT);
         jib.setRequiredNetworkType(allowMetered ? JobInfo.NETWORK_TYPE_ANY : JobInfo.NETWORK_TYPE_UNMETERED);
         if (js.schedule(jib.build()) == JobScheduler.RESULT_SUCCESS) {
-            if (BuildConfig.DEBUG) Log.i(TAG, "Job scheduled.");
+            //if (BuildConfig.DEBUG) Log.i(TAG, "Job scheduled.");
             return;
         }
         if (BuildConfig.DEBUG) Log.e(TAG, "Failed to schedule job!");
@@ -583,7 +621,6 @@ public final class QueueManager implements NetworkChangedReceiver.ConnectivityCh
     private void store() {
         assert this.file != null;
         synchronized (this.wishes) {
-            if (BuildConfig.DEBUG) Log.i(TAG, "Storing " + this.wishes.size() + " wish(es)");
             if (this.wishes.isEmpty()) {
                 Util.deleteFile(this.file);
                 return;

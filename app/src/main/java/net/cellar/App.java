@@ -26,6 +26,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -36,7 +37,11 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.preference.PreferenceManager;
 
 import net.cellar.auth.AuthManager;
@@ -47,7 +52,6 @@ import net.cellar.net.EvilBlocker;
 import net.cellar.net.NetworkChangedReceiver;
 import net.cellar.net.ProxyPicker;
 import net.cellar.queue.QueueManager;
-import net.cellar.supp.HttpLogger;
 import net.cellar.supp.IdSupply;
 import net.cellar.supp.Log;
 import net.cellar.supp.ThreadLocalFFmpegMediaMetadataRetriever;
@@ -66,6 +70,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -84,16 +89,18 @@ import okhttp3.Route;
 public class App extends Application implements SharedPreferences.OnSharedPreferenceChangeListener, okhttp3.Authenticator, NetworkChangedReceiver.ConnectivityChangedListener {
 
     public static final String ACTION_BACKUP_RESTORE_STARTED = BuildConfig.APPLICATION_ID + ".backuprestore";
+    /** for testing only */
+    public static final String ACTION_DOWNLOAD_FILE_RENAMED =  BuildConfig.APPLICATION_ID +  ".filerenamed";
     /** for testing only - delivers {@link Order#getDestinationFilename() the destination file name} as {@link LoaderService#EXTRA_FILE extra} */
     public static final String ACTION_DOWNLOAD_FINISHED = BuildConfig.APPLICATION_ID + ".downloaded";
+    /** for testing only */
+    public static final String ACTION_DOWNLOAD_PLAYLIST_LOADED = BuildConfig.APPLICATION_ID + ".playlistloaded";
     /** for testing only */
     public static final String ACTION_DOWNLOAD_QUEUED = BuildConfig.APPLICATION_ID + ".queued";
     /** for testing only */
     public static final String ACTION_DOWNLOAD_RESUMING = BuildConfig.APPLICATION_ID + ".resuming";
     /** for testing only */
     public static final String ACTION_DOWNLOAD_STARTED = BuildConfig.APPLICATION_ID + ".downloading";
-    /** for testing only */
-    public static final String ACTION_DOWNLOAD_PLAYLIST_LOADED = BuildConfig.APPLICATION_ID + ".playlistloaded";
     /** for testing only */
     public static final String ACTION_DOWNLOAD_STREAMING_STARTED = BuildConfig.APPLICATION_ID + ".streamingstarted";
     /** default proxy port (if not set by user) */
@@ -296,6 +303,7 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     private LoaderFactory loaderFactory;
     private ProxyPicker proxyPicker;
     private EvilBlocker evilBlocker;
+    private ShortcutInfoCompat shortcutCancelAll;
 
     /**
      * Adds a Loader.
@@ -309,6 +317,18 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
         synchronized (this.loaders) {
             this.loaders.put(downloadId, loader);
         }
+        if (this.shortcutCancelAll == null) {
+            Intent intentCancelAll = new Intent(this, UiActivity.class);
+            intentCancelAll.setAction(UiActivity.ACTION_CANCEL_ALL);
+            this.shortcutCancelAll = new ShortcutInfoCompat.Builder(this, UiActivity.ACTION_CANCEL_ALL)
+                    .setShortLabel(getString(R.string.action_cancel_all_short))
+                    .setLongLabel(getString(R.string.action_cancel_all))
+                    .setDisabledMessage(getString(R.string.label_no_current_downloads))
+                    .setIcon(IconCompat.createWithResource(this, R.drawable.ic_baseline_cancel_24))
+                    .setIntent(intentCancelAll)
+                    .build();
+        }
+        ShortcutManagerCompat.pushDynamicShortcut(this, this.shortcutCancelAll);
     }
 
     /**
@@ -362,6 +382,59 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
             if (BuildConfig.DEBUG) Log.w(TAG, "Did not find credential for realm '" + realm + "'");
         }
         return null;
+    }
+
+    /**
+     * Cancels all non-finished, non-deferred Loaders.
+     * @return number of Loaders that have been cancelled
+     */
+    int cancelAllLoaders() {
+        int counter = 0;
+        synchronized (this.loaders) {
+            final int n = this.loaders.size();
+            for (int i = 0; i < n; i++) {
+                Loader loader = this.loaders.valueAt(i);
+                if (loader == null || loader.getStatus() == AsyncTask.Status.FINISHED || loader.isDeferred()) continue;
+                loader.cancel(true);
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    /**
+     * Defers all non-finished, non-deferred Loaders.
+     * @return number of Loaders that have been deferred
+     */
+    int deferAllLoaders() {
+        int counter = 0;
+        synchronized (this.loaders) {
+            final QueueManager queueManager = QueueManager.getInstance();
+            final int n = this.loaders.size();
+            for (int i = 0; i < n; i++) {
+                Loader loader = this.loaders.valueAt(i);
+                if (loader == null || loader.getStatus() == AsyncTask.Status.FINISHED || loader.isDeferred()) continue;
+                Order[] orders = loader.getOrders();
+                loader.defer();
+                if (orders != null && orders.length > 0) {
+                    for (Order order : orders) {
+                        if (order == null) continue;
+                        queueManager.addDeferredDownload(order);
+                    }
+                }
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    /**
+     * Calls {@link System#exit(int) System.exit(0)}.
+     * @param delay delay in ms
+     */
+    @UiThread
+    void exit(@IntRange(from = 0) long delay) {
+        new Handler().postDelayed(() -> System.exit(0), delay);
     }
 
     /**
@@ -523,7 +596,7 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
                     .cache(new okhttp3.Cache(new File(getCacheDir(), "okcache"), 10_000_000L));
             //
             if (BuildConfig.DEBUG) {
-                HttpLogger.enable(builder);
+                net.cellar.supp.HttpLogger.enable(builder);
             }
             //
             this.okHttpClient = builder.build();
@@ -685,7 +758,7 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     /** {@inheritDoc} */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onSharedPreferenceChanged(…, \"" + key + "\")");
+        //if (BuildConfig.DEBUG) Log.i(TAG, "onSharedPreferenceChanged(…, \"" + key + "\")");
         if (PREF_PROXY_TYPE.equals(key) || PREF_PROXY_SERVER.equals(key)) {
             makeOkhttpClient();
         } else if (PREF_CLIPSPY.equals(key)) {
@@ -728,8 +801,13 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     @AnyThread
     void removeLoader(@IntRange(to = IdSupply.NOTIFICATION_ID_PROGRESS_OFFSET_MINUS_1) int downloadId) {
         if (BuildConfig.DEBUG && !IdSupply.isDownloadId(downloadId)) Log.e(TAG, "removeDownloader(" + downloadId + "): not a download id!");
+        boolean empty;
         synchronized (this.loaders) {
             this.loaders.remove(downloadId);
+            empty = this.loaders.size() == 0;
+        }
+        if (empty) {
+            ShortcutManagerCompat.removeDynamicShortcuts(this, Collections.singletonList(UiActivity.ACTION_CANCEL_ALL));
         }
     }
 

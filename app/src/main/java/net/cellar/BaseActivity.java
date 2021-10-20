@@ -46,6 +46,8 @@ import java.util.Comparator;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final File[] EMPTY_FILES_ARRAY = new File[0];
+    /** byte flag that indicates, when set to 1, that this Activity won't have a ui */
+    protected static final String FLAG_NOUI = "noui";
 
     /**
      * Returns the Uri that is currently in the clipboard.
@@ -182,8 +184,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @CallSuper
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setAnimations(this);
-        setDarkMode(this);
+        byte noui = savedInstanceState != null ? savedInstanceState.getByte(FLAG_NOUI) : (byte)0;
+        if (noui != (byte)1) {
+            setAnimations(this);
+            setDarkMode(this);
+        }
         super.onCreate(savedInstanceState);
         this.dir = App.getDownloadsDir(this);
     }

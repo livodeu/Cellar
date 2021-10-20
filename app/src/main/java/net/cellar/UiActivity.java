@@ -161,6 +161,8 @@ public class UiActivity extends BaseActivity
         implements NetworkChangedReceiver.ConnectivityChangedListener, SnackbarDisplayer, LoaderService.DoneListener, ServiceConnection, SharedPreferences.OnSharedPreferenceChangeListener, SwipeRefreshLayout.OnRefreshListener, ThumbsManager.OnThumbCreatedListener {
 
     static final String ACTION_INSTALL = BuildConfig.APPLICATION_ID + ".action.install";
+    /** action to cancel all downloads - should only be called when there is no resumed activity (e.g. via shortcut) */
+    static final String ACTION_CANCEL_ALL = BuildConfig.APPLICATION_ID + ".action_cancel_all";
     static final String EXTRA_MIME_FILTER = BuildConfig.APPLICATION_ID + ".extra.mimefilter";
     @ViewType static final int VIEW_TYPE_GRID = 2;
     @ViewType static final int VIEW_TYPE_LINEAR = 1;
@@ -363,8 +365,9 @@ public class UiActivity extends BaseActivity
             if (extraMimeFilter.length() == 0) extraMimeFilter = null;
         }
         setMimeFilter(extraMimeFilter);
-        // the documents ui might have called this activity
-        if (DocumentsContract.ACTION_DOCUMENT_SETTINGS.equals(intent.getAction())) {
+        final String action = intent.getAction();
+        if (DocumentsContract.ACTION_DOCUMENT_SETTINGS.equals(action)) {
+            // the documents ui might have called this activity
             Uri uri = intent.getData();
             if (uri != null) this.showMe = uri.getLastPathSegment();
         }
@@ -526,6 +529,15 @@ public class UiActivity extends BaseActivity
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (ACTION_CANCEL_ALL.equals(getIntent().getAction())) {
+            if (savedInstanceState == null) savedInstanceState = new Bundle(1);
+            savedInstanceState.putByte(FLAG_NOUI, (byte)1);
+            super.onCreate(savedInstanceState);
+            startActivity(new Intent(this, CancelActivity.class));
+            finishAndRemoveTask();
+            return;
+        }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(App.PREF_TRANSLUCENT_NAVIGATION, App.PREF_TRANSLUCENT_NAVIGATION_DEFAULT)) {
             setTheme(R.style.AppTheme_NoActionBar_WithTranslucentNavigation);
@@ -2329,7 +2341,6 @@ public class UiActivity extends BaseActivity
         @UiThread
         @Override
         public void thumbnailsLoaded() {
-            //if (BuildConfig.DEBUG) Log.i(TAG, "Received information that thumbnails have been loaded.");
             notifyDataSetChanged();
         }
 

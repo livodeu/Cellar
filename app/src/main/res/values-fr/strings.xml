@@ -8,6 +8,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Cave</string>
     <string name="app_desc">Cave est un manager par téléchargements.</string>
+    <string name="action_cancel_all">Annuler téléchargement</string>
+    <string name="action_cancel_all_short">Annuler</string>
     <string name="action_checksum">Somme de contrôle</string>
     <string name="action_create_download">Neuf</string>
     <string name="action_defer">Reporter</string>
@@ -122,9 +124,18 @@
     <string name="msg_buffering">Mise en mémoire tampon %1$d %%…</string>
     <string name="msg_calculating_checksum">Calcule somme de contrôle…</string>
     <string name="msg_cancelled">Annulé.</string>
+    <plurals name="msg_cancelled_downloads">
+        <item quantity="one">%1$d téléchargement annulé.</item>
+        <item quantity="other">%1$d téléchargements annulés.</item>
+    </plurals>
     <string name="msg_clipspy_monitoring">Surveiller le presse-papier…</string>
     <string name="msg_confirmation">Confirmer</string>
     <string name="msg_credential_deleted">Informations d\'identification du %1$s supprimées.</string>
+    <!-- TODO msg_deferred_downloads -->
+    <!--<plurals name="msg_deferred_downloads">
+        <item quantity="one">%1$d téléchargement annulé.</item>
+        <item quantity="other">%1$d téléchargements annulés.</item>
+    </plurals>-->
     <plurals name="msg_delete_all">
         <item quantity="one" tools:ignore="ImpliedQuantity">Supprimer le fichier? Ça ne peut pas être annulé!</item>
         <item quantity="other">Supprimer les %1$d fichiers? Ça ne peut pas être annulé!</item>

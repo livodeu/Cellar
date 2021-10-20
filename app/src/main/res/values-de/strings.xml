@@ -8,10 +8,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Keller</string>
     <string name="app_desc">Keller ist ein Programm zum Laden von Dateien aus entfernten Quellen.</string>
+    <string name="action_cancel_all">Download abbrechen</string>
+    <string name="action_cancel_all_short">Abbrechen</string>
     <string name="action_checksum">Prüfsumme</string>
     <string name="action_create_download">Neu</string>
-    <string name="action_defer">Zurückstellen</string>
-    <string name="action_defer_stop">Nicht mehr zurückstellen</string>
+    <string name="action_defer">Aussetzen</string>
+    <string name="action_defer_stop">Nicht mehr aussetzen</string>
     <string name="action_delete">Löschen</string>
     <string name="action_delete_multi">Ausgewählte Dateien löschen</string>
     <string name="action_download">Speichern</string>
@@ -153,9 +155,17 @@
     <string name="msg_buffering">Puffere %1$d %%…</string>
     <string name="msg_calculating_checksum">Berechne Prüfsumme…</string>
     <string name="msg_cancelled">Abgebrochen.</string>
+    <plurals name="msg_cancelled_downloads">
+        <item quantity="one">%1$d Download abgebrochen.</item>
+        <item quantity="other">%1$d Downloads abgebrochen.</item>
+    </plurals>
     <string name="msg_clipspy_monitoring">Beobachte die Zwischenablage…</string>
     <string name="msg_confirmation">Bestätigung</string>
     <string name="msg_credential_deleted">Anmeldeinformation für %1$s wurde gelöscht.</string>
+    <plurals name="msg_deferred_downloads">
+        <item quantity="one">%1$d Download zurückgestellt.</item>
+        <item quantity="other">%1$d Downloads zurückgestellt.</item>
+    </plurals>
     <plurals name="msg_delete_all">
         <item quantity="one">Möchten Sie die geladene Datei löschen?\nDies kann nicht rückgängig gemacht werden!</item>
         <item quantity="other">Möchten Sie alle %1$d geladenen Dateien löschen?\nDies kann nicht rückgängig gemacht werden!</item>

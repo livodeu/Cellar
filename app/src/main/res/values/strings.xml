@@ -7,6 +7,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Cellar</string>
     <string name="app_desc">Cellar is a download manager.</string>
+    <string name="action_cancel_all">Cancel download</string>
+    <string name="action_cancel_all_short">Cancel</string>
     <string name="action_checksum">Checksum</string>
     <string name="action_checksum_md5" translatable="false">MD5</string>
     <string name="action_checksum_sha1" translatable="false">SHA-1</string>
@@ -129,6 +131,7 @@
     <string name="label_network_metered_restrictions">Metered network restrictions</string>
     <string name="label_new_download">New download</string>
     <string name="label_no">No</string>
+    <string name="label_no_current_downloads">No current downloads.</string>
     <string name="label_no_thanks">No, thanks</string>
     <string name="label_notifications_channel">Notifications from the</string>
     <string name="label_notifications_channel_important">Accentuated notifications from the</string>
@@ -175,9 +178,17 @@
     <string name="msg_buffering">Buffering %1$d %%…</string>
     <string name="msg_calculating_checksum">Calculating checksum…</string>
     <string name="msg_cancelled">Cancelled.</string>
+    <plurals name="msg_cancelled_downloads">
+        <item quantity="one">Cancelled %1$d download.</item>
+        <item quantity="other">Cancelled %1$d downloads.</item>
+    </plurals>
     <string name="msg_clipspy_monitoring">Monitoring the clipboard…</string>
     <string name="msg_confirmation">Confirmation</string>
     <string name="msg_credential_deleted">Credential for %1$s deleted.</string>
+    <plurals name="msg_deferred_downloads">
+        <item quantity="one">Deferred %1$d download.</item>
+        <item quantity="other">Deferred %1$d downloads.</item>
+    </plurals>
     <plurals name="msg_delete_all">
         <item quantity="one">Do you want to delete the download?\nThis cannot be undone!</item>
         <item quantity="other">Do you want to delete all %1$d downloads?\nThis cannot be undone!</item>
