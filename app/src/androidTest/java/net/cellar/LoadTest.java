@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class LoadTest extends BroadcastReceiver {
 
     static final int SECS_TO_FINISH = 300;
-    static final int SECS_TO_START = 5;
+    static final int SECS_TO_START = 15;
     protected static File downloadsDir;
     Context ctx;
     private boolean receiverRegistered;
@@ -72,6 +72,7 @@ public abstract class LoadTest extends BroadcastReceiver {
         f.addAction(App.ACTION_DOWNLOAD_STARTED);
         f.addAction(App.ACTION_DOWNLOAD_FINISHED);
         f.addAction(App.ACTION_DOWNLOAD_RESUMING);
+        f.addAction(App.ACTION_DOWNLOAD_FILE_RENAMED);
         ctx.registerReceiver(this, f);
         receiverRegistered = true;
     }
@@ -93,6 +94,10 @@ public abstract class LoadTest extends BroadcastReceiver {
             assertNotNull(msg);
             int space = msg.lastIndexOf(' ');
             this.downloadResuming = Boolean.parseBoolean(msg.substring(space + 1).trim());
+        } else if (App.ACTION_DOWNLOAD_FILE_RENAMED.equals(intent.getAction())) {
+            // contrary to the docs, here EXTRA_FILE contains the file name only, no path.
+            this.fileName = intent.getStringExtra(LoaderService.EXTRA_FILE);
+            android.util.Log.i(getClass().getSimpleName(), "File name is \"" + this.fileName + "\"");
         }
     }
 
